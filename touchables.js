@@ -52,38 +52,26 @@ Touchables.prototype.add = function (touchable) {
 */
 Touchables.prototype.check = function () {
     let found = false;
-    // test
-    game.tattler.tellGroup(new Tale(`mouse`, `down:${mouse.buttonDown} @ ${mouse.move.where.x}, ${mouse.move.where.y}`, '999'));
     this.touchables.forEach((t) => {
-        // test
-        game.tattler.tellGroup(new Tale(`touchables`, ` checking ${t.name} [${t.x0},${t.y0},${t.x1},${t.y1}]`, '#567'));
         if (bounded(mouse.move.where, t)) {
             found = true;
             if (t !== this.hovered) {
-                // test
-                game.tattler.tellGroup(new Tale(`touchables0`, ` hovered ${t.name}`, '#ff0'))
                 this.hovered = t;
                 this.pressed = null;
                 return;
             }
 
             if (mouse.buttonDown === true && this.hovered === t) {
-                // test
-                game.tattler.tellGroup(new Tale(`touchables1`, ` pressed${t.name}`, '#f50'))
                 this.pressed = t;
                 return;
             }
             if (mouse.buttonDown === false && this.pressed === t) {
-                // test
-                game.tattler.tellGroup(new Tale(`touchables3`, ` !clicked${t.name}`, '#f22'))
-                t.action;
+                t.action('cool');
                 this.pressed = false;
             }
         }
     });
     if (!found) {
-        // test
-        game.tattler.tellGroup(new Tale(`untouch`, `${this.hovered} `, '#ff0'))
         this.hovered = false;
         this.pressed = false;
     }
