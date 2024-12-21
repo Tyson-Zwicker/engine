@@ -2,7 +2,6 @@
     Interface with the browser to give you an updating canvas, keeps track of the 
     mouse and also calls the run() function defined in index.html, on a timer.
 */
-let debug = true;
 let canvas = undefined;
 let ctx = undefined;
 let oldTime = Date.now();
