@@ -5,31 +5,34 @@
     <script src="./main.js"></script>
     <script src="./tattle.js"></script>
     <script src="./sprite.js"></script>
+    <script src="./button.js"></script>
     <script src="./touchables.js"></script>
 </head>
 </head>
 
 <body onload="buildPage(33)" style="border:none">
     <script>
-        // this is where you used the tools to make your game
+        // this is where you use the tools to make your game
         const game = {
             debug: true,
-            tattler: new Tattler('1.2em monospace', 20,550),
-            buttonSprite: new Sprite([
+            aSprite: new Sprite([
                 new SpriteLine(-100, -100, 100, -100, '#f00', 2),
                 new SpriteLine(100, -100, 100, 100, '#0f0', 2),
                 new SpriteLine(100, 100, -100, 100, '#00f', 2),
                 new SpriteLine(-100, 100, -100, -100, '#f0f', 2)
             ]),
+            buttons:[
+                new Button ('button1','Some Text!',30,30,180,60,1.1,'#ff0')
+            ],
             touchables : new Touchables ([
-                new Touchable ('button1',200,200,400,400,()=>{
-                    console.log ('WE DID IT');
+                new Touchable ('button1',30,30,180,60,(msg)=>{
+                    console.log (`You pressed it: ${msg}`);
                 })
             ]),
             run: function (delta) {
-                this.buttonSprite.draw(1, 0, new Point(300, 300));
-                this.touchables.check ();
-                this.tattler.tattle();
+                this.aSprite.draw(1, 0, new Point(300, 300));
+                this.buttons[0].draw();
+                this.touchables.check ();                
             }
         };
     </script>
