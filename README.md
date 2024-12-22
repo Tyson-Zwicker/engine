@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 ##General
-=======
-##Overview
->>>>>>> 06b5d28992933086a0bc1361fa90b99d585928a2
 
 This is intended to let you write a simulation/game.  It handles keeping the main loop running, reacting to
 mouse events, etc. It gives you an easy way to draw vector graphics, make parts of the canvas reactive to the
