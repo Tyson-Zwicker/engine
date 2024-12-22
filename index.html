@@ -7,32 +7,30 @@
     <script src="./sprite.js"></script>
     <script src="./button.js"></script>
     <script src="./touchables.js"></script>
+    <script src="./entity.js"></script>
 </head>
 </head>
 
 <body onload="buildPage(33)" style="border:none">
     <script>
         // this is where you use the tools to make your game
+        const debug = true;
+        
+        const testButton = new Button(
+            'button1', 'Some Text!', 30, 30, 180, 60, 1.1, '#ff0','#00f'
+        );
+        const touchables = new Touchables([
+            new Touchable(
+                'button1', 30, 30, 180, 60,
+                (msg) => {
+                    console.log(`You pressed it: ${msg}`);
+                },
+                testButton)
+        ]);
         const game = {
-            debug: true,
-            aSprite: new Sprite([
-                new SpriteLine(-100, -100, 100, -100, '#f00', 2),
-                new SpriteLine(100, -100, 100, 100, '#0f0', 2),
-                new SpriteLine(100, 100, -100, 100, '#00f', 2),
-                new SpriteLine(-100, 100, -100, -100, '#f0f', 2)
-            ]),
-            buttons:[
-                new Button ('button1','Some Text!',30,30,180,60,1.1,'#ff0')
-            ],
-            touchables : new Touchables ([
-                new Touchable ('button1',30,30,180,60,(msg)=>{
-                    console.log (`You pressed it: ${msg}`);
-                })
-            ]),
             run: function (delta) {
-                this.aSprite.draw(1, 0, new Point(300, 300));
-                this.buttons[0].draw();
-                this.touchables.check ();                
+                testButton.draw();
+                touchables.check();
             }
         };
     </script>
