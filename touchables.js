@@ -12,8 +12,9 @@
 /*  
     Constructor for the "thing that can be touched by the mouse". 
     It Takes a name, a rectangle, and the action (function) to call if its clicked.
+    The button is optional, you can make a touchable that has no graphic.
 */
-const Touchable = function (name, x0, y0, x1, y1, action) {
+const Touchable = function (name, x0, y0, x1, y1, action, button) {
     this.name = name;
     this.x0 = x0;  //Defines a rectangle for Maths.bounds to check.
     this.y0 = y0;
@@ -21,6 +22,7 @@ const Touchable = function (name, x0, y0, x1, y1, action) {
     this.y1 = y1;
     this.action = action;
     this.manger = null;
+    this.button = (button) ? button : undefined;
 }
 /*
     This is a collection of "Touchable" objects. It tracks which one is
@@ -60,19 +62,32 @@ Touchables.prototype.check = function () {
                 this.pressed = null;
                 return;
             }
-
             if (mouse.buttonDown === true && this.hovered === t) {
                 this.pressed = t;
+                if (t.button) {
+                    t.button.active = true
+                    console.log (t.button.active);
+                } else {
+                    t.button.active == false;
+                }                
                 return;
             }
             if (mouse.buttonDown === false && this.pressed === t) {
                 t.action('cool');
                 this.pressed = false;
+                if (t.button){
+                     t.button.active = false;
+                }
             }
         }
     });
     if (!found) {
         this.hovered = false;
         this.pressed = false;
+        if (this.pressed != null) {
+            if (this.pressed.button) {
+                this.pressed.button.active = false;
+            }
+        }
     }
 }
