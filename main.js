@@ -80,10 +80,10 @@ const mainLoop = function (thingToLoop) {
     //delta is how long since last update in milliseconds.
     let delta = time - oldTime;
     oldTime = time;
-    if (game) {
-        if (game.debug) {
-            ctx.fillStyle = '#112';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+    if (game) {        
+        ctx.fillStyle = '#112';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        if (game.debug) {        
             ctx.fillStyle = '#FFF';
             let timestring = time.toString();
             let substring = timestring.substring(6);
