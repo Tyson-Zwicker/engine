@@ -40,13 +40,19 @@
         ]);
         //name, sprites, position, angle, velocity, spin, mass
         const entity1 = new Entity(
-            'Test',
+            'Test1',
             [sprite1, sprite2],
             { x: 0, y: 0 },
             rad(45),
             { x: 1, y: 1 }
             , rad(1), 10);
-
+        const entity2 = new Entity(
+            'Test2',
+            [sprite1, sprite2],
+            { x: -50, y: 400 },
+            rad(270),
+            { x: 3, y: -2 }
+            , rad(0.5), 10);
         const game = {
             run: function (delta) {
                 //scale, rotation, offset
@@ -57,7 +63,9 @@
                 let camera = {x:0,y:0};
                 let scale = 1;
                 entity1.draw (camera, scale);  
-                entity1.move (delta);              
+                entity1.move (delta);       
+                entity2.draw (camera, scale);  
+                entity2.move (delta);        
                 testButton.draw();
                 touchables.check();
             }
