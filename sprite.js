@@ -23,9 +23,10 @@ const SpriteLine = function (x0, y0, x1, y1, color, thickness) {
 /*  SpriteLine function that draws the line, using given color and thickness. */
 SpriteLine.prototype.draw = function (scale, rotation, offset) {
     /*Create a new line, set width and color*/
-    ctx.beginPath();
+  //  ctx.beginPath();
     ctx.strokeStyle = this.color;
     ctx.strokeWidth = this.thickness;
+   
     /*
         Rotate the vectors, convert them to cartesian coordinates
         and translate by offset.
@@ -37,7 +38,7 @@ SpriteLine.prototype.draw = function (scale, rotation, offset) {
     /*draw the line*/
     ctx.moveTo(x0, y0);
     ctx.lineTo(x1, y1);
-    ctx.closePath();
+    //ctx.closePath();
     ctx.stroke();
 }
 /*  Constructor, parameter should be an array of SpriteLines (optional) */
