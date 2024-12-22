@@ -45,7 +45,7 @@
             { x: 0, y: 0 },
             rad(45),
             { x: 1, y: 1 }
-            , 1, 10);
+            , rad(1), 10);
 
         const game = {
             run: function (delta) {
@@ -56,7 +56,8 @@
                 //camera, scale
                 let camera = {x:0,y:0};
                 let scale = 1;
-                entity1.draw (camera, scale);                
+                entity1.draw (camera, scale);  
+                entity1.move (delta);              
                 testButton.draw();
                 touchables.check();
             }
