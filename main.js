@@ -83,14 +83,13 @@ const mainLoop = function (thingToLoop) {
     if (game) {        
         ctx.fillStyle = '#112';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        if (game.debug) {        
+        if (debug) {        
             ctx.fillStyle = '#FFF';
             let timestring = time.toString();
-            let substring = timestring.substring(6);
+            let substring = timestring.substring(7);
             ctx.font = "1em monospace";
             ctx.fillText(substring + '', 30, 30);
         }
-        ctx.stroke();
         if (game.run) {
             game.run(delta);
         } else {
