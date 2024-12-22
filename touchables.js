@@ -66,17 +66,17 @@ Touchables.prototype.check = function () {
                 this.pressed = t;
                 if (t.button) {
                     t.button.active = true
-                    console.log (t.button.active);
+                    
                 } else {
                     t.button.active == false;
-                }                
+                }
                 return;
             }
             if (mouse.buttonDown === false && this.pressed === t) {
                 t.action('cool');
                 this.pressed = false;
-                if (t.button){
-                     t.button.active = false;
+                if (t.button) {
+                    t.button.active = false;
                 }
             }
         }
