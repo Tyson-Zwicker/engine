@@ -1,0 +1,35 @@
+     const sprite1 = new Sprite([
+            new SpriteLine(-100, -100, 100, -100, '#ff0', 2),
+            new SpriteLine(100, -100, 0, 100, '#ff0', 2),
+            new SpriteLine(0, 100, -100, -100, '#ff0', 2)
+        ]);
+        const sprite2 = new Sprite([
+            new SpriteLine(-70, -70, 70, -70, '#f0f', 2),
+            new SpriteLine(70, -70, 0, 90, '#f0f', 2),
+            new SpriteLine(0, 90, -70, -70, '#f0f', 2)
+        ]);
+        const camera = {x:0,y:0};
+        const USSTest = new Entity(
+            'USS Test',
+            [sprite1, sprite2],
+            {x:0,y:0},
+            rad(45),
+            {x:1,y:1}
+            ,1,10);
+        const game = {
+            debug: true,
+            buttons: [
+                new Button('button1', 'Some Text!', 30, 30, 180, 60, 1.1, '#ff0')
+            ],
+            touchables: new Touchables([
+                new Touchable('button1', 30, 30, 180, 60, (msg) => {
+                    console.log(`You pressed it: ${msg}`);
+                })
+            ]),
+            run: function (delta) {
+                USSTest.move();
+                USSTest.draw(camera,1);
+                this.buttons[0].draw();
+                this.touchables.check();
+            }
+        };
