@@ -11,11 +11,11 @@ const Point = function (x, y) {
     this.x = x;
     this.y = y;
 }
-const rad = function (a){
-    return Math.PI*a/180;
+const rad = function (d) {
+    return d * Math.PI / 180;
 }
-const ang = function (r){
-    return a*10/Math.PI;
+const deg = function (r) {
+    return r * 180 / Math.PI;
 }
 const length = function (x, y) {
     return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
