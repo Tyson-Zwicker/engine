@@ -14,8 +14,12 @@ const Entity = function (name, sprites, position, angle, velocity, spin, mass) {
     this.spin = spin;
     this.sprites = sprites;
     this.mass = mass;
+    this.parts = [];
 }
-
+Entity.prototype.addPart = new function (part){
+    this.parts.add (part);
+    part.owner = this;
+}
 Entity.prototype.move = function (delta) {
     this.angle += this.spin;
     this.position.x += (this.velocity.x / delta);
@@ -33,5 +37,8 @@ Entity.prototype.draw = function (camera, scale) {
     };
     this.sprites.forEach ((s)=>{
         s.draw(scale, this.angle, spriteLocation);
+    });
+    this.parts.forEach ((p)=>{
+        p.draw(spriteLocation,scale);
     });
 }
