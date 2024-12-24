@@ -75,7 +75,7 @@ const shapeCanvas = function () {
     The run function is defined by the consumer and added to "game" 
     object in the index.html file.
 */
-const mainLoop = function (thingToLoop) {
+const mainLoop = function () {
     let time = Date.now();
     //delta is how long since last update in milliseconds.
     let delta = time - oldTime;
