@@ -7,9 +7,21 @@ const Vector = function (a, l) {
     this.angle = a;
     this.length = l;
 }
+Vector.prototype.toPoint = function (){
+    return new Point (
+        Math.cos (this.a)*this.l,
+        Math.sin (this.a)*this.l
+    );
+}
 const Point = function (x, y) {
     this.x = x;
     this.y = y;
+}
+Point.prototype.toVector = function () {
+    return new Vector(
+        bearing({ x: 0, y: 0 }, this),
+        length(this.x, this.y)
+    )
 }
 const rad = function (d) {
     return d * Math.PI / 180;
