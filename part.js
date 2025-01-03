@@ -8,10 +8,10 @@ owner           the entity that owns it assigned when added.
 
 const Part = function (sprite, offset, orientation){
     this.sprite = sprite;
-    this.offset = new Vector ();
-    this.orientation = orientation;
+    
+    this.orientation =(orientiation)? orientation:0;
     this.owner = undefined;
-    this.offset = new Point (offset.x, offset.y).toVector();
+    this.offset = (offset)?new Point (offset.x, offset.y).toVector(): new Vector (0,0);
 
 }
 Part.prototype.draw = function(offset,scale){
