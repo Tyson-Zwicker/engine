@@ -26,7 +26,6 @@ SpriteLine.prototype.draw = function (scale, rotation, offset) {
   //  ctx.beginPath();
     ctx.strokeStyle = this.color;
     ctx.strokeWidth = this.thickness;
-   
     /*
         Rotate the vectors, convert them to cartesian coordinates
         and translate by offset.
