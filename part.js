@@ -11,7 +11,6 @@ const Part = function (sprite, offset, orientation){
     this.orientation =(orientation)? orientation:0;
     this.owner = undefined;
     this.offset = (offset)?new Point (offset.x, offset.y).toVector(): new Vector (0,0);
-    //offset is NaN,NaN ... time to write that math.html test page I guess..
 }
 Part.prototype.draw = function(offset,scale){
     console.log (`part offset ${this.offset.angle},${this.offset.length}`);
