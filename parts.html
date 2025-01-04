@@ -60,7 +60,7 @@
             new SpriteLine(-10, -10, 10, -10, '0f0', 1),
             new SpriteLine(10, -10, 10, 10, '0f0', 1),
         ]);
-        const part = new Part(partSprite, 20, 0);
+        const part = new Part(partSprite, {'x':20, 'y':0},0);
         entity1.addPart (part);
         const game = {
             run: function (delta) {
