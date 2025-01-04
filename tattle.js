@@ -48,7 +48,6 @@ Tattler.prototype.tell = function (tale) {
             return;
         }
     }
-
     if (this.tales.length === this.lines) {
         this.tales.pop();
     }
