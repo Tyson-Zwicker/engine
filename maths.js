@@ -9,8 +9,8 @@ const Vector = function (a, l) {
 }
 Vector.prototype.toPoint = function (){
     return new Point (
-        Math.cos (this.a)*this.l,
-        Math.sin (this.a)*this.l
+        Math.cos (this.angle)*this.length,
+        Math.sin (this.angle)*this.length
     );
 }
 const Point = function (x, y) {
