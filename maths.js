@@ -1,4 +1,3 @@
-
 /*This library holds all of the functions that do commonly needed
 mathematic functions, or define the datatype.It wraps a lot of the
 built in Math class.
