@@ -16,9 +16,10 @@ Its a library of javascript code that does a lot of tedious stuff you don't want
   
   * **parts**: A shape attached to an entity defined by both its shape (a sprite) and its offset from the origin of the entity it "belongs to".
   
-  * **tabbler**:  This doesn't work with the canvas, but it will make an HTML table out of a javascript object, or an array, and it can handle objects that contain arrays and/or other objects.  Used for debugging.
+  * **tabbler**:  This doesn't work with the canvas, but it will make an HTML table out of a javascript object, or an array, and it can handle objects that contain arrays and/or other objects, but only upto two dimensions.  It also provides convienent ways to make the table elements so you can always use those, to make higher dimensional tables if you want. Used for debugging, by me, mostly.
 
-  * **tattler**: This will create a read-only text area on the canvas that you can use to display information. Used for debugging.
+  * **tattler**: This will create a read-only text area on the canvas that you can use to display information. Used for debugging. It can group the text sent to it by a "prefix",  so it doesn't spam the limited space, kind of like how the browser console will add a (#) after a log entry if its the same thing as the last one.  Its flexible about how it does this.
   
  **"tag"** Next thing to be added: It will just be a convient to use text box with formatting options.  May end up replacing "button". The idea is to be able to attach them to an entity and have them move around when the entity gets next to the edge of the window, so they're always visible, and centered.  Kind of like "tabbler" but not HTML and made to show on the canvas.. with pretty colors and fonts and stuff.
 
+**"mover"** The other next thing to be added, which will probaby happen when I get sick of dealing with fonts.  Collision dynamics, gravity/wind/current, rudder/steering wheel, that sort of thing.  Physics.
