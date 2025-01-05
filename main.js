@@ -5,8 +5,9 @@
 let canvas = undefined;
 let ctx = undefined;
 let oldTime = Date.now();
+
 /*
-    This is updated when the browser get a chance.  JS get to finish its whole thread 
+    This is updated when the browser gets a chance.  JS gets to finish it's whole thread 
     without interuption before getting updated.  Used in main loop to get reliable/stable
     mouse state.
 */
@@ -59,6 +60,9 @@ const buildPage = function (framerate) {
         };
         mouse.buttonDown = false;
     }
+    //TODO: Add wheel support, change the "zoom" level.
+    //Also where is "zoom" actually defined... or is it just hard coded as 1 everywhere?
+    
     // Fix canvas size and run first main loop.
     shapeCanvas();
     mainLoop();
@@ -70,6 +74,7 @@ const shapeCanvas = function () {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 }
+window.addEventListener("resize", shapeCanvas);
 /*
     This runs repeatedly until the web page is closed.
     The run function is defined by the consumer and added to "game" 
@@ -99,5 +104,5 @@ const mainLoop = function () {
         console.log('waiting for game object to show up...');
     }
 }
-window.addEventListener("resize", shapeCanvas);
+
 
