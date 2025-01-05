@@ -4,22 +4,21 @@ offset         given as a point, relative to the center of the entity that owns 
                but stored as a vector for drawing purposes. Optional (default {0,0})
 orientation    initial value relative to entity that owns it. Optional (default 0).
 owner           the entity that owns it assigned when added.
-*/ 
+*/
 
-const Part = function (sprite, offset, orientation){
+const Part = function (sprite, offset, orientation) {
     this.sprite = sprite;
-    this.orientation =(orientation)? orientation:0;
+    this.orientation = (orientation) ? orientation : 0;
     this.owner = undefined;
-    this.offset = (offset)?new Point (offset.x, offset.y).toVector(): new Vector (0,0);
+    this.offset = (offset) ? new Point(offset.x, offset.y).toVector() : new Vector(0, 0);
 }
-Part.prototype.draw = function(offset,scale){
-    console.log (`part offset ${this.offset.angle},${this.offset.length}`);
-   
+//offset parameter is displacement from upper left corner of the screen/
+//the "camera translation".
+Part.prototype.draw = function (offset, scale) {
     let partLocation = {
-        x : offset.x + cos (this.offset.angle) * this.offset.length/scale,
-        y : offset.y + sin (this.offset.angle) * this.offset.length/scale
+        x: offset.x + cos(this.offset.angle+this.owner.angle) * this.offset.length / scale,
+        y: offset.y + sin(this.offset.angle+this.owner.angle) * this.offset.length / scale
     };
     let orientation = this.orientation + this.owner.angle;
-    console.log (`part ${partLocation.x},${partLocation.y}, O=${orientation}`);
-    this.sprite.draw (scale,orientation,partLocation);
+    this.sprite.draw(scale, orientation, partLocation);
 }
