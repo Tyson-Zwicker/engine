@@ -39,7 +39,6 @@ Entity.prototype.draw = function (camera, scale) {
         s.draw(scale, this.angle, spriteLocation);
     });
     this.parts.forEach((p) => {
-        console.log (spriteLocation, scale);
         p.draw(spriteLocation, scale);
     });
 }
