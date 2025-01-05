@@ -4,7 +4,7 @@ const Tabler = function () {
 //innerObjectMap:
 //If you find one of the properties is a object I SHOULD also contain it.  The property name
 //will be the Key and the Value is the list of properties you should show of that object.
-Tabler.prototype.ComplexobjectListToHtmlTable = function (title, objects, properties, innerObjectMap) {
+Tabler.prototype.ComplexObjectListToHtmlTable = function (title, objects, properties, innerObjectMap) {
     let tableElement = this.getEmptyTableElement(title);
     let rowElement = this.getEmptyRowElement();
     properties.forEach(propertyName => {
@@ -18,20 +18,19 @@ Tabler.prototype.ComplexobjectListToHtmlTable = function (title, objects, proper
         properties.forEach(property => {
             let dataElement = this.getEmptyDataElement();
             if (Array.isArray(object[property])) {
-                //Its an array..
-                console.log ('found an array');                
+                //Its an array..            
                 dataElement.appendChild(this.arrayToHtmlTable(undefined, object[property]));
             } else if (
                 typeof object[property] == 'string' ||
                 typeof object[property] == 'number' ||
                 typeof object[property] == 'boolean') {
-                    let value = object[property];
-                    console.log (`found a primitive: ${value}`);
+                let value = object[property];
                 dataElement.innerText = value;
             } else if (typeof object[property] == 'object') {
                 //It's an object..
                 //so it SHOULD be a key in here..
                 let innerTablePropertyList = innerObjectMap.get(property);
+                if (!innerTablePropertyList) throw new Error ('property missing corresponding innerObjectMap entry.');
                 let innerTable = this.objectListToHtmlTable('', [object[property]], innerTablePropertyList);
                 let innerTableElement = innerTable;
                 dataElement = this.getEmptyDataElement();
