@@ -6,10 +6,10 @@ const Vector = function (a, l) {
     this.angle = a;
     this.length = l;
 }
-Vector.prototype.toPoint = function (){
-    return new Point (
-        Math.cos (this.angle)*this.length,
-        Math.sin (this.angle)*this.length
+Vector.prototype.toPoint = function () {
+    return new Point(
+        Math.cos(this.angle) * this.length,
+        Math.sin(this.angle) * this.length
     );
 }
 const Point = function (x, y) {
@@ -21,6 +21,9 @@ Point.prototype.toVector = function () {
         bearing({ x: 0, y: 0 }, this),
         length(this.x, this.y)
     )
+}
+const rnd = function (min, max) {
+    return Math.random() * (max - min) + min;
 }
 const rad = function (d) {
     return d * Math.PI / 180;
