@@ -1,0 +1,38 @@
+<html>
+
+<head>
+    <script src="./maths.js"></script>
+    <script src="./main.js"></script>
+    <script src="./tattle.js"></script>
+    <script src="./sprite.js"></script>
+    <script src="./button.js"></script>
+    <script src="./touchables.js"></script>
+    <script src="./entity.js"></script>
+</head>
+
+<body onload="buildPage(33)" style="border:none">
+    <script>
+        // this is where you use the tools to make your program
+        const debug = true;
+        
+        const testButton = new Button(
+            'button1', 'Some Text!', 30, 30, 180, 60, 1.1, '#ff0','#00f'
+        );
+        const touchables = new Touchables([
+            new Touchable(
+                'button1', 30, 30, 180, 60,
+                (msg) => {
+                    console.log(`You pressed it: ${msg}`);
+                },
+                testButton)
+        ]);
+        const program = {
+            run: function (delta) {
+                testButton.draw();
+                touchables.check();
+            }
+        };
+    </script>
+</body>
+
+</html>
