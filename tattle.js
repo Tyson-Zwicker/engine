@@ -10,7 +10,7 @@ A Tale is the debugging message, given to the tattler.
 */
 const Tale = function (prefix, msg, color) {
     this.count = 1;
-    this.prefix = prefix;
+    this.prefix = ( prefix)? prefix : '';
     this.message = msg;
     this.color = (color) ? color : `#f0f`;
 }
@@ -28,6 +28,7 @@ Tattler.prototype.tellGroup = function (tale) {
         if (t.prefix === tale.prefix) {
             t.count++;
             found = true;
+            t.message = tale.message;
         }
     });
     if (!found) {
