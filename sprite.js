@@ -39,7 +39,7 @@ SpriteLine.prototype.draw = function (scale, rotation, offset) {
     ctx.lineTo(x1, y1);
     ctx.closePath();
     ctx.stroke();
-    if (debug){
+    /*
         // draw a big white line from the origin to the start point
         //so its easier to eye-ball stuff.
         ctx.beginPath();
@@ -48,7 +48,7 @@ SpriteLine.prototype.draw = function (scale, rotation, offset) {
         ctx.lineTo (x0,y0);
         ctx.closePath();
         ctx.stroke();
-    }
+    */
 }
 /*  Constructor, parameter should be an array of SpriteLines (optional) */
 const Sprite = function (lines) {
