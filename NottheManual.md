@@ -208,5 +208,10 @@ Let's talk about the *camera*, since it was ignored in that last section. *It is
 
 **Zoom/Scale is currently its own thing: But it will become part of camera in a very much planned update.**
 
-##Parts
+##  Parts
 I just added these, they need expanding up.  For the moment, you can slap as many as you want on an entity, they contain a single sprite and they know which why they are looking *relative to their "owner"*.
+
+##  Touchables and Buttons
+These have been aroound for a while, and they are so just "Button" it makes me sick. I'm just going to turn them into Button this week.  Changes TBA... that said I still need a "Touchables" because I want to  stick on entities for reasons I'll get into later.
+
+This has been Not the Manul.
