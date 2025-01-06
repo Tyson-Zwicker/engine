@@ -2,6 +2,8 @@
 mathematic functions, or define the datatype.It wraps a lot of the
 built in Math class.
 */
+const PI =  Math.PI;
+const TAU = Math.PI*2;
 const Vector = function (a, l) {
     this.angle = a;
     this.length = l;
