@@ -2,7 +2,7 @@
 
 **There is a manual, I am still writing that.  This document is more a walk through or quick tutorial. I attempt to be detailed, and the information is as true as I can make it (the code is faithfully copied from a working/compiler-happy page)- but it not as concise as I would choose it to be.**
 
-*This assumes you have a web server and a web browser- It is a JavaScript project, afterall. If not, download VSCode, YouTube how to run an extension called LiveServer, and use it. Or wait for that manual I allude to.*
+*This assumes you have a web server and a web browser- It is a JavaScript project, afterall. If not, download VSCode, YouTube how to run an extension called LiveServer, and use it. Or do it your own way, Or wait for that manual I allude to.*
 
 pull git@github.com:Tyson-Zwicker/engine.git for the files.
 
@@ -54,17 +54,19 @@ By envoking buildPage, you know have access to the follow Global Level Propertie
 # The Mouse
 The Mouse bears some talking about because you're going to need it a lot.  So here is how it works:  Once (And Only Once) per javascript's turn to get a slice of a the processor and pretend to run the show it gets to do event collection.  When that happens the "mouse" object, which is global just like "canvas" and "ctx" and "program", gets updates (if anything happened).  It records the place and time of the three events it understands, and the last know status of the left mouse button.
 
-**mouse**
-    
+**The Mouse**
 
-  * **move.when**:  timestamp of the last time the mouse moved.
-  *  **move.where**: is a point (x,y) where the last known mouse coordinates.
-  *  **down.when**:  timestamp of the last time the mouse's left button was pressed.
-  *  **down.where**: is a point (x,y) where the mouse was last located when the mouse button was pressed.
-  *  **up.when**:    timestamp ofthe last time the left mouse button was released.
-  *  **up.where**:   is a point (x,y) where them ouse was last located when the mouse button was released.
+Information about what the mouse was been up to is available by the appropriately named "mouse". It is a global constant.
 
-There is nothing more to the mouse.  The information is always there.
+  * **mouse.move.when**:  timestamp of the last time the mouse moved.
+  *  **mouse.move.where**: is a point (x,y) where the last known mouse coordinates.
+  *  **mouse.down.when**:  timestamp of the last time the mouse's left button was pressed.
+  *  **mouse.down.where**: is a point (x,y) where the mouse was last located when the mouse button was pressed.
+  *  **mouse.up.when**:    timestamp ofthe last time the left mouse button was released.
+  *  **mouse.up.where**:   is a point (x,y) where them ouse was last located when the mouse button was released.
+  *  **mouse.mouseDown**:   true ifleft mouse button pressed down, false if not.
+
+There is nothing more to the mouse.  The information is always there.  Other things, like "Button", use it a lot.
 
 # Adding a Tattle
 
@@ -78,21 +80,19 @@ The following code will add a Tattle to the lower right hand corner of the scree
             tattler = new Tattler ('1em monospace', 10, 300);
             const program = {
                 run: function (delta) { 
-                    //This is the "main loop" of your program.
-                    console.log (mouse);
-                    let tale = new Tale (`mouse @`,`(${mouse.move.where.x},${mouse.move.where.y}`,`#ff0`);
+                    let tale = new Tale (`mouse @`,`(${mouse.move.where.x},${mouse.move.where.y})`,`#ff0`);
                     tattler.tellGroup (tale);
                     tale = new Tale ('button down',mouse.buttonDown,'#fff');
                     tattler.tellGroup (tale);
-                    tale = new Tale ('down @',`${mouse.down.where.x},${mouse.down.where.y}`,'#ff0'); 
+                    tale = new Tale ('down @',(`${mouse.down.where.x},${mouse.down.where.y})`,'#ff0'); 
                     tattler.tellGroup (tale);
-                    tale = new Tale ('up @',`${mouse.up.where.x},${mouse.up.where.y}`,'#0f0'); 
+                    tale = new Tale ('up @',`$({mouse.up.where.x},${mouse.up.where.y})`,'#0f0'); 
                     tattler.tellGroup (tale);
                     tattler.tattle();
                 }
             };
         </script>
-So what does all this nonsense do!?  
+So what does all this nonsense do!?  It tells the tattler three "tales" about the mouse and the tales get told at the end.
 
 **Tale**
 
@@ -100,12 +100,15 @@ So what does all this nonsense do!?
   * message - the message you want to show on the Tattler
   * color - the color you want that message to be shown in.
 
-Tales are stories you want to be shown.  The come with an prefix, which can help them to group together things that similar, or you can ignore the prefix and it will just scroll your message with trying, this is folowed by a message you want shown and optional color (defaults to white).
+Tales are stories you want to be shown.  They come with an prefix, which can help them to group together things that similar, or you can ignore the prefix and it will just scroll your messages. Next follows a message you want shown and finally, optional color (defaults to white).
 
 **Tattler**
 
 This is the that collects all the Tales and, when asked, draw them all. It handles culling messages that have scrolled out of the viewable area, clipping text that's to wide, and actually drawing the rectangular background and the words.
 You don't have to do anything special with it, just tell it to Tattle(), and it will.
+
+**Important note**: Its is best to collect tales through out a program cycle and tattle *only once* at the *end* of the loop once everything else has
+finished drawing.
 
 *So that's the Tattler, sometimes useful,entirely optional.*
 
@@ -211,7 +214,37 @@ Let's talk about the *camera*, since it was ignored in that last section. *It is
 ##  Parts
 I just added these, they need expanding up.  For the moment, you can slap as many as you want on an entity, they contain a single sprite and they know which why they are looking *relative to their "owner"*.
 
-##  Touchables and Buttons
-These have been aroound for a while, and they are so just "Button" it makes me sick. I'm just going to turn them into Button this week.  Changes TBA... that said I still need a "Touchables" because I want to  stick on entities for reasons I'll get into later.
+##  Buttons
+Buttons are colored rectangles, typically adorned with a word or two, that can be "clicked" by the mouse.  You define them using a constructor. The parameters are:
 
-This has been Not the Manul.
+* **name** - (its an ID, you don't need to worry about it at the moment- nothing bad will happen if you leave it blank, but it should be a string.)
+* **label** - This is the text it will draw on the button.
+*  x0,y0,x1,y1 - four numbers (two sets of coordinates) that define the upper left and lower right boundaries of the button.
+*  **fontsize** - At the momemt monospace is the only font you get.  The font# the size you get, in "em"'s.  Typically 16pt is 1 em but it varies by device and application.
+*  **color, bgcolor** - The normal sets of colors to draw the button.  The text gets the same color as the border.
+*  **highlightColor, highlighBGColor** - The sets of colors to draw the button when its hovered over wit the mouse.  Clicking on the button will invert these two colors.
+* **action** - a function that will run if this button is clicked.
+
+Example Button:
+
+    const button1 = new Button(
+    'button1',
+    'Button One!',
+    30, 40, 180, 70,
+    1.1,
+    '#700', '#aa0',
+    '#00f', '#0ff',
+    action1);
+
+Now, this button will do exactly *nothing* without something to tell it what to do. Which brings us to the...
+
+# Button Manager
+
+The ButtonManager is so named because it manages all the buttons.  It checks what the mouse has been doing, decides how the buttons should feel about that, and draws all the buttons accordingly.  You give it buttons to manage either when it is constructed (as an array of buttons) or you can use the "addButton()" method:
+
+
+
+    const ButtonManager = new buttonManager 9[button1, button2, button3];
+buttonManager.addButton (theButtonIForgot);
+
+This has been Not the Manual.
