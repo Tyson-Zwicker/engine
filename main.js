@@ -77,7 +77,7 @@ const shapeCanvas = function () {
 window.addEventListener("resize", shapeCanvas);
 /*
     This runs repeatedly until the web page is closed.
-    The run function is defined by the consumer and added to "game" 
+    The run function is defined by the consumer and added to "program" 
     object in the index.html file.
 */
 const mainLoop = function () {
@@ -85,23 +85,24 @@ const mainLoop = function () {
     //delta is how long since last update in milliseconds.
     let delta = time - oldTime;
     oldTime = time;
-    if (game) {        
+    if (program) {        
         ctx.fillStyle = '#112';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        if (debug) {        
+        /// Take this away when you feel safe to do soo        
+        do{
             ctx.fillStyle = '#FFF';
             let timestring = time.toString();
             let substring = timestring.substring(7);
             ctx.font = "1em monospace";
             ctx.fillText(substring + '', 30, 30);
-        }
-        if (game.run) {
-            game.run(delta);
+        } while (false); //<-- made it you do it once.
+        if (program.run) {
+            program.run(delta);
         } else {
             console.log('Nothing to loop.. yet?');
         }
     } else {
-        console.log('waiting for game object to show up...');
+        console.log('waiting for program to show up...');
     }
 }
 
