@@ -38,7 +38,6 @@ Button.prototype.draw = function () {
         ctx.fillStyle = this.bgColor;
     } else {
         ctx.fillStyle = this.color
-
     }
     ctx.fillText(this.text + '*', tx, ty);
 }
