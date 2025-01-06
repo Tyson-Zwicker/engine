@@ -1,18 +1,7 @@
 /*
-    Still in testing
-*/
-
-/*
     This defines a Touchable- anarea of the screen that can be interacted with the 
-    mouse, and how to react to it hovering, touching (mouse down) and clicking (mouse up)
-    
+    mouse, and how to react to it hovering, touching (mouse down) and clicking (mouse up)  
     The mouse is defined and wired to browser events in window.js
-*/
-
-/*  
-    Constructor for the "thing that can be touched by the mouse". 
-    It Takes a name, a rectangle, and the action (function) to call if its clicked.
-    The button is optional, you can make a touchable that has no graphic.
 */
 const Touchable = function (name, x0, y0, x1, y1, action, button) {
     this.name = name;
@@ -49,7 +38,6 @@ Touchables.prototype.add = function (touchable) {
 /*
     Checks to see what the mouse did and if it hovered, pressed, clicked or vacated
     a "Touchable" object in the collection
-  
     It will fire the "Touchable" objects action if it is clicked.
 */
 Touchables.prototype.check = function () {
@@ -66,7 +54,6 @@ Touchables.prototype.check = function () {
                 this.pressed = t;
                 if (t.button) {
                     t.button.active = true
-                    
                 } else {
                     t.button.active == false;
                 }
