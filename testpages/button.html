@@ -3,34 +3,42 @@
 <head>
     <script src=".././maths.js"></script>
     <script src=".././main.js"></script>
-    <script src=".././tattle.js"></script>
-    <script src=".././sprite.js"></script>
     <script src=".././button.js"></script>
-    <script src=".././touchables.js"></script>
-    <script src=".././part.js"></script>
-    <script src=".././entity.js"></script>
+    <script src=".././tattle.js"></script>
+    
 </head>
 
 <body onload="buildPage(33)" style="border:none">
     <script>
-        // this is where you use the tools to make your program
-        const debug = true;
-        
-        const testButton = new Button(
-            'button1', 'Some Text!', 30, 30, 180, 60, 1.1, '#ff0','#00f'
+        const tattler = new Tattler('1em monospace',10,300);        
+        function action1() { tattler.tellGroup (
+           new Tale ('ACTION1','**button1')
+        ) };
+        function action2() { tattler.tellGroup (
+            new Tale ('ACTION2','**button2')
+        ) };
+        const button1 = new Button(
+            'button1',
+            'Button One!',
+            30, 40, 180, 70, 1.1,
+            '#700', '#aa0',
+            '#00f', '#0ff',
+            action1
         );
-        const touchables = new Touchables([
-            new Touchable(
-                'button1', 30, 30, 180, 60,
-                (msg) => {
-                    console.log(`You pressed it: ${msg}`);
-                },
-                testButton)
-        ]);
+        const button2 = new Button(
+            'button2',
+            'Button Two?',
+            30, 75, 180, 105, 1.1,
+            '#070', '#0aa',
+            '#0f0', '#f0f',
+            action2
+        );
+        const buttonManager = new ButtonManager ([button1,button2]);
         const program = {
             run: function (delta) {
-                testButton.draw();
-                touchables.check();
+                buttonManager.check();
+                buttonManager.draw();
+                tattler.tattle();
             }
         };
     </script>
