@@ -25,15 +25,18 @@ Entity.prototype.move = function (delta) {
     this.position.x += (this.velocity.x / delta);
     this.position.y += (this.velocity.y / delta);
 }
-
+Entity.prototype.spin = function (force) {
+    this.velocity.x += cos(vector.a) * vector.l / this.mass;
+    this.velocity.y += sin(vector.a) * vector.l / this.mass;
+}
 Entity.prototype.push = function (vector) {
     this.velocity.x += cos(vector.a) * vector.l / this.mass;
     this.velocity.y += sin(vector.a) * vector.l / this.mass;
 }
 Entity.prototype.draw = function (camera, scale) {
     spriteLocation = {
-        x: (this.position.x - camera.x) / scale + canvas.width / 2,
-        y: (this.position.y - camera.y) / scale + canvas.height / 2
+        x: (this.position.x - camera.x) * scale + canvas.width / 2,
+        y: (this.position.y - camera.y) * scale + canvas.height / 2
     };
     this.sprites.forEach((s) => {
         s.draw(scale, this.angle, spriteLocation);
