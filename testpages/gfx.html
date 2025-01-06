@@ -1,0 +1,86 @@
+<html>
+
+<head>
+    <script src=".././maths.js"></script>
+    <script src=".././main.js"></script>
+    <script src=".././button.js"></script>
+    <script src=".././tattle.js"></script>
+
+
+</head>
+
+<body onload="buildPage(100)" style="border:none">
+    <script>
+        const drawBox = function (x0, y0, x1, y1, color, fill) {
+            ctx.beginPath();
+            if (fill) {
+                ctx.fillStyle = color;
+                ctx.fillRect(x0, y0, x1 - x0, y1 - y0);
+            } else {
+                ctx.strokeWidth = 1;
+                ctx.strokeStyle = color;
+                ctx.strokeRect(x0, y0, x1 - x0, y1 - y0);
+                console.log('drawing');
+            }
+            ctx.closePath();
+        }
+        const drawArc = function (x, y, r, a0, a1, color) {
+            ctx.beginPath();
+            ctx.strokeWidth = 1;
+            ctx.strokeStyle = color;
+            ctx.arc(x, y, r, a0, a1);
+            ctx.stroke();
+
+        }
+        const drawCircle = function (x, y, r, color, fill) {
+            drawArc(x, y, r, 0, TAU, color);
+        }
+        const drawPie = function (x, y, r, a0, a1, color, fill) {
+            let x0 = x + cos(a0) * r;
+            let y0 = y + sin(a0) * r;
+            let x1 = x + cos(a1) * r;
+            let y1 = y + sin(a1) * r;
+            ctx.beginPath();
+            ctx.strokeWidth = 1;
+            ctx.strokeStyle = color;
+            ctx.moveTo(x, y);
+            ctx.lineTo(x0, y0);
+            drawArc(x, y, r, a0, a1);
+            ctx.lineTo(x, y);
+            ctx.closePath();
+            ctx.stroke();
+            if (fill) {
+                ctx.fillStyle = color;
+                ctx.fill();
+            }
+        }
+        const drawText = function (x0, y0, x1, y1, text, size, color) {
+            
+            drawBox(x0, y0, x1, y1, '#444');
+            ctx.font = `${size}em monospace`;
+            let metic = ctx.measureText (text);
+            let width = metric.width;
+            let descent = metrics.fontFoundingBoxDescent;
+            let ascent = metrics.fontBoundBoxAscent;
+            let maybeHeight = descent + ascent;
+            console.log (`width ${width} descent ${descent} accent ${ascent} height? ${maybeHeight}`);
+            ctx.fillStyle = color;
+            ctx.fillText(text, x0, y1);
+            //drawBox(x0, y0, x1, y1, '#444'); <-this cuts off the last pixel!!
+        }
+        const program = {
+            run: function (delta) {
+                drawBox(50, 50, 500, 500, '#a0a', false);
+                drawCircle(275, 275, 100, '#0f0');
+                drawPie(275, 275, 75, 0.3, 2.1, '#306', true);
+                drawBox(75, 75, 475, 475, '#ff0', false);
+                drawArc(275, 275, 125, 0.1, 1.97, '#f00');
+                drawArc(275, 275, 125, 1.97, 3.37, '#0ff');
+                drawPie(275, 275, 125, 3.37, TAU, '#062', true);
+                drawText(75, 600, 550, 630, 'yo My Orange Let go my jello.', 2, '#fff');
+            }
+        };
+
+
+    </script>
+</body>
