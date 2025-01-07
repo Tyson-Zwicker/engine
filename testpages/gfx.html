@@ -4,73 +4,11 @@
     <script src=".././maths.js"></script>
     <script src=".././main.js"></script>
     <script src=".././button.js"></script>
-    <script src=".././tattle.js"></script>
+    <script src=".././gfx.js"></script>
 </head>
 
 <body onload="buildPage(30)" style="border:none">
-    <script>
-        const tattler = new Tattler('1em monospace', 10, 300);
-        const drawBox = function (x0, y0, x1, y1, color, fill) {
-            ctx.beginPath();
-            if (fill) {
-                ctx.fillStyle = color;
-                ctx.fillRect(x0, y0, x1 - x0, y1 - y0);
-            } else {
-                ctx.strokeWidth = 1;
-                ctx.strokeStyle = color;
-                ctx.strokeRect(x0, y0, x1 - x0, y1 - y0);
-            }
-            ctx.closePath();
-        }
-        const drawArc = function (x, y, r, a0, a1, color) {
-            ctx.beginPath();
-            ctx.strokeWidth = 1;
-            ctx.strokeStyle = color;
-            ctx.arc(x, y, r, a0, a1);
-            ctx.stroke();
-        }
-        const drawCircle = function (x, y, r, color, fill) {
-            drawArc(x, y, r, 0, TAU, color);
-        }
-        const drawPie = function (x, y, r, a0, a1, color, fill) {
-            let x0 = x + cos(a0) * r;
-            let y0 = y + sin(a0) * r;
-            let x1 = x + cos(a1) * r;
-            let y1 = y + sin(a1) * r;
-            ctx.beginPath();
-            ctx.strokeWidth = 1;
-            ctx.strokeStyle = color;
-            ctx.moveTo(x, y);
-            ctx.lineTo(x0, y0);
-            drawArc(x, y, r, a0, a1);
-            ctx.lineTo(x, y);
-            ctx.closePath();
-            ctx.stroke();
-            if (fill) {
-                ctx.fillStyle = color;
-                ctx.fill();
-            }
-        }
-        const drawText = function (x0, y0, x1, y1, text, size, color) {
-            drawBox(x0, y0, x1, y1, '#444');
-            ctx.font = `${size}em monospace`;
-            let metrics = ctx.measureText(text);
-            let width = metrics.width;
-            let descent = metrics.fontBoundingBoxDescent;
-            let ascent = metrics.fontBoundingBoxAscent;
-            let height = descent + ascent;
-            let xa = x0+((x1 - x0) - width) / 2;
-            let properBaseline = y1 - ((y1-y0)/2 + (ascent+height))/2;
-            ctx.fillStyle = "#fff";
-            ctx.fillText(text,xa, properBaseline);
-        }
-        const drawPixel = function (x,y,color){
-            let previousSize = ctx.strokeWidth;
-            let strokeStyle =1;
-            drawBox (x-0.5,y-0.5,x+0.5,y+0.5,color);
-            ctx.strokeWidth = previousSize;
-        }
-        //font, lines, width
+    <script>        
         const program = {
             run: function (delta) {
                 drawBox(50, 50, 500, 500, '#a0a', false);
@@ -80,14 +18,15 @@
                 drawArc(275, 275, 125, 0.1, 1.97, '#f00');
                 drawArc(275, 275, 125, 1.97, 3.37, '#0ff');
                 drawPie(275, 275, 125, 3.37, TAU, '#041', true);
-                drawText(75, 550, 550, 660, 'yo My Orange Let go my jello.', 2, '#fff');
-                
-                for (let i =0;i<500;i++){
-                    drawPixel (rnd (100,600),rnd(100,600),'#0ff');
+                for (let i = 0; i < 500; i++) {
+                    drawPixel(rnd(250, 300), rnd(250, 300), '#0ff');
                 }
-                
-                console.log(tattler);
-                tattler.tattle();
+                drawLine(50, 600, 500, 600, 1, '#00f');
+                drawLine(50, 650, 500, 650, 1, '#00f');
+                drawLine(275, 550, 275, 800, 1, '#f00');
+                drawTextRight (275,600,'Heyya',2);
+                drawTextLeft  (275,600,'World',2);
+                drawTextCenter(275,650,'Surly this just Works.',2);
             }
         };
 
