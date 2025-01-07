@@ -11,39 +11,50 @@
     <script>
         const Particle = function (x, y, life, r, g, b) {
             this.position = position;
-            this.velcoty = velocity;
+            this.velocity = velocity;
             this.lifespan = life;
-            this.redFade = r / life;
-            this.blueFade = b / life
-            this.greenFade = g / life;
-            this.red = red;
-            this.green = green;
-            this.blue = blue;
+            this.red = parseInt(red, 16);
+            this.green = parseInt(red / 16);
+            this.blue = parseInt(blue / 16);
+            this.redFade = this.red / life;
+            this.blueFade = this.blue / life
+            this.greenFade = this.green / life;
+            this.manager = null;
         }
         Particle.prototype.move = function (delta) {
-            this.position.x += this.velocity.x/delta;
-            this.position.y += this.velocity.y/delta;
-            this.red -= this.redFade/delta;
-            this.blue -= this.blueFade/delta;
-            this.green -= this.greenFade/delta;
-            if (this.red===0) this.red =0;
-            if (this.green===0) this.green =0;
-            if (this.blue===0) this.blue =0;
+            this.position.x += this.velocity.x / delta;
+            this.position.y += this.velocity.y / delta;
+            this.red -= this.redFade / delta;
+            this.blue -= this.blueFade / delta;
+            this.green -= this.greenFade / delta;
+            if (this.red === 0) this.red = 0;
+            if (this.green === 0) this.green = 0;
+            if (this.blue === 0) this.blue = 0;
             this.lifespan--;
         }
-
-        const ParticalManager = function ParticleManager(){
+        Particle.prototype.draw= function (camera){
+            let x = this.x - camera.x;
+            let y = this.y - camera.y;
+            let color = `#${this.red.toString(16)}${this.green.toString(16)}${this.blue.toString(16)}`;
+            drawPixel (x,y,color);
+        }
+        const ParticalManager = function ParticleManager() {
             this.particles = [];
         }
-        //Sprays anumber of them between a0 and 1 degress, dying off between midlife and maxlife for duration seconds.
-        ParticleManager.prototype.addBurst (number, color, minlife,maxlife, a0,a1, duration){
+        //Sprays anumber of them between a0 and a1 degress, dying off between midlife and maxlife for duration seconds.
+        //r,g,b are 0-255 
+        ParticleManager.prototype.addBurst = function (number, r, g, b, minlife, maxlife, a0, a1, duration) {
+            for (let i = 0; i < number; i++) {
 
+            }
         }
         ParticleManager.prototype.process = function () {
             let alive = [];
             this.particles.forEach(particle => {
                 particle.move();
-                if (particle.lifespan>0) {
+                if (particle.lifespan > 0) {
+                    particle.draw();
+                    particle.move();
                     alive.push (particle);
                 }
             });
@@ -51,5 +62,4 @@
         }
     </script>
 </body>
-
 </html>
