@@ -9,7 +9,7 @@
 
 <body onload="buildPage(33)" style="border:none">
     <script>
-        const Particle = function (x, y, life, r, g, b) {
+        const Particle = function (position, velocity, life, r, g, b) {
             this.position = position;
             this.velocity = velocity;
             this.lifespan = life;
@@ -41,11 +41,11 @@
         const ParticalManager = function ParticleManager() {
             this.particles = [];
         }
-        //Sprays anumber of them between a0 and a1 degress, dying off between midlife and maxlife for duration seconds.
-        //r,g,b are 0-255 
-        ParticleManager.prototype.addBurst = function (number, r, g, b, minlife, maxlife, a0, a1, duration) {
+        //particle : position, velocity, life, r, g, b
+        ParticleManager.prototype.addBurst = function (x,y,number, r, g, b, minlife, maxlife, a0, a1, magnitude) {
             for (let i = 0; i < number; i++) {
-
+                let velocity = new Vector (rnd (a0,a1),rnd (magnitude/2));
+                let particle = new Particle (position,velocity,rnd (minlife, maxlife),r,g,b);
             }
         }
         ParticleManager.prototype.process = function () {
