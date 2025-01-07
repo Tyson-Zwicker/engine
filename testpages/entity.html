@@ -5,8 +5,6 @@
     <script src=".././main.js"></script>
     <script src=".././tattle.js"></script>
     <script src=".././sprite.js"></script>
-    <script src=".././button.js"></script>
-    <script src=".././touchables.js"></script>
     <script src=".././part.js"></script>
     <script src=".././entity.js"></script>
 </head>
@@ -17,14 +15,6 @@
         const testButton = new Button(
             'button1', 'Some Text!', 30, 30, 180, 60, 1.1, '#ff0', '#00f'
         );
-        const touchables = new Touchables([
-            new Touchable(
-                'button1', 30, 30, 180, 60,
-                (msg) => {
-                    console.log(`You pressed it: ${msg}`);
-                },
-                testButton)
-        ]);
         const sprite1 = new Sprite([
             new SpriteLine(0, -150, 100, 100, '#ff0', 3),
             new SpriteLine(100, 100, -100, 100, '#ff0', 3),
@@ -50,30 +40,29 @@
             rad(270),
             { x: 3, y: -2 }
             , rad(0.5), 10);
-            
-            const entity3 = new Entity(
+
+        const entity3 = new Entity(
             'Test3',
             [sprite1, sprite2],
             { x: 0, y: 0 },
-            rad(rnd (0,360)),
+            rad(rnd(0, 360)),
             { x: 3, y: -2 }
             , rad(0.9), 10);
-        
-            const program = {
+
+        const program = {
             run: function (delta) {
                 //scale, rotation, offset
                 //sprite1.draw(1, rad(45), { x: 400, y: 400 });
                 //sprite2.draw(1, rad(45), { x: 400, y: 400 });
-                
+
                 //camera, scale
-                let camera = {x:0,y:0};
+                let camera = { x: 0, y: 0 };
                 let scale = 0.3;
-                entity1.draw (camera, scale);  
-                entity1.move (delta);       
-                entity2.draw (camera, scale);  
-                entity2.move (delta);        
+                entity1.draw(camera, scale);
+                entity1.move(delta);
+                entity2.draw(camera, scale);
+                entity2.move(delta);
                 testButton.draw();
-                touchables.check();
             }
         };
     </script>
