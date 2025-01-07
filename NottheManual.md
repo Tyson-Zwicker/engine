@@ -64,7 +64,7 @@ Information about what the mouse was been up to is available by the appropriatel
   *  **mouse.down.where**: is a point (x,y) where the mouse was last located when the mouse button was pressed.
   *  **mouse.up.when**:    timestamp ofthe last time the left mouse button was released.
   *  **mouse.up.where**:   is a point (x,y) where them ouse was last located when the mouse button was released.
-  *  **mouse.mouseDown**:   true ifleft mouse button pressed down, false if not.
+  *  **mouse.buttonDown**:   true ifleft mouse button pressed down, false if not.
 
 There is nothing more to the mouse.  The information is always there.  Other things, like "Button", use it a lot.
 
