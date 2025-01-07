@@ -11,13 +11,12 @@
         <script src=".././entity.js"></script>
     </head>
     <body onload="buildPage(33)" style="border:none">
-        <scriptt>
+        <script>
             //Define stuff you want your main loop to have access to here.
             tattler = new Tattler ('1em monospace', 10, 300);
             const program = {
                 run: function (delta) { 
-                    //This is the "main loop" of your program.
-                    console.log (mouse);
+                    //This is the "main loop" of your program..
                     let tale = new Tale (`mouse @`,`(${mouse.move.where.x},${mouse.move.where.y}`,`#ff0`);
                     tattler.tellGroup (tale);
                     tale = new Tale ('button down',mouse.buttonDown,'#fff');
