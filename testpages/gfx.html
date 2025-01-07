@@ -5,12 +5,11 @@
     <script src=".././main.js"></script>
     <script src=".././button.js"></script>
     <script src=".././tattle.js"></script>
-
-
 </head>
 
-<body onload="buildPage(100)" style="border:none">
+<body onload="buildPage(33)" style="border:none">
     <script>
+        const tattler = new Tattler('1em monospace', 10, 300);
         const drawBox = function (x0, y0, x1, y1, color, fill) {
             ctx.beginPath();
             if (fill) {
@@ -20,7 +19,6 @@
                 ctx.strokeWidth = 1;
                 ctx.strokeStyle = color;
                 ctx.strokeRect(x0, y0, x1 - x0, y1 - y0);
-                console.log('drawing');
             }
             ctx.closePath();
         }
@@ -30,7 +28,6 @@
             ctx.strokeStyle = color;
             ctx.arc(x, y, r, a0, a1);
             ctx.stroke();
-
         }
         const drawCircle = function (x, y, r, color, fill) {
             drawArc(x, y, r, 0, TAU, color);
@@ -55,19 +52,32 @@
             }
         }
         const drawText = function (x0, y0, x1, y1, text, size, color) {
-            
             drawBox(x0, y0, x1, y1, '#444');
             ctx.font = `${size}em monospace`;
-            let metic = ctx.measureText (text);
-            let width = metric.width;
-            let descent = metrics.fontFoundingBoxDescent;
-            let ascent = metrics.fontBoundBoxAscent;
-            let maybeHeight = descent + ascent;
-            console.log (`width ${width} descent ${descent} accent ${ascent} height? ${maybeHeight}`);
-            ctx.fillStyle = color;
-            ctx.fillText(text, x0, y1);
-            //drawBox(x0, y0, x1, y1, '#444'); <-this cuts off the last pixel!!
+            let metrics = ctx.measureText(text);
+            let width = metrics.width;
+            let descent = metrics.fontBoundingBoxDescent;
+            let ascent = metrics.fontBoundingBoxAscent;
+            let height = descent + ascent;
+            let xa = x0+((x1 - x0) - width) / 2;
+         
+            
+            let ya = y1-descent-1- (y0-ascent)/2;//NOTE THE FUCKING -1... god CSS sucks.
+            
+            //Now this is way to low, so I have to shove it up by 1/2 the available space left..
+            //somehow.
+            tattler.tellGroup(new Tale('width', ` ${width}`, '#aaa'));
+            tattler.tellGroup(new Tale('descent', ` ${descent}`, '#aaa'));
+            tattler.tellGroup(new Tale('ascent', ` ${ascent}`, '#aaa'));
+            tattler.tellGroup(new Tale('height', ` ${height}`, '#aaa'));
+            tattler.tellGroup(new Tale('origin', ` (${xa},${ya}`), '#ccc');
+            
+            let properBaseline = y1 - ((y1-y0)/2 + (ascent+height))/2;
+            ctx.fillStyle = "#fff";
+            ctx.fillText(text,xa, properBaseline);
         }
+        
+        //font, lines, width
         const program = {
             run: function (delta) {
                 drawBox(50, 50, 500, 500, '#a0a', false);
@@ -77,10 +87,11 @@
                 drawArc(275, 275, 125, 0.1, 1.97, '#f00');
                 drawArc(275, 275, 125, 1.97, 3.37, '#0ff');
                 drawPie(275, 275, 125, 3.37, TAU, '#062', true);
-                drawText(75, 600, 550, 630, 'yo My Orange Let go my jello.', 2, '#fff');
+                drawText(75, 550, 550, 660, 'yo My Orange Let go my jello.', 2, '#fff');
+                console.log(tattler);
+                tattler.tattle();
             }
         };
-
 
     </script>
 </body>
