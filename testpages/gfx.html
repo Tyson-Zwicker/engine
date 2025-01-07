@@ -7,7 +7,7 @@
     <script src=".././tattle.js"></script>
 </head>
 
-<body onload="buildPage(33)" style="border:none">
+<body onload="buildPage(30)" style="border:none">
     <script>
         const tattler = new Tattler('1em monospace', 10, 300);
         const drawBox = function (x0, y0, x1, y1, color, fill) {
@@ -60,23 +60,16 @@
             let ascent = metrics.fontBoundingBoxAscent;
             let height = descent + ascent;
             let xa = x0+((x1 - x0) - width) / 2;
-         
-            
-            let ya = y1-descent-1- (y0-ascent)/2;//NOTE THE FUCKING -1... god CSS sucks.
-            
-            //Now this is way to low, so I have to shove it up by 1/2 the available space left..
-            //somehow.
-            tattler.tellGroup(new Tale('width', ` ${width}`, '#aaa'));
-            tattler.tellGroup(new Tale('descent', ` ${descent}`, '#aaa'));
-            tattler.tellGroup(new Tale('ascent', ` ${ascent}`, '#aaa'));
-            tattler.tellGroup(new Tale('height', ` ${height}`, '#aaa'));
-            tattler.tellGroup(new Tale('origin', ` (${xa},${ya}`), '#ccc');
-            
             let properBaseline = y1 - ((y1-y0)/2 + (ascent+height))/2;
             ctx.fillStyle = "#fff";
             ctx.fillText(text,xa, properBaseline);
         }
-        
+        const drawPixel = function (x,y,color){
+            let previousSize = ctx.strokeWidth;
+            let strokeStyle =1;
+            drawBox (x-0.5,y-0.5,x+0.5,y+0.5,color);
+            ctx.strokeWidth = previousSize;
+        }
         //font, lines, width
         const program = {
             run: function (delta) {
@@ -86,8 +79,13 @@
                 drawBox(75, 75, 475, 475, '#ff0', false);
                 drawArc(275, 275, 125, 0.1, 1.97, '#f00');
                 drawArc(275, 275, 125, 1.97, 3.37, '#0ff');
-                drawPie(275, 275, 125, 3.37, TAU, '#062', true);
+                drawPie(275, 275, 125, 3.37, TAU, '#041', true);
                 drawText(75, 550, 550, 660, 'yo My Orange Let go my jello.', 2, '#fff');
+                
+                for (let i =0;i<500;i++){
+                    drawPixel (rnd (100,600),rnd(100,600),'#0ff');
+                }
+                
                 console.log(tattler);
                 tattler.tattle();
             }
