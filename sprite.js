@@ -1,13 +1,3 @@
-/*
-    A Sprite is a picture. These sprites are unfilled polygons created by
-    joining SpriteLines.
-
-    SpriteLines do two things.  First, they will convert a pair of 
-    coortesian coordinates into vectors (which makes drawing them
-    much faster because Sprites can rotate).  Secondly, it draws them.
-*/
-
-/*  Constuctor defines two pair of coordinates relative to the center of the Sprite. */
 const SpriteLine = function (x0, y0, x1, y1, color, thickness) {
     this.v1 = new Vector(
         Math.atan2(y0, x0),
@@ -20,42 +10,29 @@ const SpriteLine = function (x0, y0, x1, y1, color, thickness) {
     this.color = (color) ? color : '#fff';
     this.thickness = (thickness) ? thickness : 1;
 }
-/*  SpriteLine function that draws the line, using given color and thickness. */
 SpriteLine.prototype.draw = function (scale, rotation, offset) {
-    /*Create a new line, set width and color*/
-    ctx.beginPath();
-    ctx.strokeStyle = this.color;
-    ctx.strokeWidth = this.thickness;
-    /*
-        Rotate the vectors, convert them to cartesian coordinates
-        and translate by offset.
-    */
-    let x0 = cos(this.v1.angle + rotation) * this.v1.length * scale + offset.x;
-    let y0 = sin(this.v1.angle + rotation) * this.v1.length * scale + offset.y;
-    let x1 = cos(this.v2.angle + rotation) * this.v2.length * scale + offset.x;
-    let y1 = sin(this.v2.angle + rotation) * this.v2.length * scale + offset.y;
-    /*draw the line*/
-    ctx.moveTo(x0, y0);
-    ctx.lineTo(x1, y1);
-    ctx.closePath();
-    ctx.stroke();
-    /*
-        // draw a big white line from the origin to the start point
-        //so its easier to eye-ball stuff.
-        ctx.beginPath();
-        ctx.strokeStyle = '#666';
-        ctx.moveTo (offset.x,offset.y);
-        ctx.lineTo (x0,y0);
-        ctx.closePath();
-        ctx.stroke();
+    let p0 = this.v1.toPoint();
+    let p1 = this.v2.toPoint();
+    drawLine (
+        p0.x+offset.x,
+        p0.y+offset.y,
+        p1.x+offset.x,
+        p1.y+offset.y,
+        this.thickness, 
+        this.color
+    );
+    /*drawLine (
+        cos(this.v1.angle + rotation) * this.v1.length * scale + offset.x,
+        sin(this.v1.angle + rotation) * this.v1.length * scale + offset.y,
+        cos(this.v2.angle + rotation) * this.v2.length * scale + offset.x,
+        sin(this.v2.angle + rotation) * this.v2.length * scale + offset.y,
+        this.thickness, this.color
+    );
     */
 }
-/*  Constructor, parameter should be an array of SpriteLines (optional) */
 const Sprite = function (lines) {
     this.lines = (lines) ? lines : [];
 }
-/*  Draws all of the SpriteLines it contains */
-Sprite.prototype.draw = function (offset, scale, rotation) {
-    ctx.beginPath();
+Sprite.prototype.draw = function (offset, scale, rotation) {    
     this.lines.forEach((line) => { line.draw(offset, scale, rotation) });
 }
