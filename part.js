@@ -1,19 +1,10 @@
-/*
-sprite         it's sprite
-offset         given as a point, relative to the center of the entity that owns it.
-               but stored as a vector for drawing purposes. Optional (default {0,0})
-orientation    initial value relative to entity that owns it. Optional (default 0).
-owner           the entity that owns it assigned when added.
-*/
-
 const Part = function (sprite, offset, orientation) {
     this.sprite = sprite;
     this.orientation = (orientation) ? orientation : 0;
     this.owner = undefined;
     this.offset = (offset) ? new Point(offset.x, offset.y).toVector() : new Vector(0, 0);
 }
-//offset parameter is displacement from upper left corner of the screen/
-//the "camera translation".
+//offset parameter is the "owners" screen coordinates.
 Part.prototype.draw = function (offset, scale) {
     let partLocation = {
         x: offset.x + cos(this.offset.angle+this.owner.angle) * this.offset.length / scale,
