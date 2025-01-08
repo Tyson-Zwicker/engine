@@ -2,11 +2,10 @@
 
 <head>
     <script src=".././maths.js"></script>
+    <script src=".././gfx.js"></script>
     <script src=".././main.js"></script>
     <script src=".././tattle.js"></script>
     <script src=".././sprite.js"></script>
-    <script src=".././button.js"></script>
-    <script src=".././touchables.js"></script>
     <script src=".././part.js"></script>
     <script src=".././entity.js"></script>
     
@@ -50,11 +49,6 @@
         entity1.addPart (part);
         const program = {
             run: function (delta) {
-                //scale, rotation, offset
-                //sprite1.draw(1, rad(45), { x: 400, y: 400 });
-                //sprite2.draw(1, rad(45), { x: 400, y: 400 });
-
-                //camera, scale
                 let camera = { x: 0, y: 0 };
                 let scale = 1;
                 entity1.draw(camera, scale);
