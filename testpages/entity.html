@@ -2,8 +2,10 @@
 
 <head>
     <script src=".././maths.js"></script>
+    <script src=".././gfx.js"></script>
     <script src=".././main.js"></script>
     <script src=".././tattle.js"></script>
+    <script src=".././button.js"></script>
     <script src=".././sprite.js"></script>
     <script src=".././part.js"></script>
     <script src=".././entity.js"></script>
@@ -12,9 +14,7 @@
 <body onload="buildPage(33)" style="border:none">
     <script>
         // this is where you use the tools to make your program
-        const testButton = new Button(
-            'button1', 'Some Text!', 30, 30, 180, 60, 1.1, '#ff0', '#00f'
-        );
+       
         const sprite1 = new Sprite([
             new SpriteLine(0, -150, 100, 100, '#ff0', 3),
             new SpriteLine(100, 100, -100, 100, '#ff0', 3),
@@ -62,7 +62,6 @@
                 entity1.move(delta);
                 entity2.draw(camera, scale);
                 entity2.move(delta);
-                testButton.draw();
             }
         };
     </script>
