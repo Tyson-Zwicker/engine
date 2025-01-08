@@ -1,16 +1,6 @@
-/*
-    Interface with the browser to give you an updating canvas, keeps track of the 
-    mouse and also calls the run() function defined in index.html, on a timer.
-*/
 let canvas = undefined;
 let ctx = undefined;
 let oldTime = Date.now();
-
-/*
-    This is updated when the browser gets a chance.  JS gets to finish it's whole thread 
-    without interuption before getting updated.  Used in main loop to get reliable/stable
-    mouse state.
-*/
 const mouse = {
     move: {
         where: new Point(0, 0),
@@ -26,9 +16,7 @@ const mouse = {
     },
     buttonDown: false
 }
-/*  Creates the canvas, adds it to the page, wires the events and calls mainloop! */
 const buildPage = function (framerate) {
-    // Add canvas..
     let body = document.getElementsByTagName('body')[0];
     body.style.margin = "0px";
     canvas = document.createElement('canvas');
@@ -37,7 +25,6 @@ const buildPage = function (framerate) {
     canvas.style.border = "0px";
     ctx = canvas.getContext('2d');
     body.appendChild(canvas);
-    // Wire events.
     canvas.onmousemove = function (e) {
         mouse.move = {
             where: new Point(e.clientX, e.clientY),
@@ -62,34 +49,28 @@ const buildPage = function (framerate) {
     }
     //TODO: Add wheel support, change the "zoom" level.
     //Also where is "zoom" actually defined... or is it just hard coded as 1 everywhere?
-    
-    // Fix canvas size and run first main loop.
     shapeCanvas();
-    mainLoop();
-    // if a framerate was specified, tell the browser to keep running it.
+    mainLoop()
     if (framerate) setInterval(mainLoop, framerate);
 }
-/*  Full-Window the canvas */
+const centerOfScreen = { "x": window.innerWidth, "y": window.innerHeight };
 const shapeCanvas = function () {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    centerOfScreen.x = window.innerWidth;
+    centerOfScreen.y = window.innerHeight;
 }
 window.addEventListener("resize", shapeCanvas);
-/*
-    This runs repeatedly until the web page is closed.
-    The run function is defined by the consumer and added to "program" 
-    object in the index.html file.
-*/
-const mainLoop = function () {
+
+const mainLoop = function () {//---------------------------------------------->
     let time = Date.now();
     //delta is how long since last update in milliseconds.
     let delta = time - oldTime;
     oldTime = time;
-    if (program) {        
+    if (program) {
         ctx.fillStyle = '#112';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        /// Take this away when you feel safe to do soo        
-        do{
+        do {
             ctx.fillStyle = '#FFF';
             let timestring = time.toString();
             let substring = timestring.substring(7);
@@ -105,5 +86,3 @@ const mainLoop = function () {
         console.log('waiting for program to show up...');
     }
 }
-
-
