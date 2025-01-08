@@ -15,7 +15,7 @@ const Button = function (name, text, x0, y0, x1, y1, fontsize, color, bgColor, h
     this.action = action;
     this.manager = null;
 }
-Button.prototype.draw = function () {
+Button.prototype.selectColor = function (){
     let border = undefined;
     let text = undefined;
     let bg = undefined;
@@ -34,24 +34,15 @@ Button.prototype.draw = function () {
         text = border;
         bg = this.hbgColor;
     }
-    ctx.fillStyle = bg;
-    ctx.strokeStyle = border;
-    ctx.strokeWidth = 2;
-    ctx.fillRect(this.x0, this.y0, this.width, this.height);
-    ctx.beginPath();
-    ctx.strokeRect(this.x0, this.y0, this.width, this.height);
-    ctx.closePath();
-    ctx.stroke();
-    ctx.font = `${this.fontsize}em monospace`;
-    let measure = ctx.measureText(this.text);
-    let w = measure.actualBoundingBoxRight +
-        measure.actualBoundingBoxLeft;
-    let h = measure.fontBoundingBoxDescent +
-        measure.fontBoundingBoxAscent;
-    let tx = this.x0 + (this.width - w) / 2;
-    let ty = this.y1 - (this.height - h) / 2;
-    ctx.fillStyle = text;
-    ctx.fillText(this.text + '*', tx, ty);
+    return {'border':border,'text':text, 'bg':bg};
+}
+Button.prototype.draw = function () {
+    let colors = this.selectColor();
+    let mx = this.x0+(this.x1-this.x0)/2;
+    let my = this.y0+(this.y1-this.y0)/2;
+    drawBox (this.x0,this.y0, this.x1, this.y1,colors.bg,true);
+    drawBox (this.x0,this.y0, this.x1, this.y1,colors.bg,false,3);
+    drawTextCenter (mx,my,this.text, 1,colors.text);
 }
 const ButtonManager = function (buttonList) {
     this.buttons = [];
