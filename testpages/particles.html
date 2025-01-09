@@ -2,64 +2,100 @@
 
 <head>
     <script src=".././maths.js"></script>
+    <script src=".././gfx.js"></script>
     <script src=".././main.js"></script>
-    <script src=".././button.js"></script>
     <script src=".././tattle.js"></script>
 </head>
 
-<body onload="buildPage(33)" style="border:none">
+<body onload="buildPage(5)" style="border:none">
     <script>
-        const Particle = function (position, velocity, life, r, g, b) {
+        const Particle = function (position, velocity, lifespan, rgb) {
             this.position = position;
             this.velocity = velocity;
-            this.lifespan = life;
-            this.red = parseInt(red, 16);
-            this.green = parseInt(red / 16);
-            this.blue = parseInt(blue / 16);
-            this.redFade = this.red / life;
-            this.blueFade = this.blue / life
-            this.greenFade = this.green / life;
+            this.lifespan = lifespan;
+            this.originalLifespan = lifespan;
+            this.red = rgb.r;
+            this.green = rgb.g;
+            this.blue = rgb.b;
             this.manager = null;
         }
         Particle.prototype.move = function (delta) {
-            this.position.x += this.velocity.x / delta;
-            this.position.y += this.velocity.y / delta;
-            this.red -= this.redFade / delta;
-            this.blue -= this.blueFade / delta;
-            this.green -= this.greenFade / delta;
-            if (this.red === 0) this.red = 0;
-            if (this.green === 0) this.green = 0;
-            if (this.blue === 0) this.blue = 0;
-            this.lifespan--;
+            let vp = this.velocity.toPoint();            
+            let vx = vp.x * delta;
+            let vy = vp.y * delta;
+            this.position.x += vx;
+            this.position.y += vy;
+            this.lifespan -= (delta*1000);
+
+            console.log(`move-delvel ${vx},${vy}`);            
         }
-        Particle.prototype.draw= function (camera){
-            let x = this.x - camera.x;
-            let y = this.y - camera.y;
-            let color = `#${this.red.toString(16)}${this.green.toString(16)}${this.blue.toString(16)}`;
-            drawPixel (x,y,color);
+        Particle.prototype.draw = function (camera) {
+            let x = this.position.x - camera.x + centerOfScreen.x;
+            let y = this.position.y - camera.y + centerOfScreen.y;
+            let lifePercent = this.lifespan / this.originalLifespan;
+            let r = this.red * lifePercent;
+            let g = this.green * lifePercent;
+            let b = this.blue * lifePercent;
+            let hexColor = rgbToHex(r, g, b);
+            drawPixel(x, y, hexColor);
         }
-        const ParticalManager = function ParticleManager() {
+        const ParticleManager = function () {
             this.particles = [];
         }
-        //particle : position, velocity, life, r, g, b
-        ParticleManager.prototype.addBurst = function (x,y,number, r, g, b, minlife, maxlife, a0, a1, magnitude) {
-            for (let i = 0; i < number; i++) {
-                let velocity = new Vector (rnd (a0,a1),rnd (magnitude/2));
-                let particle = new Particle (position,velocity,rnd (minlife, maxlife),r,g,b);
+        
+        ParticleManager.prototype.addBurst = function (position, quantity, rgb, lifeMinMax, arc, magnitude) {
+            for (let i = 0; i < quantity; i++) {
+                let a = rnd(arc.start, arc.end);
+                let l = magnitude/2 + rnd (0,magnitude/2);    
+                let velocity = new Vector(a, l,);                
+                let particle = new Particle(position, velocity, rnd(lifeMinMax.min, lifeMinMax.max), rgb);
+                this.particles.push(particle);
+                let hexColor = rgbToHex(particle.red, particle.green, particle.blue);
             }
         }
-        ParticleManager.prototype.process = function () {
+        ParticleManager.prototype.manage = function (camera, delta) {
             let alive = [];
             this.particles.forEach(particle => {
-                particle.move();
+                particle.draw(camera);
+                particle.move(delta);
                 if (particle.lifespan > 0) {
-                    particle.draw();
-                    particle.move();
-                    alive.push (particle);
+                    alive.push(particle);
                 }
             });
             this.particles = alive;
         }
+        let manager = new ParticleManager();
+        let camera = { "x": 0, "y": 0 };
+        let count = 0;
+        manager.addBurst(
+            manager.addBurst(
+                        new Point(0,0),        //Origin of "spray"
+                        rnd(5,55),              //Quanity of partles to generate  
+                        { r: 5+rnd (10), g: 5+rnd(1), b: 5+rnd (10) },//Initial Color
+                        { min: 2000, max: 10000 },   //Lifespan range
+                        { start: 0, end: TAU },   //direction of "spray"\\
+                        1+Math.random (5)
+                    )
+                );
+        const program = {
+            run: function (delta) {
+                //if (count<12) {
+                    
+                    manager.manage(camera, delta);
+                    count++;
+                   //if (count%10==0){
+                        manager.addBurst(
+                        new Point(0,0),        //Origin of "spray"
+                        rnd (5,10),              //Quanity of partles to generate  
+                        { r: 5+rnd (1,10), g: 5+rnd(1,10), b: 5+rnd (1,10) },//Initial Color
+                        { min: 2000, max: 5000 },   //Lifespan range
+                        { start: 0, end: TAU },   //direction of "spray"\\
+                        15+Math.random (45));
+                    //}
+                //}
+            }
+        }
     </script>
 </body>
+
 </html>
