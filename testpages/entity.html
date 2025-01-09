@@ -32,14 +32,14 @@
             { x: 160, y: 0 },
             rad(45),
             { x: 1, y: 1 }
-            , rad(1), 10);
+            , rad(15), 10);
         const entity2 = new Entity(
             'Test2',
             [sprite1, sprite2],
             { x: -160, y: 100 },
             rad(270),
             { x: 3, y: -2 }
-            , rad(0.5), 10);
+            , rad(10), 100);
 
         const entity3 = new Entity(
             'Test3',
@@ -47,7 +47,7 @@
             { x: 0, y: 0 },
             rad(rnd(0, 360)),
             { x: 3, y: -2 }
-            , rad(0.9), 10);
+            , rad(25), 1000);
 
         const program = {
             run: function (delta) {
@@ -62,6 +62,8 @@
                 entity1.move(delta);
                 entity2.draw(camera, scale);
                 entity2.move(delta);
+                entity3.draw(camera, scale);
+                entity3.move(delta);
             }
         };
     </script>
