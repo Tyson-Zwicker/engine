@@ -21,9 +21,9 @@ Entity.prototype.addPart = function (part) {
     part.owner = this;
 }
 Entity.prototype.move = function (delta) {
-    this.angle += this.spin;
-    this.position.x += (this.velocity.x / delta);
-    this.position.y += (this.velocity.y / delta);
+    this.angle += this.spin * delta;
+    this.position.x += this.velocity.x * delta;
+    this.position.y += this.velocity.y * delta;
 }
 Entity.prototype.spin = function (force) {
     this.velocity.x += cos(vector.a) * vector.l / this.mass;
