@@ -65,7 +65,7 @@ window.addEventListener("resize", shapeCanvas);
 const mainLoop = function () {//---------------------------------------------->
     let time = Date.now();
     //delta is how long since last update in milliseconds.
-    let delta = time - oldTime;
+    let delta = (time - oldTime)/1000; //A percentage of 1 second.
     oldTime = time;
     if (program) {
         ctx.fillStyle = '#112';
