@@ -53,15 +53,14 @@ const buildPage = function (framerate) {
     mainLoop()
     if (framerate) setInterval(mainLoop, framerate);
 }
-const centerOfScreen = { "x": window.innerWidth, "y": window.innerHeight };
+const centerOfScreen = { "x": window.innerWidth/2, "y": window.innerHeight/2 };
 const shapeCanvas = function () {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    centerOfScreen.x = window.innerWidth;
-    centerOfScreen.y = window.innerHeight;
+    centerOfScreen.x = window.innerWidth/2;
+    centerOfScreen.y = window.innerHeight/2;
 }
 window.addEventListener("resize", shapeCanvas);
-
 const mainLoop = function () {//---------------------------------------------->
     let time = Date.now();
     //delta is how long since last update in milliseconds.
