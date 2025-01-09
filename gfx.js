@@ -83,5 +83,5 @@ const drawTextRight = function (x, y, text, size, color) {
     ctx.fillText(text, x, y);
 }
 const rgbToHex =function (r,g,b){
-    return `#${r.toString(16)}${g.toString(16)}${b.toString(16)}`
+    return `#${Math.trunc(r).toString(16)}${Math.trunc(g).toString(16)}${Math.trunc(b).toString(16)}`
 }
