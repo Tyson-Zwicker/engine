@@ -70,12 +70,9 @@ const mainLoop = function () {//---------------------------------------------->
         ctx.fillStyle = '#112';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         do {
-            ctx.fillStyle = '#FFF';
-            let timestring = time.toString();
-            let substring = timestring.substring(7);
-            ctx.font = "1em monospace";
-            ctx.fillText(substring + '', 30, 30);
-        } while (false); //<-- made it you do it once.
+            //TODO: Use the gfx function for text..
+            drawTextLeft (10,10,time.toString().substring(7),1);            
+        } while (false);
         if (program.run) {
             program.run(delta);
         } else {
