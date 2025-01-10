@@ -2,8 +2,8 @@
 mathematic functions, or define the datatype.It wraps a lot of the
 built in Math class.
 */
-const PI =  Math.PI;
-const TAU = Math.PI*2;
+const PI = Math.PI;
+const TAU = Math.PI * 2;
 const Vector = function (a, l) {
     this.angle = a;
     this.length = l;
@@ -24,8 +24,14 @@ Point.prototype.toVector = function () {
         length(this.x, this.y)
     )
 }
+Point.prototype.add = function (p0, p1) {
+    return new Point(p0.x + p1.x, p0.y + p1.y);
+}
+Point.prototype.mult = function (p, s) {
+    return new Point(p.x * s, p.y * s);
+}
 const rnd = function (min, max) {
-    return Math.random() * (max - min) + min;
+    return Math.random() * (max - min);
 }
 const rad = function (d) {
     return d * Math.PI / 180;
