@@ -24,11 +24,11 @@ Point.prototype.toVector = function () {
         length(this.x, this.y)
     )
 }
-Point.prototype.add = function (p0, p1) {
-    return new Point(p0.x + p1.x, p0.y + p1.y);
+Point.prototype.add = function (p) {
+    return new Point(this.x + p.x, this.y + p.y);
 }
-Point.prototype.mult = function (p, s) {
-    return new Point(p.x * s, p.y * s);
+Point.prototype.mult = function (s) {
+    return new Point(this.x * s, this.y * s);
 }
 const rnd = function (min, max) {
     return Math.random() * (max - min);
