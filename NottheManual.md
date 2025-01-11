@@ -149,14 +149,25 @@ All colors are assumed to be of the form *#RGB* **not** *#RRGGBB*.  In most case
 
 * drawArc (x,y,r,a0,a1,color, thickness): draw an arc with an origin at (x,y), radius of r, between angles a0, and a1 (in radians). Color and thickness are optinal, defaulting to "white" and 1 respectively.
 
-#Keep editing from here!#
+* drawCircle (x,y,r, color, fill, thickness): draw circle at (x,y) with radius r.  color, fill and thickness are optional.  default is white, not-filled, and 1 respectively.
 
+* drawPie (x,y,r,a0,a1,color,fill, thickness): draw a pie shaped section of a circle at (x,y) with radius r, from an arc from a0 to a1.color, fill and thickness are optional and default to white, not-filled, and 1, respectively.
 
+*drawPixel (x,y,color): draw a single pixel at (x,y) color defaults to white.
 
+*drawLine (x0,y0,x1,y1,thickness, color): draws a line between (x0,y0) and (x1,y1). Thickness defaults to 1, color defaults to white.
+
+*drawTextCenter (x,y,text, size, color): draw filled text centered at (x,y). Text is text to draw, size defaults 1 (unit is em's) and color defaults to white.  Text is centered vertically on y.
+
+*drawTextLeft (x,y,text, size, color): draw filled text whose left side will be at touch x. Text is text to draw, size defaults 1 (unit is em's) and color defaults to white.Text is centered vertically on y.
+
+*drawTextRight (x,y,text, size, color): draw filled text whose right side will touch x. at (x,y). Text is text to draw, size defaults 1 (unit is em's) and color defaults to white. Text is centered vertically on y.
+ 
+rgbToHex (r,g,b): given a red, green  and blue decimal values between 0 and 15, it will return a string formatted as a CSS-style color: "#RGB" where RG and B are in hexidecimal.
 
 ###The Tattler
 
-While not necessary, or in most cases, even desired, having a chunk of the** canvas devoted to telling you what the program is doing can be useful when debugging.  Its also useful for letting users see how the internal workings are... working, things like FPS or number of object being rendered or, whatever people want to see on-the-fly.
+While not necessary, or in most cases, even desired, having a chunk of the canvas devoted to telling you what the program is doing can be useful when debugging.  Its also useful for letting users see how the internal workings are... working, things like FPS or number of object being rendered or, whatever people want to see on-the-fly.
 
 The following code will add a Tattle to the lower right hand corner of the screen, and it will show the mouse position and the state of the the left mouse button, to give you an idea of how mouse works.
 
@@ -199,9 +210,9 @@ finished drawing.
 *So that's the Tattler, sometimes useful,entirely optional.*
 
 
-## Time for Sprites ##
+## Sprite ##
 
-Sprites are important.  Without them you mostly just looking a lot nothing.  They are very simple, they're just a bunch of colored lines-  You and turn them, scale them, and move them around the screen.  But that's it.
+Sprite are very simple vector graphics: they're just a bunch of colored lines, that can be different colors.  You and turn them, scale them, and move them around the screen.
 
     <script>
         // this is where you use the tools to make your program
@@ -217,9 +228,9 @@ Sprites are important.  Without them you mostly just looking a lot nothing.  The
         };
     </script>
 
-The first thing this does is define a yellow (#ff0) triangle, each line has a thickness of two.
+The first thing this does is define a yellow (#ff0) triangle, each line has a thickness of two.  The main loop draws it.
 
-A **sprite**'s parameters are:
+**Constructor parameters:**
 
   * x0,y0,x1,y1 : Cartension coordinates that define start and end point for line.  The center of the sprite is 0,0. Note this has nothing to to the center of the window or the canvas. These coordinates are relative to the sprite's own center.
   * color: The color that the line should have.  In our example '#ff0' makes yellow.
@@ -232,21 +243,17 @@ a **sprite** has one function: **draw**. It's parameters are:
   * rotation: the amount to rotate the sprite. This is in Radians.
   * offset: where on the screen the sprite should consider its center (0,0) so it can draw itself in the right place
   
-*That's about it for sprites they're super easy.  They're just colored lines drawing pictures.*
-
 ## Entities ##
 
-An "*entity*",  is a just something that can keep track of where it is, which way it is facing, which way its moving, and how heavy it is.  It could be a sitting rock, or a thrown rock.  It could represent a whole planet (which is just another rock I guess).  Or a robot. Its not a geogolgy simulator.
+An "*entity*",  is an object that can keep track of where it is, which way it is facing, which way its moving, and how heavy it is.  It could be a sitting rock, or a thrown rock.  It could represent a whole planet (which is just another rock I guess).  Or a robot or a spaceship.
 
-Enties can be assigned a sprite, so they can show what they're doing, and they have a small handful of methods that, if called during the main loop, keep them moving in whatever direction they think they should. Another small group of methods lets them be pushed and pulled and spun, allowing you to exert an exertnal force to them, wether that be to simulate gravity/wind/sea currents/electricl fields, who knows what you're writing?. An entity is very generic. It is ment to be customized.
+Enties can be assigned a sprite, so they can show what they're doing, and they have a small handful of methods that, if called during the main loop, keep them moving in whatever direction they they should. Another small group of methods lets them be pushed and pulled and spun, allowing you to exert an exertnal force to them, wether that be to simulate gravity/wind/sea currents/electricl fields, who knows what you're writing?. An entity is very generic. It is meant to be customized. It can contain more sprites, all of which take their direction from the location and and orientation of the Entity. 
 
-It can contain more sprites, all of which take their direction from the location and and orientation of the Entity.  There is another thing that Entities can have: parts.  Parts are, as the name suggests, pieces of the entity.  They have their own locaion on the entity (again relative to the center of the entity [0,0]), but they can also spin independently of the entity they belong to, like eyes can turn in a head or a hand independent of an arm. Or a turret of three 18" Naval guns spinning around to look at something it doed not like.
+There is another thing that Entities can have: parts.  Parts are, as the name suggests, pieces of the entity.  They have their own locaion on the entity (again relative to the center of the entity [0,0]), but they can also spin independently of the entity they belong to, like eyes can turn in a head, a hand independent of an arm, or a gun turrent moving independent of the ship its mounted on.
 
-Parts can spin.  More on those later.
+This next part makes two instances and sends them off through space. Ignore the reference to "*camera*" I'll talk about that next.
 
-This next part makes two instances and sends them off through space. Ignore the reference to "*camera*" I promise I'll talk about that next.
-
-**To Instation one:**
+**TODO: EDIT FROM HERE.  CHANGE CODE EXAMPLE TO CONSTRUCTOR DEFINITION..**
 
       <script>
         //We will give our new Entity Two Sprites.  On Yellow Triangle, Longed from its center in the ..
@@ -301,7 +308,8 @@ Let's talk about the *camera*, since it was ignored in that last section. *It is
 **Zoom/Scale is currently its own thing: But it will become part of camera in a very much planned update- and camera will become a global or a "main" property as well.**
 
 ##  Parts
-I just added these, they need expanding up.  For the moment, you can slap as many as you want on an entity, they contain a single sprite and they know which why they are looking *relative to their "owner"*.
+I just added these, they need expanding upon.  For the moment, you can slap as many as you want on an entity, they contain a single sprite and they know which why they are looking *relative to their "owner"*.
+
 
 ##  Buttons
 Buttons are colored rectangles, typically adorned with a word or two, that can be "clicked" by the mouse.  You define them using a constructor. The parameters are:
@@ -327,7 +335,7 @@ Example Button:
 
 Now, this button will do exactly *nothing* without something to tell it what to do. Which brings us to the...
 
-# Button Manager
+## Button Manager
 
 The ButtonManager is so named because it manages all the buttons.  It checks what the mouse has been doing, decides how the buttons should feel about that, and draws all the buttons accordingly.  You give it buttons to manage either when it is constructed (as an array of buttons) or you can use the "addButton()" method:
 
@@ -337,3 +345,4 @@ The ButtonManager is so named because it manages all the buttons.  It checks wha
 buttonManager.addButton (theButtonIForgot);
 
 This has been Not the Manual.
+
