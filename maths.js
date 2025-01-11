@@ -42,13 +42,15 @@ const deg = function (r) {
 const length = function (x, y) {
     return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
 }
+const distance = function (p0,p1){
+    return length (p1.x-p0.x,p1.y-p0.y);
+}
 const bearing = function (p0, p1) {
     let b = Math.atan2(p1.y - p0.y, p1.x - p0.x);
     if (b < 0) b += Math.PI * 2;
     return b;
 }
 const atan = function (y, x) {
-    let a = (x) ? y / x : y;
     return (Math.atan(y / x));
 }
 const sin = function (angle) {
@@ -57,8 +59,8 @@ const sin = function (angle) {
 const cos = function (angle) {
     return Math.cos(angle);
 }
-const bounded = function (thing, rect) {
+const bounded = function (point, rect) {
     return (
-        thing.x > rect.x0 && thing.x < rect.x1 && thing.y > rect.y0 && thing.y < rect.y1
+        point.x > rect.x0 && point.x < rect.x1 && point.y > rect.y0 && point.y < rect.y1
     );
 }
