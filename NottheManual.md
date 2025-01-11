@@ -1,60 +1,45 @@
 # Not the Manual
 
-**There is a manual, I am still writing that.  This document is more a walk through or quick tutorial. I attempt to be detailed, and the information is as true as I can make it (the code is faithfully copied from a working/compiler-happy page)- but it not as concise as I would choose it to be.**
+## Introduction
+
+There is a manual, I am still writing that.  This document is more a walk through or quick tutorial. I attempt to be detailed, and the information is as true as I can make it (the code is faithfully copied from a working/compiler-happy page)- but it not as concise as I would choose it to be.
 
 *This assumes you have a web server and a web browser- It is a JavaScript project, afterall. If not, download VSCode, YouTube how to run an extension called LiveServer, and use it. Or do it your own way, Or wait for that manual I allude to.*
 
 pull git@github.com:Tyson-Zwicker/engine.git for the files.
 
-Next, create an html file, and copy this code into it:
+The project currently consists of a directory called `testpages` and a series of javascript files in the project root.   Most of the javascript files have a corresponding test page.  There is also an html file in the `testpages` directory called `blank.html`.  When you create your program, make a copy of `blank.html` and use it as a template.
 
+For the purposes of this document, I will refer all of the JavaScript files as "libraries" (with the exception of `main.js` its special) because they are really just a long list of functions or constants.  That you can use to speed up development time.
 
-     <html>
-        <head>
-            <script src="./maths.js"></script>
-            <script src="./main.js"></script>
-            <script src="./tattle.js"></script>
-            <script src="./sprite.js"></script>
-            <script src="./button.js"></script>
-            <script src="./touchables.js"></script>
-            <script src="./part.js"></script>
-            <script src="./entity.js"></script>
-        </head>
-        <body onload="buildPage(33)" style="border:none">
-            <script>
-                //Define stuff you want your main loop to have access to here.
-                const program = {
-                    run: function (delta) {
-                        //This is the "main loop" of your program.
-                    }
-                };
-            </script>
-        </body>
-    </html>
+##The web side of things
 
-If you visit your web server with the browser and request the file, the page you see should be dark grey with a white number in the upper left hand corner.  This is a timestamp. If the number is changing, that means its working!
+If you visit your web server with the browser and request the `blank.html` file, the page you see should be dark grey with a white number in the upper left hand corner.  This is a timestamp. If the number is changing, that means its working!
 
-Notice the line:
+You will see that the HTML file loads three JavaScript files:  `maths.js`, `gfx.js`,`main.js'.  These three files form the core of the system.  There are many others that can be added later, but these three must come first and they must be imported in this order.
+
+`Maths.js` does just it says: Math.  It's a library of functions that you may need (and that other libraries *do* need).  It will be discussed in detail later.
+
+`gfx.js` provides functions calls that can draw to the canvas. They are the same functions available to the native canvas, but instead of taking 7 lines of code to draw a circle, line, text, whatever, you use a function in `gfx.js` to do the same thing with one line of code.  This is used extensively by  any of the other libraries.
+
+`main.js` is special.  It is what runs the program's Main Loop.  It does all the event handling.  It could be considered the engine the runs everything.  We'll start by discussing how to use it.
+
+###Main.js 
+
+In you HTML file, just after the three core scripts are loaded, the HTML Body tag calls a function in `main.js` called `buildPage`
 
         <body onload="buildPage(33)" style="border:none">
 
-**buildPage** is function of *main.js* (one of the files you imported).  This function is the one that created the canvas, creates events to keep it expanded to the window and runs a timer keep it all updated. The "33" is the number of milliseconds it will wait before re-running the main loop / refreshing the screen. You can slow it down by making the number larger, or speed it up by making it smaller.  Note this can be affected by any computation that has to occur between screen refreshes.  The browser will try to call your program's main loop at the requested interval, but if your computations take longer than the specified interval, it will still call the function again.  Effectively your code is stepping on its own feet, so keep this in mind; It can lead to stack overflows.
+This function is the one that created the canvas, this creates the canvas, wires the events, tracks the mouse and keyboard and initiates the Main Loop.  It will also resize the canvas for you if the browser window is resized.
 
-The program will keep the canvas maximized, show the time stamp, and remember the state of the mouse the last time the main loop was executed.  Anything beyound that must be written by you.
+Once `buildPage` has been called, you will have access to the follow Global Level Properties:
 
-# In Summary
-
-By envoking buildPage, you know have access to the follow Global Level Properties:
-
-  * canvas :    It will refer to the one you've already seen with the timestamp.
-  * ctx    :    It will refer to "context" of afore  mention canvas.  You can draw on it.  Further on more libraries will explain how to make some of that job easier.
-  * program:    That is your empty program.  It is doesn't exist, nothing happens.  It needs to have a run function because whatever you put into that function will be what runs in your program.
-  * mouse:      This knows what the mouse did left cycle.  It knows where and went the mouse moved, got pressed, and got released, also what the button is upto right this second.
-
-# The Mouse
-The Mouse bears some talking about because you're going to need it a lot.  So here is how it works:  Once (And Only Once) per javascript's turn to get a slice of a the processor and pretend to run the show it gets to do event collection.  When that happens the "mouse" object, which is global just like "canvas" and "ctx" and "program", gets updates (if anything happened).  It records the place and time of the three events it understands, and the last know status of the left mouse button.
-
-**The Mouse**
+  * canvas: It will refer to the one you've already seen with the timestamp.  You cannot draw directly to the canvas, you must use it's 'context'.
+  * ctx: This is the "2D context" of the afore  mention canvas.  You *can* draw on it.  There are other libraries that will make that a lot easier for you.
+  * mouse: This knows what the mouse did left cycle.  It knows where and went the mouse moved, got pressed, and got released, also what the button is upto right this second.
+  * key : I have not written this in yet. **> TODO <**
+  
+###Mouse
 
 Information about what the mouse was been up to is available by the appropriately named "mouse". It is a global constant.
 
@@ -66,11 +51,112 @@ Information about what the mouse was been up to is available by the appropriatel
   *  **mouse.up.where**:   is a point (x,y) where them ouse was last located when the mouse button was released.
   *  **mouse.buttonDown**:   true ifleft mouse button pressed down, false if not.
 
-There is nothing more to the mouse.  The information is always there.  Other things, like "Button", use it a lot.
+There is nothing more to the mouse.  The information is always there.  Other things, like "Button", use it a lot. The concept of a "Point" will be touched on in much detail in section on `math.js`.
 
-# Adding a Tattle
+###Key
 
-While not necessary, or in most cases, even desired, having a chunk of the canvas devoted to telling you what the program is doing can be useful when debugging.  Its also useful for letting users see how the internal workings are... working, things like FPS or number of object being rendered or, whatever people want to see on-the-fly.
+    **TODO : write this!**
+
+###Program
+
+If you go into the body of the HTML document, you will find a `script` tag with some code:
+
+     <script>
+        //Initialization here..
+        const program = {
+            run: function (delta) {
+               //Main loop here.
+            }
+        };
+    </script>
+
+When the page loads, `main.js` goes into a holding pattern- waiting for the `program` constant to be created.  Once it sees this, it will call the `run` function at the regular interval specified when `buildPage` was called.
+
+Examples of how to fill in this script with an actual program can be found in each of the HTML files in the `testpages` directory.
+
+##The Libraries
+
+###Maths.js
+
+The main purpose of this library is to shorten the amount of code needed to handle geometry and trigonometry.
+
+It exposes two constants that are globally accessible:
+
+* **PI**:  Just shorthand for Math.PI
+* **TAU**: PI*2 (the full circle).
+
+It provides two data structures:
+
+**Point**
+
+You can create a point with:
+
+     let myPoint = new Point (x,y);
+
+It has three methods:
+
+* add: returns a new point which is the sum of this point, and the point provided as a parameter:
+
+ `let myPoint2 = myPoint.add (new Point (2,3));`
+
+* mult: returns a new point which is the scalar product of this point, and a numerical value passed as the paramter: 
+
+`let myPoint3 = myPoint.mult (2)`
+
+* toVector: converts the point to a vector defined as the vector pointing from origin (0,0) to the X and Y components of this point:
+
+`let myVector = myPoint.toVector();`
+
+**Vector**
+
+You can create a vectow with
+
+     let myVector = new Vector (angle,length);
+
+Vector has a single method:
+
+* toPoint(): This will convert the vector to a Point.
+
+**Functions**
+
+Maths.js also provides the following globally accessible functions:
+
+*rnd (min,max): returns a value between min and max.
+
+*rad (degrees): converts degrees to radians.
+
+*deg (radians): converts radians to degrees.
+
+*length (x,y): calculates the length of a line segment originating at (0,0) and extending to (x,y)
+
+*distance (p0,p1): calculates the distance between two points.
+
+*bearing (p0,p1): caclculates the angle between p0 and p1. Its is basically the Atan function but provides values between 0 and Tau instead of the traditional and somewhat less useful angle from the horizontal.
+
+*atan (y,x): Short hand for Math.atan (y/x).
+
+*sin (angle): Short hand for Math.sin(angle)
+
+*cos (angle): Short hand for Math.cos (angle)
+
+*bounded (point, rect): Returns true if point lies with the boundries of rect. Rect must be  an object of the form {x0,y0,x1,y1}
+
+###Gfx.js 
+
+All of the functions in Gfx draw directly to the canvas. There are no data structures, or constants.
+
+All colors are assumed to be of the form *#RGB* **not** *#RRGGBB*.  In most cases it won't matter, but the more precise #RRGGBB" will cause odd results in some other libraries.
+
+* drawArc (x,y,r,a0,a1,color, thickness): draw an arc with an origin at (x,y), radius of r, between angles a0, and a1 (in radians). Color and thickness are optinal, defaulting to "white" and 1 respectively.
+
+#Keep editing from here!#
+
+
+
+
+###The Tattler
+
+While not necessary, or in most cases, even desired, having a chunk of the** canvas devoted to telling you what the program is doing can be useful when debugging.  Its also useful for letting users see how the internal workings are... working, things like FPS or number of object being rendered or, whatever people want to see on-the-fly.
 
 The following code will add a Tattle to the lower right hand corner of the screen, and it will show the mouse position and the state of the the left mouse button, to give you an idea of how mouse works.
 
@@ -193,9 +279,12 @@ This next part makes two instances and sends them off through space. Ignore the 
         };
     </script>
 
-A Entity's will move along they're pre-determined path a rate called the "delta".  The idea is that  regardless of how long the program has bothered to look at it, or ask it to move, it will have moved exactly as far as it would have if it had not been ignored.  *It behave independ of framerate.*
 
-To make the entity to move, a small number of function suffice:
+EXPLAIN DELTA BETTER - IT IS A %,  NOT A TIMESPAN in MS..
+
+A Entity's will move along they're pre-determined path a rate called the "delta".  The idea is that  regardless of how long the program has bothered to look at it, or ask it to move, it will have moved exactly as far as it would have if it had not been ignored.  *It behaves independ of framerate.*
+
+To make the entity  move, a small number of function suffice:
 
   * move(delta) : this will move the entity by however far it would have in "delta" milliseconds.
   * spin(delta) : this wlll rotate the entity by however far it would have. 
@@ -209,7 +298,7 @@ To "nudge" them into a different course or spin, the following functions can be 
 
 Let's talk about the *camera*, since it was ignored in that last section. *It is a point in space that the center of of the screen is attached to*- that it. Its a Point: *(x ,y)*.  Things in the program are going to be *all over the place* so you need to move around on the screen:  that's what the camera does.  
 
-**Zoom/Scale is currently its own thing: But it will become part of camera in a very much planned update.**
+**Zoom/Scale is currently its own thing: But it will become part of camera in a very much planned update- and camera will become a global or a "main" property as well.**
 
 ##  Parts
 I just added these, they need expanding up.  For the moment, you can slap as many as you want on an entity, they contain a single sprite and they know which why they are looking *relative to their "owner"*.
