@@ -1,0 +1,39 @@
+<!-- have it show the mouse wheel action-->
+<html>
+
+<head>
+    <script src=".././maths.js"></script>
+    <script src=".././gfx.js"></script>
+    <script src=".././main.js"></script>
+    <script src=".././tattle.js"></script>
+    <script src=".././sprite.js"></script>
+    <script src=".././button.js"></script>
+    <script src=".././touchables.js"></script>
+    <script src=".././part.js"></script>
+    <script src=".././entity.js"></script>
+</head>
+
+<body onload="buildPage(33)" style="border:none">
+    <script>
+        //Define stuff you want your main loop to have access to here.
+        tattler = new Tattler('1em monospace', 10, 300);
+        const program = {
+            run: function (delta) {
+                //This is the "main loop" of your program..
+                let tale = new Tale(`mouse @`, `(${mouse.move.where.x},${mouse.move.where.y}`, `#ff0`);
+                tattler.tellGroup(tale);
+                tale = new Tale('button down', mouse.buttonDown, '#fff');
+                tattler.tellGroup(tale);
+                tale = new Tale('down @', `${mouse.down.where.x},${mouse.down.where.y}`, '#ff0');
+                tattler.tellGroup(tale);
+                tale = new Tale('up @', `${mouse.up.where.x},${mouse.up.where.y}`, '#0f0');
+                tattler.tellGroup(tale);
+                tale = new Tale('wheel @', `${mouse.wheel.where}`, '#0ff');
+                tattler.tellGroup(tale);
+                tattler.tattle();
+            }
+        };
+    </script>
+</body>
+
+</html>
