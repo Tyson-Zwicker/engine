@@ -4,20 +4,30 @@ const EntityLabel = function (entity, fontSize, color) {
     this.color = color;
 }
 
-EntityLabel.prototype.draw = function (camera, scale) {
+EntityLabel.prototype.draw = function (text, camera, scale) {
     //So we're drawing some text, under the entity, unless its at the bottom of the screen, then it goes on top..
+
     let rowSize = this.fontSize * 16 + 2;
+    let height = rowSize * text.length;
+   
+    /*
+    let width =0;
+    text.forEach (line =>{
+        lineWidth = getTextWidth (line, `${this.fontSize}em monospace`);
+        width = (lineWidth>width)? lineWidth: width; 
+    });
+    */
+
     //determine y based on closeness of edge..   
     let x = (this.entity.position.x - camera.x) * scale + centerOfScreen.x;
-    let y = (this.entity.position.y - camera.y) * scale + centerOfScreen.y + this.entity.radius;
+    let y = (this.entity.position.y - camera.y) * scale + centerOfScreen.y + this.entity.radius * scale;
     let drawDirection = 1;
     if (y > screenSize.y) {
-        y = (this.entity.position.y - camera.y) * scale + centerOfScreen.y - this.entity.radius;
+        y = (this.entity.position.y - camera.y) * scale + centerOfScreen.y - this.entity.radius * scale;
         drawDirection = -1;
     }
-    drawTextCenter(x, y, this.entity.name);
-    y += (rowSize * drawDirection);
-    drawTextCenter(x, y, `${this.entity.position.x.toFixed(2)},${this.entity.position.y.toFixed(2)})`, this.fontSize);
-    y += (rowSize * drawDirection);
-    drawTextCenter(x, y, `${this.entity.velocity.x.toFixed(2)},${this.entity.velocity.y.toFixed(2)})`, this.fontSize);
+    text.forEach (line =>{
+        drawTextCenter(x, y, line, this.fontSize);        
+        y += (rowSize * drawDirection);
+    });
 }

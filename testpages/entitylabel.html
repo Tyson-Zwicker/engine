@@ -12,7 +12,7 @@
     <script src=".././entitylabel.js"></script>
 </head>
 
-<body onload="buildPage(10033)" style="border:none">
+<body onload="buildPage(33)" style="border:none">
     <script>
         // this is where you use the tools to make your program
 
@@ -30,14 +30,14 @@
         const entity1 = new Entity(
             'Test1',
             [sprite1, sprite2],
-            { x: 160, y: 0 },
-            rad(45),
-            { x: 1, y: 1 }
-            , rad(15), 10, 150);
+            { x: -360, y: -100 },
+            rad(0),
+            { x: 36, y: 1 }
+            , rad(0), 10, 150);
         const entity2 = new Entity(
             'Test2',
             [sprite1, sprite2],
-            { x: -160, y: 100 },
+            { x: 230, y: 400 },
             rad(270),
             { x: 3, y: -2 }
             , rad(10), 100, 150);
@@ -48,10 +48,10 @@
             { x: 0, y: 0 },
             rad(rnd(0, 360)),
             { x: 3, y: -2 }
-            , rad(25), 1000, 150);
-        const entityLabel1 = new EntityLabel(entity1, 1, '#F00');
-        const entityLabel2 = new EntityLabel(entity2, 1, '#00F');
-        const entityLabel3 = new EntityLabel(entity3, 1, '#F00');
+            , rad(60), 1000, 150);
+        const entityLabel1 = new EntityLabel(entity1, .66, '#F00');
+        const entityLabel2 = new EntityLabel(entity2, .66, '#00F');
+        const entityLabel3 = new EntityLabel(entity3, .66, '#F00');
         let camera = new Point(0, 0);
         let scale = 0.3;
         const program = {
@@ -63,9 +63,24 @@
                 entity2.move(delta);
                 entity3.draw(camera, scale);
                 entity3.move(delta);
-                entityLabel1.draw(camera, scale);
-                entityLabel2.draw(camera, scale);
-                entityLabel3.draw(camera, scale);
+                let text = [
+                    entity1.name,
+                    `( ${entity1.position.x.toFixed(2)},${entity1.position.x.toFixed(2)})`,
+                    `( ${entity1.velocity.x.toFixed(2)},${entity1.velocity.x.toFixed(2)})`
+                ];
+                entityLabel1.draw(text, camera, scale);
+                text = [
+                    entity1.name,
+                    `(${entity2.position.x.toFixed(2)},${entity2.position.x.toFixed(2)})`,
+                    `(${entity2.velocity.x.toFixed(2)},${entity2.velocity.x.toFixed(2)})`
+                ];
+                entityLabel2.draw(text, camera, scale);
+                text = [
+                    entity1.name,
+                    `(${entity3.position.x.toFixed(2)},${entity3.position.x.toFixed(2)})`,
+                    `(${entity3.velocity.x.toFixed(2)},${entity3.velocity.x.toFixed(2)})`
+                ];
+                entityLabel3.draw(text, camera, scale);
             }
         };
 

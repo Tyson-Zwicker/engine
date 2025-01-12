@@ -87,6 +87,6 @@ const rgbToHex =function (r,g,b){
 }
 function getTextWidth(text, font) {
     ctx.font = font;
-    const metrics = context.measureText(text);
+    const metrics = ctx.measureText(text);
     return metrics.width;
 }
