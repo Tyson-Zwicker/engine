@@ -10,12 +10,12 @@ const SpriteLine = function (x0, y0, x1, y1, color, thickness) {
     this.color = (color) ? color : '#fff';
     this.thickness = (thickness) ? thickness : 1;
 }
-SpriteLine.prototype.draw = function (scale, rotation, offset) {
+SpriteLine.prototype.draw = function (rotation, offset) {
     drawLine(
-        cos(this.v1.angle + rotation) * this.v1.length * scale + offset.x,
-        sin(this.v1.angle + rotation) * this.v1.length * scale + offset.y,
-        cos(this.v2.angle + rotation) * this.v2.length * scale + offset.x,
-        sin(this.v2.angle + rotation) * this.v2.length * scale + offset.y,
+        cos(this.v1.angle + rotation) * this.v1.length * zoom + offset.x,
+        sin(this.v1.angle + rotation) * this.v1.length * zoom + offset.y,
+        cos(this.v2.angle + rotation) * this.v2.length * zoom + offset.x,
+        sin(this.v2.angle + rotation) * this.v2.length * zoom + offset.y,
         this.thickness,
         this.color
     );
@@ -26,6 +26,6 @@ SpriteLine.prototype.draw = function (scale, rotation, offset) {
 const Sprite = function (lines) {
     this.lines = (lines) ? lines : [];
 }
-Sprite.prototype.draw = function (offset, scale, rotation) {
-    this.lines.forEach((line) => { line.draw(offset, scale, rotation) });
+Sprite.prototype.draw = function (rotation, offset) {
+    this.lines.forEach((line) => { line.draw(rotation,offset) });
 }

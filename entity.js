@@ -34,15 +34,15 @@ Entity.prototype.push = function (vector) {
     this.velocity.x += cos(vector.a) * vector.l / this.mass;
     this.velocity.y += sin(vector.a) * vector.l / this.mass;
 }
-Entity.prototype.draw = function (camera, scale) {
+Entity.prototype.draw = function () {
     spriteLocation = {
-        x: (this.position.x - camera.x) * scale + centerOfScreen.x,
-        y: (this.position.y - camera.y) * scale + centerOfScreen.y
+        x: (this.position.x - camera.x) * zoom + centerOfScreen.x,
+        y: (this.position.y - camera.y) * zoom + centerOfScreen.y
     };
     this.sprites.forEach((s) => {
-        s.draw(scale, this.angle, spriteLocation);
+        s.draw(this.angle, spriteLocation);
     });
     this.parts.forEach((p) => {
-        p.draw(spriteLocation, scale);
+        p.draw(spriteLocation);
     });
 }

@@ -5,11 +5,11 @@ const Part = function (sprite, offset, orientation) {
     this.offset = (offset) ? new Point(offset.x, offset.y).toVector() : new Vector(0, 0);
 }
 //offset parameter is the "owners" screen coordinates.
-Part.prototype.draw = function (offset, scale) {
+Part.prototype.draw = function (ownerLocation) {
     let partLocation = {
-        x: offset.x + cos(this.offset.angle+this.owner.angle) * this.offset.length / scale,
-        y: offset.y + sin(this.offset.angle+this.owner.angle) * this.offset.length / scale
+        x: ownerLocation.x + cos(this.offset.angle+this.owner.angle) * this.offset.length / zoom,
+        y: ownerLocation.y + sin(this.offset.angle+this.owner.angle) * this.offset.length / zoom
     };
     let orientation = this.orientation + this.owner.angle;
-    this.sprite.draw(scale, orientation, partLocation);
+    this.sprite.draw(orientation, partLocation);
 }
