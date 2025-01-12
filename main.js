@@ -53,25 +53,27 @@ const buildPage = function (framerate) {
     mainLoop()
     if (framerate) setInterval(mainLoop, framerate);
 }
-const centerOfScreen = { "x": window.innerWidth/2, "y": window.innerHeight/2 };
+const centerOfScreen = { "x": window.innerWidth / 2, "y": window.innerHeight / 2 };
+const screenSize = { "x": window.innerWidth, "y": window.innerHeight };
 const shapeCanvas = function () {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    centerOfScreen.x = window.innerWidth/2;
-    centerOfScreen.y = window.innerHeight/2;
+    centerOfScreen.x = window.innerWidth / 2;
+    centerOfScreen.y = window.innerHeight / 2;
+    screenSize.x = window.innerWidth;
+    screenSize.y = window.innerHeight;
 }
 window.addEventListener("resize", shapeCanvas);
-const mainLoop = function () {//---------------------------------------------->
+const mainLoop = function () {
     let time = Date.now();
     //delta is how long since last update in milliseconds.
-    let delta = (time - oldTime)/1000; //A percentage of 1 second.
+    let delta = (time - oldTime) / 1000; //A percentage of 1 second.
     oldTime = time;
     if (program) {
         ctx.fillStyle = '#112';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         do {
-            //TODO: Use the gfx function for text..
-            drawTextLeft (10,10,time.toString().substring(7),1);            
+            drawTextLeft(10, 10, time.toString().substring(7), 1);
         } while (false);
         if (program.run) {
             program.run(delta);

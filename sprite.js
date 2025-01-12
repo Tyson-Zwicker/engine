@@ -11,14 +11,14 @@ const SpriteLine = function (x0, y0, x1, y1, color, thickness) {
     this.thickness = (thickness) ? thickness : 1;
 }
 SpriteLine.prototype.draw = function (scale, rotation, offset) {
-    drawLine (
+    drawLine(
         cos(this.v1.angle + rotation) * this.v1.length * scale + offset.x,
         sin(this.v1.angle + rotation) * this.v1.length * scale + offset.y,
         cos(this.v2.angle + rotation) * this.v2.length * scale + offset.x,
         sin(this.v2.angle + rotation) * this.v2.length * scale + offset.y,
-        this.thickness, 
+        this.thickness,
         this.color
-    );    
+    );
     ctx.beginPath();
     ctx.strokeStyle = this.color;
     ctx.strokeWidth = this.thickness;
@@ -26,6 +26,6 @@ SpriteLine.prototype.draw = function (scale, rotation, offset) {
 const Sprite = function (lines) {
     this.lines = (lines) ? lines : [];
 }
-Sprite.prototype.draw = function (offset, scale, rotation) {    
+Sprite.prototype.draw = function (offset, scale, rotation) {
     this.lines.forEach((line) => { line.draw(offset, scale, rotation) });
 }

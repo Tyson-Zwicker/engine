@@ -6,7 +6,7 @@
     It has functions to do update the position and facing,
     change the velocity and draw the sprites.
 */
-const Entity = function (name, sprites, position, angle, velocity, spin, mass) {
+const Entity = function (name, sprites, position, angle, velocity, spin, mass, radius) {
     this.name = name;
     this.position = position;
     this.angle = angle;
@@ -15,6 +15,7 @@ const Entity = function (name, sprites, position, angle, velocity, spin, mass) {
     this.sprites = sprites;
     this.mass = mass;
     this.parts = [];
+    this.radius = radius; //This should match the furthest point of any of the sprites from the entities center.
 }
 Entity.prototype.addPart = function (part) {
     this.parts.push(part);
@@ -35,8 +36,8 @@ Entity.prototype.push = function (vector) {
 }
 Entity.prototype.draw = function (camera, scale) {
     spriteLocation = {
-        x: (this.position.x - camera.x) * scale + canvas.width / 2,
-        y: (this.position.y - camera.y) * scale + canvas.height / 2
+        x: (this.position.x - camera.x) * scale + centerOfScreen.x,
+        y: (this.position.y - camera.y) * scale + centerOfScreen.y
     };
     this.sprites.forEach((s) => {
         s.draw(scale, this.angle, spriteLocation);
