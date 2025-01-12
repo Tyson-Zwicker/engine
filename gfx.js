@@ -85,3 +85,8 @@ const drawTextRight = function (x, y, text, size, color) {
 const rgbToHex =function (r,g,b){
     return `#${Math.trunc(r).toString(16)}${Math.trunc(g).toString(16)}${Math.trunc(b).toString(16)}`
 }
+function getTextWidth(text, font) {
+    ctx.font = font;
+    const metrics = context.measureText(text);
+    return metrics.width;
+}
