@@ -1,7 +1,13 @@
 let canvas = undefined;
 let ctx = undefined;
 let oldTime = Date.now();
+let camera = new Point(0, 0);
+let zoom = 1;
 const mouse = {
+    wheel: {
+        where: 0,
+        when: null
+    },
     move: {
         where: new Point(0, 0),
         when: null
@@ -25,6 +31,12 @@ const buildPage = function (framerate) {
     canvas.style.border = "0px";
     ctx = canvas.getContext('2d');
     body.appendChild(canvas);
+    canvas.onwheel = function (e) {
+        mouse.wheel = {
+            where: e.deltaY,
+            when: Date.now()
+        }
+    }
     canvas.onmousemove = function (e) {
         mouse.move = {
             where: new Point(e.clientX, e.clientY),
@@ -81,6 +93,7 @@ const mainLoop = function () {
             console.log('Nothing to loop.. yet?');
         }
     } else {
-        console.log('waiting for program to show up...');
+        console.log('waiting for program to show up..');
     }
+    mouse.wheel.where = 0;//reset the scroll 'wheel delta' to none (0)
 }
