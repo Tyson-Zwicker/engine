@@ -18,7 +18,7 @@
             new SpriteLine(0, 100, -100, -100, '#00f', 2)
         ]);
         const program = {
-            run: function (delta) {
+            run: function () {
                 //scale, rotation, offset
                 sprite1.draw(rad(45), { x: 400, y: 400 });
                 tattler.tell(new Tale('zoom', `${zoom}`, '#ccc'));

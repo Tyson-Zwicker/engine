@@ -5,6 +5,18 @@ let camera = new Point(0, 0);
 let zoom = 1;
 let zoomRate = 0.1;
 let zoomOnWheel = false;
+let delta = undefined;
+const centerOfScreen = { "x": window.innerWidth / 2, "y": window.innerHeight / 2 };
+const screenSize = { "x": window.innerWidth, "y": window.innerHeight };
+const shapeCanvas = function () {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    centerOfScreen.x = window.innerWidth / 2;
+    centerOfScreen.y = window.innerHeight / 2;
+    screenSize.x = window.innerWidth;
+    screenSize.y = window.innerHeight;
+}
+window.addEventListener("resize", shapeCanvas);
 const mouse = {
     wheel: {
         where: 0,
@@ -66,21 +78,11 @@ const buildPage = function (framerate, enableWheelZoom) {
     mainLoop()
     if (framerate) setInterval(mainLoop, framerate);
 }
-const centerOfScreen = { "x": window.innerWidth / 2, "y": window.innerHeight / 2 };
-const screenSize = { "x": window.innerWidth, "y": window.innerHeight };
-const shapeCanvas = function () {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    centerOfScreen.x = window.innerWidth / 2;
-    centerOfScreen.y = window.innerHeight / 2;
-    screenSize.x = window.innerWidth;
-    screenSize.y = window.innerHeight;
-}
-window.addEventListener("resize", shapeCanvas);
+
 const mainLoop = function () {
     let time = Date.now();
     //delta is how long since last update in milliseconds.
-    let delta = (time - oldTime) / 1000; //A percentage of 1 second.
+    delta = (time - oldTime) / 1000; //A percentage of 1 second.
     oldTime = time;
     if (program) {
         ctx.fillStyle = '#112';
@@ -89,7 +91,7 @@ const mainLoop = function () {
             drawTextLeft(10, 10, time.toString().substring(7), 1);
         } while (false);
         if (program.run) {
-            program.run(delta);
+            program.run();
         } else {
             console.log('Nothing to loop.. yet?');
         }

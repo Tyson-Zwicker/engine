@@ -18,7 +18,7 @@
         //Define stuff you want your main loop to have access to here.
         tattler = new Tattler('1em monospace', 10, 300);
         const program = {
-            run: function (delta) {
+            run: function () {
                 //This is the "main loop" of your program..
                 let tale = new Tale(`mouse @`, `(${mouse.move.where.x},${mouse.move.where.y}`, `#ff0`);
                 tattler.tellGroup(tale);

@@ -37,7 +37,7 @@
         );
         const buttonManager = new ButtonManager ([button1,button2]);
         const program = {
-            run: function (delta) {
+            run: function () {
                 buttonManager.check();
                 buttonManager.draw();
                 tattler.tattle();

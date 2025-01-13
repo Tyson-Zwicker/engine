@@ -98,13 +98,13 @@
         const buttonManager = new ButtonManager ([button1, button2, button3]);
 
         const program = {
-            run: function (delta) {
+            run: function () {
                 entity1.draw();
-                entity1.move(delta);
+                entity1.move();
                 entity2.draw();
-                entity2.move(delta);
+                entity2.move();
                 entity3.draw();
-                entity3.move(delta);
+                entity3.move();
                 let text = [
                     entity1.name,
                     `( ${entity1.position.x.toFixed(2)},${entity1.position.x.toFixed(2)})`,

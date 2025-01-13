@@ -21,7 +21,7 @@ Entity.prototype.addPart = function (part) {
     this.parts.push(part);
     part.owner = this;
 }
-Entity.prototype.move = function (delta) {
+Entity.prototype.move = function () {
     this.angle += this.spin * delta;
     this.position.x += this.velocity.x * delta;
     this.position.y += this.velocity.y * delta;
@@ -44,5 +44,24 @@ Entity.prototype.draw = function () {
     });
     this.parts.forEach((p) => {
         p.draw(spriteLocation);
+    });
+}
+
+const EntityManager = function (entities) {
+    this.entities = (entities) ? entities : new Map([]);
+}
+EntityManager.prototype.addEntity = function (entity){
+    if (this.entities.has (entity.name)){
+        throw error (`Entity with name ${entity.name} already exists.`);
+    }
+    this.entities.set (entity.name,entity);
+}
+EntityManager.prototype.removeEntity = function (entity){
+    this.entries.delete (entity.name);
+}
+EntityManager.prototype.process =function(){
+    map.forEach (function (key,value){
+        value.move();
+        value.draw();
     });
 }
