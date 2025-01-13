@@ -8,51 +8,64 @@
     <script src=".././sprite.js"></script>
     <script src=".././part.js"></script>
     <script src=".././entity.js"></script>
-    
+
 </head>
 
-<body onload="buildPage(33)" style="border:none">
+<body onload="buildPage(33,true)" style="border:none">
     <script>
         // this is where you use the tools to make your program
-            const sprite1 = new Sprite([
+        const sprite1 = new Sprite([
             new SpriteLine(0, -200, 100, 100, '#ff0', 3),
             new SpriteLine(100, 100, -100, 100, '#ff0', 4),
             new SpriteLine(-100, 100, 0, -200, '#ff0', 3)
         ]);
         const sprite2 = new Sprite([
             new SpriteLine(0, -70, 70, 70, '#f0f', 2),
-            new SpriteLine(70, 70,-70, 70, '#f0f', 2),
+            new SpriteLine(70, 70, -70, 70, '#f0f', 2),
             new SpriteLine(-70, 70, 0, -70, '#f0f', 2)
         ]);
         //name, sprites, position, angle, velocity, spin, mass
         const entity1 = new Entity(
             'Test1',
             [sprite1, sprite2],
-            { x: -230, y: -150 },
+            { x: 1500, y: 2500 },
             rad(45),
-            { x: 1, y: 1 }
-            , rad(25), 12000,150);
+            { x: -50, y: -50 }
+            , rad(10), 100, 150
+        );
         const entity2 = new Entity(
             'Test2',
             [sprite1, sprite2],
-            { x: -50, y: 100 },
-            rad(270),
+            { x: -1600, y: -3100 },
+            rad(325),
+            { x: 20, y: 20 }
+            , rad(10), 100, 150
+        );
+
+        const entity3 = new Entity(
+            'Test3',
+            [sprite1, sprite2],
+            { x: 0, y: 0 },
+            rad(rnd(0, 360)),
             { x: 3, y: -2 }
-            , rad(-10), 10,150);
+            , rad(25), 100, 150
+        );
         const partSprite = new Sprite([
             new SpriteLine(10, 10, -10, 10, '0f0', 1),
             new SpriteLine(-10, 10, -10, -10, '0f0', 1),
             new SpriteLine(-10, -10, 10, -10, '0f0', 1),
             new SpriteLine(10, -10, 10, 10, '0f0', 1),
         ]);
-        const part = new Part(partSprite, {'x':0, 'y':-20},0);
-        entity1.addPart (part);
+        const part = new Part(partSprite, { 'x': 0, 'y': -20 }, 0);
+        entity1.addPart(part);
         const program = {
             run: function (delta) {
                 entity1.draw();
                 entity1.move(delta);
                 entity2.draw();
                 entity2.move(delta);
+                entity3.draw();
+                entity3.move(delta);
             }
         };
     </script>
