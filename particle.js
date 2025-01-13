@@ -8,12 +8,12 @@ const Particle = function (position, velocity, lifespan, rgb) {
     this.blue = rgb.b;
     this.manager = null;
 }
-Particle.prototype.move = function (delta) {
+Particle.prototype.move = function () {    
     this.orientation = this.spin * delta;
     this.position = this.position.add(this.velocity.mult(delta));
     this.lifespan -= (delta * 1000);
 }
-Particle.prototype.draw = function (camera) {
+Particle.prototype.draw = function () {
     let x = (this.position.x - camera.x) * zoom + centerOfScreen.x;
     let y = (this.position.y - camera.y) * zoom + centerOfScreen.y;
     let lifePercent = this.lifespan / this.originalLifespan;
@@ -36,12 +36,12 @@ ParticleManager.prototype.addBurst = function (position, quantity, rgb, lifeMinM
         this.particles.push(particle);
     }
 }
-ParticleManager.prototype.manage = function (camera, delta) {
+ParticleManager.prototype.manage = function () {
     let alive = [];
     this.particles.forEach(particle => {
-        particle.draw(camera);
-        particle.move(delta);
-        if (particle.lifespan > 0) {
+        particle.draw();
+        particle.move();
+        if (particle.lifespan > 0) {            
             alive.push(particle);
         }
     });
