@@ -9,13 +9,14 @@ const Particle = function (position, velocity, lifespan, rgb) {
     this.manager = null;
 }
 Particle.prototype.move = function () {    
-    this.orientation = this.spin * delta;
-    this.position = this.position.add(this.velocity.mult(delta));
-    this.lifespan -= (delta * 1000);
+    console.log (_delta);
+    this.orientation = this.spin * _delta;
+    this.position = this.position.add(this.velocity.mult(_delta));
+    this.lifespan -= (_delta * 1000);
 }
 Particle.prototype.draw = function () {
-    let x = (this.position.x - camera.x) * zoom + centerOfScreen.x;
-    let y = (this.position.y - camera.y) * zoom + centerOfScreen.y;
+    let x = (this.position.x - _camera.x) * _zoom + _centerOfScreen.x;
+    let y = (this.position.y - _camera.y) * _zoom + _centerOfScreen.y;
     let lifePercent = this.lifespan / this.originalLifespan;
     let r = this.red * lifePercent;
     let g = this.green * lifePercent;

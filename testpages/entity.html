@@ -9,10 +9,9 @@
     <script src=".././entity.js"></script>
 </head>
 
-<body onload="buildPage(33,true)" style="border:none">
+<body onload="_start(33,true)" style="border:none">
     <script>
         // this is where you use the tools to make your program
-
         const sprite1 = new Sprite([
             new SpriteLine(0, -150, 100, 100, '#ff0', 3),
             new SpriteLine(100, 100, -100, 100, '#ff0', 3),
@@ -52,7 +51,6 @@
 
         const program = {
             run: function () {
-                let camera = { x: 0, y: 0 };
                 entity1.draw();
                 entity1.move();
                 entity2.draw();

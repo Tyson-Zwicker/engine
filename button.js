@@ -67,17 +67,17 @@ ButtonManager.prototype.draw = function () {
 ButtonManager.prototype.check = function () {
     let found = false;
     this.buttons.forEach((button) => {
-        if (bounded(mouse.move.where, button)) {
+        if (bounded(_mouse.move.where, button)) {
             found = true;
-            if (mouse.buttonDown === false && this.hovered !== button) { //a _newly_ hovered button
+            if (_mouse.buttonDown === false && this.hovered !== button) { //a _newly_ hovered button
                 this.hovered = button;
                 this.pressed = null;    //means whatever was pressed is free.
             }
-            else if (mouse.buttonDown === true && this.hovered === button) {
+            else if (_mouse.buttonDown === true && this.hovered === button) {
                 //The button was pressed while it hovered on this button..
                 this.pressed = button;
             }
-            else if (mouse.buttonDown === false && this.pressed === button) {
+            else if (_mouse.buttonDown === false && this.pressed === button) {
                 //The button was raised onthe same button it went down on..
                 button.action();
                 this.pressed = null;
@@ -85,7 +85,7 @@ ButtonManager.prototype.check = function () {
         }
     });
     if (!found) {
-        //The mouse isn't over anything, so nothing can be touched or hovered.
+        //The _mouse isn't over anything, so nothing can be touched or hovered.
         this.hovered = null;
         this.pressed = null;
     }

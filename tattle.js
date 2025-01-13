@@ -56,25 +56,25 @@ Tattler.prototype.tell = function (tale) {
 };
 /*  Draw a rectangle on the canvas and prints the Tales onto it. */
 Tattler.prototype.tattle = function () {
-    ctx.font = this.font;
-    var fM = ctx.measureText("A");
+    _ctx.font = this.font;
+    var fM = _ctx.measureText("A");
     let yd = fM.actualBoundingBoxAscent + fM.actualBoundingBoxDescent + 3;
     let y = window.innerHeight - (yd * this.lines);
     let w = this.width;
-    let x = canvas.width - w;
+    let x = _canvas.width - w;
     let h = yd * this.lines;
-    ctx.beginPath();
-    ctx.fillStyle = '#000';
-    ctx.fillRect(x, canvas.height - h - yd, w, h);
-    ctx.stroke();
-    ctx.closePath();
+    _ctx.beginPath();
+    _ctx.fillStyle = '#000';
+    _ctx.fillRect(x, _canvas.height - h - yd, w, h);
+    _ctx.stroke();
+    _ctx.closePath();
     for (let i = 0; i < this.tales.length; i++) {
-        ctx.beginPath();
-        ctx.fillStyle = this.tales[i].color;
-        ctx.fillText(`${this.tales[i].prefix} :${this.tales[i].message} :(${this.tales[i].count})`, x + 5, y);
+        _ctx.beginPath();
+        _ctx.fillStyle = this.tales[i].color;
+        _ctx.fillText(`${this.tales[i].prefix} :${this.tales[i].message} :(${this.tales[i].count})`, x + 5, y);
         y += yd;
-        ctx.closePath();
+        _ctx.closePath();
     }
-    ctx.stroke();
-    ctx.closePath();
+    _ctx.stroke();
+    _ctx.closePath();
 }

@@ -22,9 +22,9 @@ Entity.prototype.addPart = function (part) {
     part.owner = this;
 }
 Entity.prototype.move = function () {
-    this.angle += this.spin * delta;
-    this.position.x += this.velocity.x * delta;
-    this.position.y += this.velocity.y * delta;
+    this.angle += this.spin * _delta;
+    this.position.x += this.velocity.x * _delta;
+    this.position.y += this.velocity.y * _delta;
 }
 Entity.prototype.spin = function (force) {
     this.velocity.x += cos(vector.a) * vector.l / this.mass;
@@ -36,9 +36,10 @@ Entity.prototype.push = function (vector) {
 }
 Entity.prototype.draw = function () {
     spriteLocation = {
-        x: (this.position.x - camera.x) * zoom + centerOfScreen.x,
-        y: (this.position.y - camera.y) * zoom + centerOfScreen.y
+        x: (this.position.x - _camera.x) * _zoom + _centerOfScreen.x,
+        y: (this.position.y - _camera.y) * _zoom + _centerOfScreen.y
     };
+    console.log (`sprite location: ${spriteLocation.x}, ${spriteLocation.y}`);
     this.sprites.forEach((s) => {
         s.draw(this.angle, spriteLocation);
     });
@@ -53,7 +54,8 @@ const EntityManager = function (entities) {
     });
 }
 EntityManager.prototype.manage = function () {
-    let keys = this.entities.keys();    
+    let keys = this.entities.keys();
+    
     for (let key of keys){
         let entity = this.entities.get (key);
         entity.move();

@@ -9,7 +9,7 @@
 
 </head>
 
-<body onload="buildPage(33,true)" style="border:none">
+<body onload="_start(33,true)" style="border:none">
     <script>
         let tattler = new Tattler('1em monospace', 10, 200);
         const sprite1 = new Sprite([
@@ -21,8 +21,8 @@
             run: function () {
                 //scale, rotation, offset
                 sprite1.draw(rad(45), { x: 400, y: 400 });
-                tattler.tell(new Tale('zoom', `${zoom}`, '#ccc'));
-                tattler.tell(new Tale('wheel', `${mouse.wheel.where}`, '#ccc'));
+                tattler.tell(new Tale('_zoom', `${_zoom}`, '#ccc'));
+                tattler.tell(new Tale('wheel', `${_mouse.wheel.where}`, '#ccc'));
                 tattler.tattle();
             }
         };

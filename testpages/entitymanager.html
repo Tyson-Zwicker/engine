@@ -9,7 +9,7 @@
     <script src=".././entity.js"></script>
 </head>
 
-<body onload="buildPage(33,true)" style="border:none">
+<body onload="_start(33,true)" style="border:none">
     <script>
         // this is where you use the tools to make your program
 
@@ -52,7 +52,6 @@
         const entityManager = new EntityManager([entity1, entity2, entity3]);
         const program = {
             run: function () {
-                let camera = { x: 0, y: 0 };
                 entityManager.manage();
             }
         };

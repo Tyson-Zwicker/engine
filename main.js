@@ -1,23 +1,18 @@
-let canvas = undefined;
-let ctx = undefined;
-let oldTime = Date.now();
-let camera = new Point(0, 0);
-let zoom = 1;
-let zoomRate = 0.1;
-let zoomOnWheel = false;
-let delta = undefined;
-const centerOfScreen = { "x": window.innerWidth / 2, "y": window.innerHeight / 2 };
-const screenSize = { "x": window.innerWidth, "y": window.innerHeight };
-const shapeCanvas = function () {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    centerOfScreen.x = window.innerWidth / 2;
-    centerOfScreen.y = window.innerHeight / 2;
-    screenSize.x = window.innerWidth;
-    screenSize.y = window.innerHeight;
-}
-window.addEventListener("resize", shapeCanvas);
-const mouse = {
+let _canvas = undefined;
+let _ctx = undefined;
+const _camera = new Point(0, 0);
+let trackingcamera
+let _zoom = 1;
+let _zoomRate = 0.1;
+let _zoomOnWheel = false;
+let _delta = undefined;
+let _oldTime = new Date();
+let _time = new Date();
+const _centerOfScreen = { "x": window.innerWidth / 2, "y": window.innerHeight / 2 };
+const _screenSize = { "x": window.innerWidth, "y": window.innerHeight };
+
+
+const _mouse = {
     wheel: {
         where: 0,
         when: null
@@ -36,62 +31,70 @@ const mouse = {
     },
     buttonDown: false
 }
-const log = function (obj){
-    console.log (obj);
+const _resizeCanvas = function () {
+    _canvas.width = window.innerWidth;
+    _canvas.height = window.innerHeight;
+    _centerOfScreen.x = window.innerWidth / 2;
+    _centerOfScreen.y = window.innerHeight / 2;
+    _screenSize.x = window.innerWidth;
+    _screenSize.y = window.innerHeight;
 }
-const buildPage = function (framerate, enableWheelZoom) {
-    zoomOnWheel = enableWheelZoom;
+const _start = function (framerate, enableWheelZoom) {
+    _zoomOnWheel = enableWheelZoom;
     let body = document.getElementsByTagName('body')[0];
     body.style.margin = "0px";
-    canvas = document.createElement('canvas');
-    canvas.style.padding = "0px 0px 0px 0px";
-    canvas.style.margin = "0px 0px 0px 0px";
-    canvas.style.border = "0px";
-    ctx = canvas.getContext('2d');
-    body.appendChild(canvas);
-    canvas.onwheel = function (e) {
-        mouse.wheel = {
+    _canvas = document.createElement('canvas');
+    _canvas.style.padding = "0px 0px 0px 0px";
+    _canvas.style.margin = "0px 0px 0px 0px";
+    _canvas.style.border = "0px";
+    _ctx = _canvas.getContext('2d');
+    body.appendChild(_canvas);
+    window.addEventListener("resize", _resizeCanvas);
+    _canvas.onwheel = function (e) {
+        _mouse.wheel = {
             where: e.deltaY,
             when: Date.now()
         }
     }
-    canvas.onmousemove = function (e) {
-        mouse.move = {
+    _canvas.onmousemove = function (e) {
+        _mouse.move = {
             where: new Point(e.clientX, e.clientY),
             when: Date.now()
         }
     }
-    canvas.onmousedown = function (e) {
-        mouse.down = {
+    _canvas.onmousedown = function (e) {
+        _mouse.down = {
             where: new Point(e.clientX, e.clientY),
             when: Date.now(),
 
         };
-        mouse.buttonDown = true;
+        _mouse.buttonDown = true;
     }
-    canvas.onmouseup = function (e) {
-        mouse.up = {
+    _canvas.onmouseup = function (e) {
+        _mouse.up = {
             where: new Point(e.clientX, e.clientY),
             when: Date.now(),
 
         };
-        mouse.buttonDown = false;
+        _mouse.buttonDown = false;
     }
-    shapeCanvas();
-    mainLoop()
-    if (framerate) setInterval(mainLoop, framerate);
+    _resizeCanvas();
+
+    _mainLoop()
+    if (framerate) setInterval(_mainLoop, framerate);
 }
 
-const mainLoop = function () {
-    let time = Date.now();
-    //delta is how long since last update in milliseconds.
-    delta = (time - oldTime) / 1000; //A percentage of 1 second.
-    oldTime = time;
+const _mainLoop = function () {
+    _time = Date.now();
+    _delta = (_time - _oldTime) / 1000; //the fraction of 1 second since last loop.
+    _oldTime = _time;
+    console.log (`mainloop delta ${_delta}`);
+    
     if (program) {
-        ctx.fillStyle = '#112';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        _ctx.fillStyle = '#112';
+        _ctx.fillRect(0, 0, _canvas.width, _canvas.height);
         do {
-            drawTextLeft(10, 10, time.toString().substring(7), 1);
+            drawTextLeft(10, 10, _time.toString().substring(7), 1);
         } while (false);
         if (program.run) {
             program.run();
@@ -102,16 +105,16 @@ const mainLoop = function () {
         console.log('waiting for program to show up..');
     }
 
-    if (zoomOnWheel && mouse.wheel.where !== 0) {
-        let sign = Math.sign(mouse.wheel.where);
-        zoom += sign * zoomRate;
-        if (zoom < 0.02) {
-            zoom = 0.02;
+    if (_zoomOnWheel && _mouse.wheel.where !== 0) {
+        let sign = Math.sign(_mouse.wheel.where);
+        _zoom += sign * _zoomRate;
+        if (_zoom < 0.02) {
+            _zoom = 0.02;
         }
-        if (zoom > 1) {
-            zoom = 1;
+        if (_zoom > 1) {
+            _zoom = 1;
         }
-        console.log(`zoom ${zoom}, sign ${sign}`);
     }
-    mouse.wheel.where = 0;//reset the scroll 'wheel delta' to none (0)
+    _mouse.wheel.where = 0;//reset the scroll 'wheel _delta' to none (0)
+    
 }

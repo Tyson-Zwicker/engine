@@ -8,8 +8,8 @@ const Part = function (sprite, offset, orientation) {
 Part.prototype.draw = function (ownerLocation) {
     let x = ownerLocation.x;
     let partLocation = {
-        x: ownerLocation.x + cos(this.offset.angle+this.owner.angle) * this.offset.length * zoom,
-        y: ownerLocation.y + sin(this.offset.angle+this.owner.angle) * this.offset.length * zoom
+        x: ownerLocation.x + cos(this.offset.angle+this.owner.angle) * this.offset.length * _zoom,
+        y: ownerLocation.y + sin(this.offset.angle+this.owner.angle) * this.offset.length * _zoom
     };
     let orientation = this.orientation + this.owner.angle;
     this.sprite.draw(orientation, partLocation);

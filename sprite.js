@@ -12,16 +12,16 @@ const SpriteLine = function (x0, y0, x1, y1, color, thickness) {
 }
 SpriteLine.prototype.draw = function (rotation, offset) {
     drawLine(
-        cos(this.v1.angle + rotation) * this.v1.length * zoom + offset.x,
-        sin(this.v1.angle + rotation) * this.v1.length * zoom + offset.y,
-        cos(this.v2.angle + rotation) * this.v2.length * zoom + offset.x,
-        sin(this.v2.angle + rotation) * this.v2.length * zoom + offset.y,
+        cos(this.v1.angle + rotation) * this.v1.length * _zoom + offset.x,
+        sin(this.v1.angle + rotation) * this.v1.length * _zoom + offset.y,
+        cos(this.v2.angle + rotation) * this.v2.length * _zoom + offset.x,
+        sin(this.v2.angle + rotation) * this.v2.length * _zoom + offset.y,
         this.thickness,
         this.color
     );
-    ctx.beginPath();
-    ctx.strokeStyle = this.color;
-    ctx.strokeWidth = this.thickness;
+    _ctx.beginPath();
+    _ctx.strokeStyle = this.color;
+    _ctx.strokeWidth = this.thickness;
 }
 const Sprite = function (lines) {
     this.lines = (lines) ? lines : [];

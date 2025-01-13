@@ -12,7 +12,7 @@
     <script src=".././entitylabel.js"></script>
 </head>
 
-<body onload="buildPage(33,true)" style="border:none">
+<body onload="_start(33,true)" style="border:none">
     <script>
         // this is where you use the tools to make your program
 
@@ -28,7 +28,7 @@
         ]);
         //name, sprites, position, angle, velocity, spin, mass
         const entity1 = new Entity(
-            'Test1',
+            'TestA',
             [sprite1, sprite2],
             { x: 1500, y: 2500 },
             rad(45),
@@ -36,21 +36,20 @@
             , 0, 100, 150
         );
         const entity2 = new Entity(
-            'Test2',
+            'TestBB',
             [sprite1, sprite2],
             { x: -1600, y: -3100 },
             rad(325),
             { x: 20, y: 20 }
             , rad(10), 100, 150
         );
-
         const entity3 = new Entity(
-            'Test3',
+            'TestCCC',
             [sprite1, sprite2],
-            { x: 0, y: 0 },
-            rad(rnd(0, 360)),
-            { x: 3, y: -2 }
-            , rad(25), 100, 150
+            { x: 1600, y: -2600 },
+            rad(325),
+            { x: 20, y: 20 }
+            , rad(10), 100, 150
         );
         const entityLabel1 = new EntityLabel(entity1, .66, '#F00');
         const entityLabel2 = new EntityLabel(entity2, .66, '#00F');

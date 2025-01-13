@@ -12,7 +12,7 @@
     <script src=".././entitylabel.js"></script>
 </head>
 
-<body onload="buildPage(33,true)" style="border:none">
+<body onload="_start(33,true)" style="border:none">
     <script>
         // this is where you use the tools to make your program
    
@@ -57,16 +57,16 @@
         const entityLabel3 = new EntityLabel(entity3, .66, '#F00');
 
         function showEntity1 (){
-            camera.x = entity1.position.x;
-            camera.y = entity1.position.y;
+            _camera.x = entity1.position.x;
+            _camera.y = entity1.position.y;
         }
         function showEntity2 (){
-            camera.x = entity2.position.x;
-            camera.y = entity2.position.y;
+            _camera.x = entity2.position.x;
+            _camera.y = entity2.position.y;
         }
         function showEntity3 (){
-            camera.x = entity3.position.x;
-            camera.y = entity3.position.y;
+            _camera.x = entity3.position.x;
+            _camera.y = entity3.position.y;
         }
         const button1 = new Button(
             'button1',
