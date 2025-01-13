@@ -36,6 +36,9 @@ const mouse = {
     },
     buttonDown: false
 }
+const log = function (obj){
+    console.log (obj);
+}
 const buildPage = function (framerate, enableWheelZoom) {
     zoomOnWheel = enableWheelZoom;
     let body = document.getElementsByTagName('body')[0];
