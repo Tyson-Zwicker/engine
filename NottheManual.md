@@ -38,6 +38,7 @@ Once `buildPage` has been called, you will have access to the follow Global Leve
   * ctx: This is the "2D context" of the afore  mention canvas.  You *can* draw on it.  There are other libraries that will make that a lot easier for you.
   * mouse: This knows what the mouse did left cycle.  It knows where and went the mouse moved, got pressed, and got released, also what the button is upto right this second.
   * zoom: scales the graphics.  A value of 1 shows everything full size, values less than 1 will "zoom out" all the graphics.
+  *  zoomRate: the speed at which it zooms.  Defaults to 0.02.
   * camera: a Point (x,y) changes the "world coordinates" that is considered to be the center of the screen, causing all the graphics to be offset by the x,y values.
   * key : I have not written this in yet. **> TODO <**
   
