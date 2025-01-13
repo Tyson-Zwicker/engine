@@ -1,0 +1,62 @@
+<html>
+
+<head>
+    <script src=".././maths.js"></script>
+    <script src=".././gfx.js"></script>
+    <script src=".././main.js"></script>
+    <script src=".././sprite.js"></script>
+    <script src=".././part.js"></script>
+    <script src=".././entity.js"></script>
+</head>
+
+<body onload="buildPage(33,true)" style="border:none">
+    <script>
+        // this is where you use the tools to make your program
+
+        const sprite1 = new Sprite([
+            new SpriteLine(0, -150, 100, 100, '#ff0', 3),
+            new SpriteLine(100, 100, -100, 100, '#ff0', 3),
+            new SpriteLine(-100, 100, 0, -150, '#ff0', 3)
+        ]);
+        const sprite2 = new Sprite([
+            new SpriteLine(0, -90, 70, 70, '#f00', 2),
+            new SpriteLine(70, 70, -70, 70, '#0ff', 2),
+            new SpriteLine(-70, 70, 0, -90, '#0f0', 2)
+        ]);
+        //name, sprites, position, angle, velocity, spin, mass
+        const entity1 = new Entity(
+            'Test1',
+            [sprite1, sprite2],
+            { x: 1500, y: 2500 },
+            rad(45),
+            { x: -50, y: -50 }
+            , 0, 100, 150
+        );
+        const entity2 = new Entity(
+            'Test2',
+            [sprite1, sprite2],
+            { x: -1600, y: -3100 },
+            rad(325),
+            { x: 20, y: 20 }
+            , rad(10), 100, 150
+        );
+
+        const entity3 = new Entity(
+            'Test3',
+            [sprite1, sprite2],
+            { x: 0, y: 0 },
+            rad(rnd(0, 360)),
+            { x: 3, y: -2 }
+            , rad(25), 100, 150
+        );
+        const entityManager = new EntityManager([entity1, entity2, entity3]);
+        const program = {
+            run: function () {
+                let camera = { x: 0, y: 0 };
+                entityManager.manage();
+            }
+        };
+    </script>
+</body>
+
+</html>
