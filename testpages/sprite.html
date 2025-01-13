@@ -6,13 +6,12 @@
     <script src=".././main.js"></script>
     <script src=".././tattle.js"></script>
     <script src=".././sprite.js"></script>
-    <script src=".././part.js"></script>
-    <script src=".././entity.js"></script>
+
 </head>
 
-<body onload="buildPage(33)" style="border:none">
+<body onload="buildPage(33,true)" style="border:none">
     <script>
-       
+        let tattler = new Tattler('1em monospace', 10, 200);
         const sprite1 = new Sprite([
             new SpriteLine(-100, -100, 100, -100, '#f00', 2),
             new SpriteLine(100, -100, 0, 100, '#0f0', 2),
@@ -21,7 +20,10 @@
         const program = {
             run: function (delta) {
                 //scale, rotation, offset
-                sprite1.draw ( rad (45),{x:400,y:400});
+                sprite1.draw(rad(45), { x: 400, y: 400 });
+                tattler.tell(new Tale('zoom', `${zoom}`, '#ccc'));
+                tattler.tell(new Tale('wheel', `${mouse.wheel.where}`, '#ccc'));
+                tattler.tattle();
             }
         };
     </script>
