@@ -6,7 +6,7 @@ There is a manual, I am still writing that.  This document is more a walk throug
 
 *This assumes you have a web server and a web browser- It is a JavaScript project, afterall. If not, download VSCode, YouTube how to run an extension called LiveServer, and use it. Or do it your own way, Or wait for that manual I allude to.*
 
-pull git@github.com:Tyson-Zwicker/engine.git for the files.
+git@github.com:Tyson-Zwicker/engine.git for the files.
 
 The project currently consists of a directory called `testpages` and a series of javascript files in the project root.   Most of the javascript files have a corresponding test page.  There is also an html file in the `testpages` directory called `blank.html`.  When you create your program, make a copy of `blank.html` and use it as a template.
 
@@ -37,6 +37,8 @@ Once `buildPage` has been called, you will have access to the follow Global Leve
   * canvas: It will refer to the one you've already seen with the timestamp.  You cannot draw directly to the canvas, you must use it's 'context'.
   * ctx: This is the "2D context" of the afore  mention canvas.  You *can* draw on it.  There are other libraries that will make that a lot easier for you.
   * mouse: This knows what the mouse did left cycle.  It knows where and went the mouse moved, got pressed, and got released, also what the button is upto right this second.
+  * zoom: scales the graphics.  A value of 1 shows everything full size, values less than 1 will "zoom out" all the graphics.
+  * camera: a Point (x,y) changes the "world coordinates" that is considered to be the center of the screen, causing all the graphics to be offset by the x,y values.
   * key : I have not written this in yet. **> TODO <**
   
 ###Mouse
@@ -44,12 +46,14 @@ Once `buildPage` has been called, you will have access to the follow Global Leve
 Information about what the mouse was been up to is available by the appropriately named "mouse". It is a global constant.
 
   * **mouse.move.when**:  timestamp of the last time the mouse moved.
-  *  **mouse.move.where**: is a point (x,y) where the last known mouse coordinates.
-  *  **mouse.down.when**:  timestamp of the last time the mouse's left button was pressed.
-  *  **mouse.down.where**: is a point (x,y) where the mouse was last located when the mouse button was pressed.
-  *  **mouse.up.when**:    timestamp ofthe last time the left mouse button was released.
-  *  **mouse.up.where**:   is a point (x,y) where them ouse was last located when the mouse button was released.
-  *  **mouse.buttonDown**:   true ifleft mouse button pressed down, false if not.
+  * **mouse.move.where**: is a point (x,y) where the last known mouse coordinates.
+  * **mouse.down.when**:  timestamp of the last time the mouse's left button was pressed.
+  * **mouse.down.where**: is a point (x,y) where the mouse was last located when the mouse button was pressed.
+  * **mouse.up.when**:    timestamp ofthe last time the left mouse button was released.
+  * **mouse.up.where**:   is a point (x,y) where them ouse was last located when the mouse button was released.
+  * **mouse.buttonDown**:   true if left mouse button pressed down, false if not.
+  * **mouse.wheel.where**: returns the delta of the mouse scroll wheel in pixels.
+  * **mosue.wheel.when**: timestamp of the last mouse scroll wheel turn.
 
 There is nothing more to the mouse.  The information is always there.  Other things, like "Button", use it a lot. The concept of a "Point" will be touched on in much detail in section on `math.js`.
 
@@ -91,7 +95,7 @@ It provides two data structures:
 
 You can create a point with:
 
-     let myPoint = new Point (x,y);
+`let myPoint = new Point (x,y);`
 
 It has three methods:
 
@@ -112,7 +116,7 @@ It has three methods:
 You can create a vectow with
 
      let myVector = new Vector (angle,length);
-
+b
 Vector has a single method:
 
 * toPoint(): This will convert the vector to a Point.
@@ -189,30 +193,44 @@ The following code will add a Tattle to the lower right hand corner of the scree
                 }
             };
         </script>
-So what does all this nonsense do!?  It tells the tattler three "tales" about the mouse and the tales get told at the end.
 
 **Tale**
 
-  * prefix - used for grouping similar messages to gether.
+Constructor Parameters:
+  * prefix - used for grouping similar messages together.
   * message - the message you want to show on the Tattler
   * color - the color you want that message to be shown in.
 
-Tales are stories you want to be shown.  They come with an prefix, which can help them to group together things that similar, or you can ignore the prefix and it will just scroll your messages. Next follows a message you want shown and finally, optional color (defaults to white).
+Tales are messages you want to be shown.  They come with prefix, which can help them to group together things that similar, or you can ignore the prefix and it will just scroll your messages. Next follows a message you want shown and finally, optional color (defaults to white).
+
 
 **Tattler**
 
-This is the that collects all the Tales and, when asked, draw them all. It handles culling messages that have scrolled out of the viewable area, clipping text that's to wide, and actually drawing the rectangular background and the words.
-You don't have to do anything special with it, just tell it to Tattle(), and it will.
+This is the that collects all the Tales and, when asked, draw them all. It handles culling messages that have scrolled out of the viewable area, clipping text that's to wide, and actually drawing the rectangular background and the words.  You don't have to do anything special with it, just tell it to Tattle(), and it will. The tattler is always drawn in the lower right hand of the window.
+
+Constructor Parameters:
+ * font
+ * line spacing
+ * height
 
 **Important note**: Its is best to collect tales through out a program cycle and tattle *only once* at the *end* of the loop once everything else has
 finished drawing.
 
-*So that's the Tattler, sometimes useful,entirely optional.*
+If you want you want the messages grouped use:
 
+`tellGroup (tale);`
+
+If you don't care about grouping them:
+
+`tell (tale);`
+
+And to make it tell:
+
+`tattle()`
 
 ## Sprite ##
 
-Sprite are very simple vector graphics: they're just a bunch of colored lines, that can be different colors.  You and turn them, scale them, and move them around the screen.
+Sprite are very simple vector graphics: they're just a bunch of colored lines, that can be different colors.  You and rotate them, scale them, and move them around the screen.
 
     <script>
         // this is where you use the tools to make your program
@@ -223,7 +241,7 @@ Sprite are very simple vector graphics: they're just a bunch of colored lines, t
         ]);
         const program = {
             run: function (delta) {
-                sprite1.draw (1, rad (45),{x:400,y:400});
+                sprite1.draw (rad (45),{x:400,y:400});
             }
         };
     </script>
@@ -234,14 +252,16 @@ The first thing this does is define a yellow (#ff0) triangle, each line has a th
 
   * x0,y0,x1,y1 : Cartension coordinates that define start and end point for line.  The center of the sprite is 0,0. Note this has nothing to to the center of the window or the canvas. These coordinates are relative to the sprite's own center.
   * color: The color that the line should have.  In our example '#ff0' makes yellow.
-  * thichness:  how thick the colored line should be drawn. Two pixels in this example.
+  * thickness:  how thick the colored line should be drawn. Two pixels in this example.
 
 a **sprite** has one function: **draw**. It's parameters are:
 
-  * scale: 1 is "normal". Larger numbers will make the sprite appear bigger.  Above zero, but below one, will make theimages appear smaler and closer togher.
-  * 
   * rotation: the amount to rotate the sprite. This is in Radians.
   * offset: where on the screen the sprite should consider its center (0,0) so it can draw itself in the right place
+
+To scale the sprites, set the global variable *zoom* to a value greater than 0 and less than 1.  A value of 1 will scale them to their specified size, a number under 1 will "zoom out" the sprites.
+
+There is also a global variable *camera* which is Point.  Setting it change the "world coordinates", and will offset all the sprites accordingly.
   
 ## Entities ##
 
