@@ -3,6 +3,8 @@ let ctx = undefined;
 let oldTime = Date.now();
 let camera = new Point(0, 0);
 let zoom = 1;
+let zoomRate = 0.1;
+let zoomOnWheel = false;
 const mouse = {
     wheel: {
         where: 0,
@@ -22,7 +24,8 @@ const mouse = {
     },
     buttonDown: false
 }
-const buildPage = function (framerate) {
+const buildPage = function (framerate, enableWheelZoom) {
+    zoomOnWheel = enableWheelZoom;
     let body = document.getElementsByTagName('body')[0];
     body.style.margin = "0px";
     canvas = document.createElement('canvas');
@@ -59,8 +62,6 @@ const buildPage = function (framerate) {
         };
         mouse.buttonDown = false;
     }
-    //TODO: Add wheel support, change the "zoom" level.
-    //Also where is "zoom" actually defined... or is it just hard coded as 1 everywhere?
     shapeCanvas();
     mainLoop()
     if (framerate) setInterval(mainLoop, framerate);
@@ -94,6 +95,18 @@ const mainLoop = function () {
         }
     } else {
         console.log('waiting for program to show up..');
+    }
+
+    if (zoomOnWheel && mouse.wheel.where !== 0) {
+        let sign = Math.sign(mouse.wheel.where);
+        zoom += sign * zoomRate;
+        if (zoom < 0.02) {
+            zoom = 0.02;
+        }
+        if (zoom > 1) {
+            zoom = 1;
+        }
+        console.log(`zoom ${zoom}, sign ${sign}`);
     }
     mouse.wheel.where = 0;//reset the scroll 'wheel delta' to none (0)
 }
