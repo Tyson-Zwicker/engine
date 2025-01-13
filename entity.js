@@ -46,22 +46,26 @@ Entity.prototype.draw = function () {
         p.draw(spriteLocation);
     });
 }
-
 const EntityManager = function (entities) {
-    this.entities = (entities) ? entities : new Map([]);
-}
-EntityManager.prototype.addEntity = function (entity){
-    if (this.entities.has (entity.name)){
-        throw error (`Entity with name ${entity.name} already exists.`);
-    }
-    this.entities.set (entity.name,entity);
-}
-EntityManager.prototype.removeEntity = function (entity){
-    this.entries.delete (entity.name);
-}
-EntityManager.prototype.process =function(){
-    map.forEach (function (key,value){
-        value.move();
-        value.draw();
+    this.entities = new Map();
+    entities.forEach (entity =>{
+        this.entities.set (entity.name, entity);
     });
+}
+EntityManager.prototype.manage = function () {
+    let keys = this.entities.keys();    
+    for (let key of keys){
+        let entity = this.entities.get (key);
+        entity.move();
+        entity.draw();
+    }
+}
+EntityManager.prototype.addEntity = function (entity) {
+    if (this.entities.has(entity.name)) {
+        throw error(`Entity with name ${entity.name} already exists.`);
+    }
+    this.entities.set(entity.name, entity);
+}
+EntityManager.prototype.removeEntity = function (entity) {
+    this.entries.delete(entity.name);
 }
