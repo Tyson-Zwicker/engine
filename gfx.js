@@ -4,7 +4,6 @@ const drawBox = function (x0, y0, x1, y1, color, fill, thickness) {
         ctx.fillStyle = color;
         ctx.fillRect(x0, y0, x1 - x0, y1 - y0);
     } else {
-        ctx.strokeWidth = 1;
         ctx.strokeStyle = color;
         ctx.lineWidth = (thickness) ? thickness : 1;
         ctx.strokeRect(x0, y0, x1 - x0, y1 - y0);
@@ -13,7 +12,6 @@ const drawBox = function (x0, y0, x1, y1, color, fill, thickness) {
 }
 const drawArc = function (x, y, r, a0, a1, color, thickness) {
     ctx.beginPath();
-    ctx.strokeWidth = 1;
     ctx.strokeStyle = color;
     ctx.lineWidth = (thickness) ? thickness : 1;
     ctx.arc(x, y, r, a0, a1);
@@ -33,7 +31,6 @@ const drawPie = function (x, y, r, a0, a1, color, fill, thickness) {
     let x1 = x + cos(a1) * r;
     let y1 = y + sin(a1) * r;
     ctx.beginPath();
-    ctx.lineWidth = 1;
     ctx.strokeStyle = color;
     ctx.moveTo(x, y);
     ctx.lineTo(x0, y0);
@@ -48,13 +45,13 @@ const drawPie = function (x, y, r, a0, a1, color, fill, thickness) {
 }
 const drawPixel = function (x, y, color) {
     let previousSize = ctx.strokeWidth;
-    let strokeStyle = 1;
+    let lineWidth = 1;
     drawBox(x, y, x + 1, y + 1, color);
     ctx.strokeWidth = previousSize;
 }
 const drawLine = function (x0, y0, x1, y1, thickness, color) {
     ctx.strokeStyle = (color) ? color : '#fff';
-    ctx.strokeWidth = (thickness) ? thickness : 1;
+    ctx.lineWidth = (thickness) ? thickness : 1;
     ctx.beginPath();
     ctx.moveTo(x0, y0);
     ctx.lineTo(x1, y1);
