@@ -27,5 +27,5 @@ const Sprite = function (lines) {
     this.lines = (lines) ? lines : [];
 }
 Sprite.prototype.draw = function (rotation, offset) {
-    this.lines.forEach((line) => { line.draw(rotation,offset) });
+    this.lines.forEach((line) => { line.draw(rotation, offset) });
 }
