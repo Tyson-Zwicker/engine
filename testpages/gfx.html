@@ -14,25 +14,26 @@
             run: function (delta) {
                 drawBox(50, 50, 500, 500, '#a0a', false,3);
                 drawCircle(275, 275, 100, '#0f0');
-                drawPie(275, 275, 75, 0.3, 2.1, '#306', true);
+                drawPie(275, 275, 75, 0.3, 2.1, '#306', true,5);
                 drawBox(75, 75, 475, 475, '#ff0', false);
-                drawArc(275, 275, 125, 0.1, 1.97, '#f00');
-                drawArc(275, 275, 125, 1.97, 3.37, '#0ff');
+                drawArc(275, 275, 125, 0.1, 1.97, '#f00',3);
+                drawArc(275, 275, 125, 1.97, 3.37, '#0ff',1);
                 drawPie(275, 275, 125, 3.37, TAU, '#041', true);
                 for (let i = 0; i < 500; i++) {
                     drawPixel(rnd(250, 300), rnd(250, 300), '#0ff');
                 }
                 drawLine(50, 600, 500, 600, 1, '#00f');
-                drawLine(50, 650, 500, 650, 1, '#00f');
+                drawLine(50, 650, 500, 650, 5, '#00f');
+                drawBox (10,400,50,500,'#fff',false,10);
                 drawLine(275, 550, 275, 800, 1, '#f00');
                 drawTextRight (275,600,'Heyya',2);
                 drawTextLeft  (275,600,'World',2);
                 drawTextCenter(275,650,'Surly this just Works.',2);
                 drawBox (10,400,50,500,'#0ff',true);
-                drawBox (10,400,50,500,'#fff',false,10);
+              
                 drawBox (90,500,120,550,'#f0f',true);
                 drawBox (90,500,120,550,'#f60',false,5);
-                
+                drawLine(75, 950, 575, 0, 1, '#fff');
             }
         };
 
