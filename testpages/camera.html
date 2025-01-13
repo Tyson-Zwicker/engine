@@ -1,0 +1,134 @@
+<html>
+
+<head>
+    <script src=".././maths.js"></script>
+    <script src=".././gfx.js"></script>
+    <script src=".././main.js"></script>
+    <script src=".././tattle.js"></script>
+    <script src=".././button.js"></script>
+    <script src=".././sprite.js"></script>
+    <script src=".././part.js"></script>
+    <script src=".././entity.js"></script>
+    <script src=".././entitylabel.js"></script>
+</head>
+
+<body onload="buildPage(33,true)" style="border:none">
+    <script>
+        // this is where you use the tools to make your program
+   
+        const sprite1 = new Sprite([
+            new SpriteLine(0, -150, 100, 100, '#ff0', 3),
+            new SpriteLine(100, 100, -100, 100, '#ff0', 3),
+            new SpriteLine(-100, 100, 0, -150, '#ff0', 3)
+        ]);
+        const sprite2 = new Sprite([
+            new SpriteLine(0, -90, 70, 70, '#f00', 2),
+            new SpriteLine(70, 70, -70, 70, '#0ff', 2),
+            new SpriteLine(-70, 70, 0, -90, '#0f0', 2)
+        ]);
+        //name, sprites, position, angle, velocity, spin, mass
+        const entity1 = new Entity(
+            'Test1',
+            [sprite1, sprite2],
+            { x: 1500, y: 2500 },
+            rad(45),
+            { x: -50, y: -50 }
+            , 0, 100, 150
+        );
+        const entity2 = new Entity(
+            'Test2',
+            [sprite1, sprite2],
+            { x: -1600, y: -3100 },
+            rad(325),
+            { x: 20, y: 20 }
+            , rad(10), 100, 150
+        );
+
+        const entity3 = new Entity(
+            'Test3',
+            [sprite1, sprite2],
+            { x: 0, y: 0 },
+            rad(rnd(0, 360)),
+            { x: 3, y: -2 }
+            , rad(25), 100, 150
+        );
+        const entityLabel1 = new EntityLabel(entity1, .66, '#F00');
+        const entityLabel2 = new EntityLabel(entity2, .66, '#00F');
+        const entityLabel3 = new EntityLabel(entity3, .66, '#F00');
+
+        function showEntity1 (){
+            camera.x = entity1.position.x;
+            camera.y = entity1.position.y;
+        }
+        function showEntity2 (){
+            camera.x = entity2.position.x;
+            camera.y = entity2.position.y;
+        }
+        function showEntity3 (){
+            camera.x = entity3.position.x;
+            camera.y = entity3.position.y;
+        }
+        const button1 = new Button(
+            'button1',
+            'Show 1',
+            30, 40, 180, 70,
+             1.1,
+            '#700', '#aa0',
+            '#00f', '#0ff',
+            showEntity1
+        );
+        const button2 = new Button(
+            'button2',
+            'Show 2',
+            30, 75, 180, 105,
+             1.1,
+            '#700', '#aa0',
+            '#00f', '#0ff',
+            showEntity2
+        );
+        const button3 = new Button(
+            'button3',
+            'Show 3',
+            30, 110, 180, 140,
+             1.1,
+            '#700', '#aa0',
+            '#00f', '#0ff',
+            showEntity3
+        );
+        const buttonManager = new ButtonManager ([button1, button2, button3]);
+
+        const program = {
+            run: function (delta) {
+                entity1.draw();
+                entity1.move(delta);
+                entity2.draw();
+                entity2.move(delta);
+                entity3.draw();
+                entity3.move(delta);
+                let text = [
+                    entity1.name,
+                    `( ${entity1.position.x.toFixed(2)},${entity1.position.x.toFixed(2)})`,
+                    `( ${entity1.velocity.x.toFixed(2)},${entity1.velocity.x.toFixed(2)})`
+                ];
+                entityLabel1.draw(text);
+                text = [
+                    entity2.name,
+                    `(${entity2.position.x.toFixed(2)},${entity2.position.x.toFixed(2)})`,
+                    `(${entity2.velocity.x.toFixed(2)},${entity2.velocity.x.toFixed(2)})`
+                ];
+                entityLabel2.draw(text);
+                text = [
+                    entity2.name,
+                    `(${entity3.position.x.toFixed(2)},${entity3.position.x.toFixed(2)})`,
+                    `(${entity3.velocity.x.toFixed(2)},${entity3.velocity.x.toFixed(2)})`
+                ];
+                entityLabel3.draw(text);
+                buttonManager.check();
+                buttonManager.draw();
+            }
+        };
+
+    </script>
+</body>
+
+</html>
