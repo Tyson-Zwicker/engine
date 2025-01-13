@@ -4,14 +4,12 @@
     <script src=".././maths.js"></script>
     <script src=".././gfx.js"></script>
     <script src=".././main.js"></script>
-    <script src=".././tattle.js"></script>
-    <script src=".././button.js"></script>
     <script src=".././sprite.js"></script>
     <script src=".././part.js"></script>
     <script src=".././entity.js"></script>
 </head>
 
-<body onload="buildPage(33)" style="border:none">
+<body onload="buildPage(33,true)" style="border:none">
     <script>
         // this is where you use the tools to make your program
 
@@ -29,17 +27,19 @@
         const entity1 = new Entity(
             'Test1',
             [sprite1, sprite2],
-            { x: 160, y: 0 },
+            { x: 1500, y: 2500 },
             rad(45),
-            { x: 1, y: 1 }
-            , rad(15), 10, 150);
+            { x: -50, y: -50 }
+            , 0, 100, 150
+        );
         const entity2 = new Entity(
             'Test2',
             [sprite1, sprite2],
-            { x: -160, y: 100 },
-            rad(270),
-            { x: 3, y: -2 }
-            , rad(10), 100, 150);
+            { x: -1600, y: -3100 },
+            rad(325),
+            { x: 20, y: 20 }
+            , rad(10), 100, 150
+        );
 
         const entity3 = new Entity(
             'Test3',
@@ -47,11 +47,12 @@
             { x: 0, y: 0 },
             rad(rnd(0, 360)),
             { x: 3, y: -2 }
-            , rad(25), 1000, 150);
+            , rad(25), 100, 150
+        );
 
         const program = {
             run: function (delta) {
-                let camera = { x: 0, y: 0 };                
+                let camera = { x: 0, y: 0 };
                 entity1.draw();
                 entity1.move(delta);
                 entity2.draw();
