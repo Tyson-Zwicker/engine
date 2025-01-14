@@ -22,10 +22,10 @@
                 for (let i = 0; i < 500; i++) {
                     drawPixel(rnd(250, 300), rnd(250, 300), '#0ff');
                 }
-                drawLine(50, 600, 500, 600, 1, '#00f');
-                drawLine(50, 650, 500, 650, 5, '#00f');
+                drawLine(50, 600, 500, 600, '#00f', 1);
+                drawLine(50, 650, 500, 650, '#00f', 5);
                 drawBox (10,400,50,500,'#fff',false,10);
-                drawLine(275, 550, 275, 800, 1, '#f00');
+                drawLine(275, 550, 275, 800, '#f00', 1);
                 drawTextRight (275,600,'Heyya',2);
                 drawTextLeft  (275,600,'World',2);
                 drawTextCenter(275,650,'3rd Pie is drawing for some reason',2);
@@ -33,7 +33,7 @@
                 drawPie(675, 875, 105, 0.40, 3.14, '#306', true,5);
                 drawBox (90,500,120,550,'#f0f',true);
                 drawBox (90,500,120,550,'#f60',false,5);
-                drawLine(75, 950, 575, 0, 1, '#fff');
+                drawLine(75, 950, 575, 0, '#fff', 1);
             }
         };
 
