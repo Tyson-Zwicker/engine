@@ -30,9 +30,10 @@ table.complexobjectListToHtmlTable (title, objectList, propertyNames, subObjectP
 
     If the property is primite, its shows it,
     If its an array, it shows the first dimesion's values.
-    IF its an object (sub-object) it looks into the "subObjectProperty" 
-        parameter, which is MAP.  Key if the sub-object/property you
-        want to be shown and the value is whatever properties of the sub-object
-        you want to be shown
+    IF its an object (a sub-object) it looks into the "subObjectProperty" 
+        parameter, which is MAP.  The keys are the sub-objects you
+        want to be shown (you can ignore sub objects) and the value is whatever properties of the sub-object
+        you want to be shown (you can ignore some of them to).
+
 
     
