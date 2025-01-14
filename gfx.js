@@ -50,7 +50,7 @@ const drawPixel = function (x, y, color) {
     drawBox(x, y, x + 1, y + 1, color);
     _ctx.strokeWidth = previousSize;
 }
-const drawLine = function (x0, y0, x1, y1, thickness, color) {
+const drawLine = function (x0, y0, x1, y1, color, thickness) {
     _ctx.strokeStyle = (color) ? color : '#fff';
     _ctx.lineWidth = (thickness) ? thickness : 1;
     _ctx.beginPath();
