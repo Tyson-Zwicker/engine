@@ -10,8 +10,6 @@ let _oldTime = new Date();
 let _time = new Date();
 const _centerOfScreen = { "x": window.innerWidth / 2, "y": window.innerHeight / 2 };
 const _screenSize = { "x": window.innerWidth, "y": window.innerHeight };
-
-
 const _mouse = {
     wheel: {
         where: 0,
@@ -80,15 +78,14 @@ const _start = function (framerate, enableWheelZoom) {
     }
     _resizeCanvas();
 
-    _mainLoop()
-    if (framerate) setInterval(_mainLoop, framerate);
+    _mainLoop(); //Run at least once..
+    if (framerate) setInterval(_mainLoop, framerate); //then if a framerate was specified go for it.
 }
 
 const _mainLoop = function () {
     _time = Date.now();
     _delta = (_time - _oldTime) / 1000; //the fraction of 1 second since last loop.
     _oldTime = _time;
-    console.log (`mainloop delta ${_delta}`);
     
     if (program) {
         _ctx.fillStyle = '#112';
@@ -116,5 +113,4 @@ const _mainLoop = function () {
         }
     }
     _mouse.wheel.where = 0;//reset the scroll 'wheel _delta' to none (0)
-    
 }
