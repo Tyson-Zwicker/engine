@@ -1,4 +1,4 @@
-const Part = function (sprite, offset, orientation) {
+const Part = function (name,sprite, offset, orientation) {
     this.sprite = sprite;
     this.orientation = (orientation) ? orientation : 0;
     this.owner = undefined;
@@ -15,5 +15,5 @@ Part.prototype.draw = function (ownerLocation) {
     this.sprite.draw(orientation, partLocation);
 }
 Part.prototype.clone = function (){
-    return new Part (this.sprite, this.offset.toPoint(), this.orientation);
+    return new Part (this.name, this.sprite, this.offset.toPoint(), this.orientation);
 }
