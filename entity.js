@@ -14,7 +14,7 @@ const Entity = function (name, sprites, position, angle, velocity, spin, mass, r
     this.spin = spin;
     this.sprites = sprites;
     this.mass = mass;
-    this.parts = [];
+    this.parts = new Map();
     this.radius = radius; //This should match the furthest point of any of the sprites from the entities center.
     this.label = undefined;
     this.propertiesToLabel;
@@ -26,9 +26,13 @@ Entity.prototype.assignLabel = function (label, properties) {
     label.owner = this;
 }
 Entity.prototype.addPart = function (part) {
-    this.parts.push(part);
+    this.parts.set(part.name, part);
     part.owner = this;
 }
+Entity.prototype.removePart = function (partName) {
+    this.parts.delete(partName);
+}
+
 Entity.prototype.move = function () {
     this.angle += this.spin * _delta;
     this.position.x += this.velocity.x * _delta;
@@ -57,7 +61,6 @@ Entity.prototype.draw = function () {
         text = [];
         this.propertiesToLabel.forEach(property => {
             if (typeof (this[property.name]) === 'object') {
-                
                 text.push(`${property.label}${this[property.name].toString()}`);
             }
             else {
@@ -69,17 +72,19 @@ Entity.prototype.draw = function () {
 }
 const EntityManager = function (entities) {
     this.entities = new Map();
-    entities.forEach(entity => {
-        this.entities.set(entity.name, entity);
-    });
+    if (entities) {
+        entities.forEach(entity => {
+            this.entities.set(entity.name, entity);
+        });
+    }
 }
 EntityManager.prototype.manage = function () {
     let keys = this.entities.keys();
-
     for (let key of keys) {
         let entity = this.entities.get(key);
         entity.move();
         entity.draw();
+        //think..        
     }
 }
 EntityManager.prototype.addEntity = function (entity) {
@@ -89,5 +94,8 @@ EntityManager.prototype.addEntity = function (entity) {
     this.entities.set(entity.name, entity);
 }
 EntityManager.prototype.removeEntity = function (entity) {
-    this.entries.delete(entity.name);
+    this.entities.delete(entity.name);
+}
+EntityManager.prototype.getEntity = function (entity) {
+    this.entities.get(entity);
 }
