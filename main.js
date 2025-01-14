@@ -29,6 +29,10 @@ const _mouse = {
     },
     buttonDown: false
 }
+const _key = {
+    which: null,
+    when: null
+}
 const _resizeCanvas = function () {
     _canvas.width = window.innerWidth;
     _canvas.height = window.innerHeight;
@@ -71,10 +75,19 @@ const _start = function (framerate, enableWheelZoom) {
     _canvas.onmouseup = function (e) {
         _mouse.up = {
             where: new Point(e.clientX, e.clientY),
-            when: Date.now(),
-
+            when: Date.now(),            
         };
         _mouse.buttonDown = false;
+    }
+    
+    window.onkeydown = function (e){
+        console.log (e.key);
+        _key.which = e.key;
+        _key.when = Date.now();       
+    }
+    window.onkeyup = function (e){
+        _key.which = null;
+        _key.when= null;
     }
     _resizeCanvas();
 
