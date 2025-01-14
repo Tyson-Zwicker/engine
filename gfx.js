@@ -64,6 +64,7 @@ const drawTextCenter = function (x, y, text, size, color) {
     _ctx.textAlign = "center";
     _ctx.fillStyle = (color) ? color : '#ccc';
     _ctx.fillText(text, x, y);
+    
 }
 const drawTextLeft = function (x, y, text, size, color) {
     _ctx.font = (size) ? `${size}em monospace` : '0.75em monospace';
