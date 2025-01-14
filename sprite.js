@@ -16,8 +16,7 @@ SpriteLine.prototype.draw = function (rotation, offset) {
         sin(this.v1.angle + rotation) * this.v1.length * _zoom + offset.y,
         cos(this.v2.angle + rotation) * this.v2.length * _zoom + offset.x,
         sin(this.v2.angle + rotation) * this.v2.length * _zoom + offset.y,
-        this.thickness,
-        this.color
+        this.color,this.thickness
     );
     _ctx.beginPath();
     _ctx.strokeStyle = this.color;
