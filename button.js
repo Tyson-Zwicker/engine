@@ -42,7 +42,7 @@ Button.prototype.draw = function () {
     let my = this.y0+(this.y1-this.y0)/2;
     drawBox (this.x0,this.y0, this.x1, this.y1,colors.bg,true);
     drawBox (this.x0,this.y0, this.x1, this.y1,colors.bg,false,3);
-    drawTextCenter (mx,my,this.text, 1,colors.text);
+    drawTextCenter (mx,my,this.text, this.fontsize,colors.text);
 }
 const ButtonManager = function (buttonList) {
     this.buttons = [];
