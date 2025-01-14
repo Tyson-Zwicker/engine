@@ -16,6 +16,14 @@ const Entity = function (name, sprites, position, angle, velocity, spin, mass, r
     this.mass = mass;
     this.parts = [];
     this.radius = radius; //This should match the furthest point of any of the sprites from the entities center.
+    this.label = undefined;
+    this.propertiesToLabel;
+}
+//Properties [{name:___, label:____},...]
+Entity.prototype.assignLabel = function (label, properties) {
+    this.label = label;
+    this.propertiesToLabel = properties;
+    label.owner = this;
 }
 Entity.prototype.addPart = function (part) {
     this.parts.push(part);
@@ -39,25 +47,37 @@ Entity.prototype.draw = function () {
         x: (this.position.x - _camera.x) * _zoom + _centerOfScreen.x,
         y: (this.position.y - _camera.y) * _zoom + _centerOfScreen.y
     };
-    console.log (`sprite location: ${spriteLocation.x}, ${spriteLocation.y}`);
     this.sprites.forEach((s) => {
         s.draw(this.angle, spriteLocation);
     });
     this.parts.forEach((p) => {
         p.draw(spriteLocation);
     });
+    if (this.label) {
+        text = [];
+        this.propertiesToLabel.forEach(property => {
+            if (typeof (this[property.name]) === 'object') {
+                
+                text.push(`${property.label}${this[property.name].toString()}`);
+            }
+            else {
+                text.push(property.label + this[property.name]);
+            }
+        });
+        this.label.draw(text);
+    }
 }
 const EntityManager = function (entities) {
     this.entities = new Map();
-    entities.forEach (entity =>{
-        this.entities.set (entity.name, entity);
+    entities.forEach(entity => {
+        this.entities.set(entity.name, entity);
     });
 }
 EntityManager.prototype.manage = function () {
     let keys = this.entities.keys();
-    
-    for (let key of keys){
-        let entity = this.entities.get (key);
+
+    for (let key of keys) {
+        let entity = this.entities.get(key);
         entity.move();
         entity.draw();
     }

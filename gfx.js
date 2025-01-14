@@ -35,7 +35,6 @@ const drawPie = function (x, y, r, a0, a1, color, fill, thickness) {
     _ctx.moveTo(x, y);
     _ctx.lineTo(x0, y0);
     drawArc(x, y, r, a0, a1);
-    console.log (x,y,r);
     _ctx.lineTo(x, y);
     _ctx.closePath();
     _ctx.stroke();

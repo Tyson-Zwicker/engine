@@ -9,7 +9,6 @@ const Particle = function (position, velocity, lifespan, rgb) {
     this.manager = null;
 }
 Particle.prototype.move = function () {    
-    console.log (_delta);
     this.orientation = this.spin * _delta;
     this.position = this.position.add(this.velocity.mult(_delta));
     this.lifespan -= (_delta * 1000);

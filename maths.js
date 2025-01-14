@@ -7,6 +7,9 @@ const TAU = Math.PI * 2;
 const Vector = function (a, l) {
     this.angle = a;
     this.length = l;
+    this.toString = function (){
+        return `(${this.length.toFixed(2)} @ ${deg (this.angle).toFixed(2)})`;
+    }
 }
 Vector.prototype.toPoint = function () {
     return new Point(
@@ -17,7 +20,11 @@ Vector.prototype.toPoint = function () {
 const Point = function (x, y) {
     this.x = x;
     this.y = y;
+    this.toString = function (){
+        return `(${this.x.toFixed(2)},${this.y.toFixed(2)})`;;
+    }
 }
+
 Point.prototype.toVector = function () {
     return new Vector(
         bearing({ x: 0, y: 0 }, this),
@@ -58,6 +65,12 @@ const sin = function (angle) {
 }
 const cos = function (angle) {
     return Math.cos(angle);
+}
+const sqrt = function (i){
+    return Math.sqrt(i);
+}
+const sqr = function (i){
+    return Math.power (i,2);
 }
 const bounded = function (point, rect) {
     return (

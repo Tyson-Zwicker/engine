@@ -14,3 +14,6 @@ Part.prototype.draw = function (ownerLocation) {
     let orientation = this.orientation + this.owner.angle;
     this.sprite.draw(orientation, partLocation);
 }
+Part.prototype.clone = function (){
+    return new Part (this.sprite, this.offset.toPoint(), this.orientation);
+}

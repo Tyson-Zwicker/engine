@@ -56,8 +56,15 @@
             new SpriteLine(-10, -10, 10, -10, '0f0', 1),
             new SpriteLine(10, -10, 10, 10, '0f0', 1),
         ]);
-        const part = new Part(partSprite, { 'x': 0, 'y': -20 }, 0);
-        entity1.addPart(part);
+        /* THE CLONING THING IS BECAUSE THE PART AND THE ENTITY ARE BONDED, IF YOU 
+         REUSE THE SAME PART ALL THE ENTITIES POINT TO THE SAME ONE, AND THE PART THINKS
+         IT'S OWNER IS WHO EVER IT WAS _LAST_ ATTACHED TO! CLONING MAKES THEM INDEPENDENT
+         INSTANCES OF THE THING BEING CLONED.*/
+        const part = new Part(partSprite, { 'x': 0, 'y': -24 }, 0);
+        
+        entity1.addPart(part.clone());
+        entity2.addPart(part.clone());
+        entity3.addPart(part.clone());
         const program = {
             run: function () {
                 entity1.draw();

@@ -28,35 +28,48 @@
         ]);
         //name, sprites, position, angle, velocity, spin, mass
         const entity1 = new Entity(
-            'Test1',
+            'Entity 1',
             [sprite1, sprite2],
-            { x: 1500, y: 2500 },
+            new Point(1500, 2500),
             rad(45),
-            { x: -50, y: -50 }
-            , 0, 100, 150
+            new Point(-50, -50),
+            0, 100, 150
         );
         const entity2 = new Entity(
-            'Test2',
+            'Entity 2',
             [sprite1, sprite2],
-            { x: -1600, y: -3100 },
-            rad(325),
-            { x: 20, y: 20 }
-            , rad(10), 100, 150
+            new Point(-1600, -3100),
+            rad(90),
+            new Point(20, 20),
+            rad(10), 100, 150
         );
-
         const entity3 = new Entity(
-            'Test3',
+            'Entity 3',
             [sprite1, sprite2],
-            { x: 0, y: 0 },
-            rad(rnd(0, 360)),
-            { x: 3, y: -2 }
-            , rad(25), 100, 150
+            new Point(0, 0),
+            rad(0),
+            new Point(0, 0),
+            rad(10), 100, 150
         );
-        const entityLabel1 = new EntityLabel(entity1, .66, '#F00');
-        const entityLabel2 = new EntityLabel(entity2, .66, '#00F');
-        const entityLabel3 = new EntityLabel(entity3, .66, '#F00');
+        const redLabel = new EntityLabel(.66, '#F00');
+        const greenLabel = new EntityLabel(.66, '#0F0');
+        let labelContents = [
+            { name: 'name', label: '' },
+            { name: 'position', label: 'P:' },
+            { name: 'velocity', label: 'V:' }
+        ];
+        let labelContents2 = [
+            { name: 'name', label: '' },
+            { name: 'position', label: 'P:' },
+            { name: 'velocity', label: 'V:' },
+            { name: 'angle', label: 'H:' }
+        ]
+        entity1.assignLabel(redLabel.clone(), labelContents);
+        entity2.assignLabel(redLabel.clone(), labelContents);
+        entity3.assignLabel(greenLabel.clone(), labelContents2);
 
-        function showEntity1 (){
+         /* These are the functions that the buttons call when clicked*/
+         function showEntity1 (){
             _camera.x = entity1.position.x;
             _camera.y = entity1.position.y;
         }
@@ -68,6 +81,7 @@
             _camera.x = entity3.position.x;
             _camera.y = entity3.position.y;
         }
+        /*And these are the buttons that so those^^ functions*/
         const button1 = new Button(
             'button1',
             'Show 1',
@@ -105,24 +119,6 @@
                 entity2.move();
                 entity3.draw();
                 entity3.move();
-                let text = [
-                    entity1.name,
-                    `( ${entity1.position.x.toFixed(2)},${entity1.position.x.toFixed(2)})`,
-                    `( ${entity1.velocity.x.toFixed(2)},${entity1.velocity.x.toFixed(2)})`
-                ];
-                entityLabel1.draw(text);
-                text = [
-                    entity2.name,
-                    `(${entity2.position.x.toFixed(2)},${entity2.position.x.toFixed(2)})`,
-                    `(${entity2.velocity.x.toFixed(2)},${entity2.velocity.x.toFixed(2)})`
-                ];
-                entityLabel2.draw(text);
-                text = [
-                    entity3.name,
-                    `(${entity3.position.x.toFixed(2)},${entity3.position.x.toFixed(2)})`,
-                    `(${entity3.velocity.x.toFixed(2)},${entity3.velocity.x.toFixed(2)})`
-                ];
-                entityLabel3.draw(text);
                 buttonManager.check();
                 buttonManager.draw();
             }

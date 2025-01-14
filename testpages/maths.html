@@ -1,14 +1,18 @@
 <html>
 
 <head>
-    <script src="./maths.js"></script>
-    <script src="./tabler.js"></script>
+    <script src=".././maths.js"></script>
+    <script src=".././tabler.js"></script>
 </head>
 
 <body>
     <script>
-     //TODO: build the damn tests for this
-
+        let body = document.getElementsByTagName('body')[0];
+        let p = new Point(1, 1);
+        let v = new Vector( rad(45), sqrt(2));
+        body.innerText = `p ${p.toString()} | p to v${p.toVector().toString()} 
+                ***** v ${v.toString()} v to p ${v.toPoint().toVector()}
+                ***** p->v->p ${p.toVector().toPoint()} | v->p->v ${v.toPoint().toVector()}`;
     </script>
 </body>
 
