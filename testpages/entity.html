@@ -13,14 +13,28 @@
     <script>
         // this is where you use the tools to make your program
         const sprite1 = new Sprite([
-            new SpriteLine(0, -150, 100, 100, '#ff0', 3),
-            new SpriteLine(100, 100, -100, 100, '#ff0', 3),
-            new SpriteLine(-100, 100, 0, -150, '#ff0', 3)
+            new SpriteLine(0,-200, 30,-150, '#f00', 2),
+            new SpriteLine(30, -150, 45, -100, '#0f0', 2),
+            new SpriteLine(45, -100, 52, -50, '#00f', 2),
+            new SpriteLine(52, -50, 52, 50, '#f0f', 2),
+            new SpriteLine(52, 50, 45, 100, '#00f', 2),
+            new SpriteLine(45, 100, 30,150,'#0f0',2),
+           
+            new SpriteLine(30,150,0,200,'#f00',2),
+           
+            new SpriteLine (0,200,-30,150,'#f00'),
+            new SpriteLine (-30,150,-45,100,'#0f0'),
+            new SpriteLine (-45,100,-52,50,'#00f'),
+            new SpriteLine (-52,50,-52,-50,'#f0f'),
+            new SpriteLine (-52,-50,-45,-100,'#00f'),
+            new SpriteLine (-45,-100,-30,-150,'#0f0'),
+            new SpriteLine (-30,-150,0,-200,'#f00') 
         ]);
         const sprite2 = new Sprite([
-            new SpriteLine(0, -90, 70, 70, '#f00', 2),
-            new SpriteLine(70, 70, -70, 70, '#0ff', 2),
-            new SpriteLine(-70, 70, 0, -90, '#0f0', 2)
+            new SpriteLine(-40, -50, 40, -50, '#ff0', 2),
+            new SpriteLine(40,-50, 40, 50, '#0ff', 2),
+            new SpriteLine(40,50, -40, 50, '#f0f', 2),
+            new SpriteLine(-40,50,-40,-50,'#0ff',2)
         ]);
         //name, sprites, position, angle, velocity, spin, mass
         const entity1 = new Entity(
