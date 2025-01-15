@@ -15,14 +15,28 @@
     <script>
         // this is where you use the tools to make your program
         const sprite1 = new Sprite([
-            new SpriteLine(0, -200, 100, 100, '#ff0', 3),
-            new SpriteLine(100, 100, -100, 100, '#ff0', 4),
-            new SpriteLine(-100, 100, 0, -200, '#ff0', 3)
+            new SpriteLine(0,-200, 30,-150, '#f00', 2),
+            new SpriteLine(30, -150, 45, -100, '#0f0', 2),
+            new SpriteLine(45, -100, 52, -50, '#00f', 2),
+            new SpriteLine(52, -50, 52, 50, '#f0f', 2),
+            new SpriteLine(52, 50, 45, 100, '#00f', 2),
+            new SpriteLine(45, 100, 30,150,'#0f0',2),
+           
+            new SpriteLine(30,150,0,200,'#f00',2),
+           
+            new SpriteLine (0,200,-30,150,'#f00'),
+            new SpriteLine (-30,150,-45,100,'#0f0'),
+            new SpriteLine (-45,100,-52,50,'#00f'),
+            new SpriteLine (-52,50,-52,-50,'#f0f'),
+            new SpriteLine (-52,-50,-45,-100,'#00f'),
+            new SpriteLine (-45,-100,-30,-150,'#0f0'),
+            new SpriteLine (-30,-150,0,-200,'#f00') 
         ]);
         const sprite2 = new Sprite([
-            new SpriteLine(0, -70, 70, 70, '#f0f', 2),
-            new SpriteLine(70, 70, -70, 70, '#f0f', 2),
-            new SpriteLine(-70, 70, 0, -70, '#f0f', 2)
+            new SpriteLine(-40, -50, 40, -50, '#ff0', 2),
+            new SpriteLine(40,-50, 40, 50, '#0ff', 2),
+            new SpriteLine(40,50, -40, 50, '#f0f', 2),
+            new SpriteLine(-40,50,-40,-50,'#0ff',2)
         ]);
         //name, sprites, position, angle, velocity, spin, mass
         const entity1 = new Entity(
@@ -51,10 +65,10 @@
             , rad(25), 100, 150
         );
         const partSprite = new Sprite([
-            new SpriteLine(10, 10, -10, 10, '0f0', 1),
-            new SpriteLine(-10, 10, -10, -10, '0f0', 1),
-            new SpriteLine(-10, -10, 10, -10, '0f0', 1),
-            new SpriteLine(10, -10, 10, 10, '0f0', 1),
+            new SpriteLine(10, 10, -10, 10, '#0f0', 1),
+            new SpriteLine(-10, 10, -10, -10, '#0f0', 1),
+            new SpriteLine(-10, -10, 10, -10, '#0f0', 1),
+            new SpriteLine(10, -10, 10, 10, '#0f0', 1),
         ]);
         /* THE CLONING THING IS BECAUSE THE PART AND THE ENTITY ARE BONDED, IF YOU 
          REUSE THE SAME PART ALL THE ENTITIES POINT TO THE SAME ONE, AND THE PART THINKS
