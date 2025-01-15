@@ -7,39 +7,17 @@
     <script src=".././sprite.js"></script>
     <script src=".././part.js"></script>
     <script src=".././entity.js"></script>
+    <script src="spritedefinitions.js"></script>
 </head>
 
 <body onload="_start(33,true)" style="border:none">
     <script>
         // this is where you use the tools to make your program
-        const sprite1 = new Sprite([
-            new SpriteLine(0,-200, 30,-150, '#f00', 2),
-            new SpriteLine(30, -150, 45, -100, '#0f0', 2),
-            new SpriteLine(45, -100, 52, -50, '#00f', 2),
-            new SpriteLine(52, -50, 52, 50, '#f0f', 2),
-            new SpriteLine(52, 50, 45, 100, '#00f', 2),
-            new SpriteLine(45, 100, 30,150,'#0f0',2),
-           
-            new SpriteLine(30,150,0,200,'#f00',2),
-           
-            new SpriteLine (0,200,-30,150,'#f00'),
-            new SpriteLine (-30,150,-45,100,'#0f0'),
-            new SpriteLine (-45,100,-52,50,'#00f'),
-            new SpriteLine (-52,50,-52,-50,'#f0f'),
-            new SpriteLine (-52,-50,-45,-100,'#00f'),
-            new SpriteLine (-45,-100,-30,-150,'#0f0'),
-            new SpriteLine (-30,-150,0,-200,'#f00') 
-        ]);
-        const sprite2 = new Sprite([
-            new SpriteLine(-40, -50, 40, -50, '#ff0', 2),
-            new SpriteLine(40,-50, 40, 50, '#0ff', 2),
-            new SpriteLine(40,50, -40, 50, '#f0f', 2),
-            new SpriteLine(-40,50,-40,-50,'#0ff',2)
-        ]);
+        
         //name, sprites, position, angle, velocity, spin, mass
         const entity1 = new Entity(
             'Test1',
-            [sprite1, sprite2],
+            [hull],
             { x: 1500, y: 2500 },
             rad(45),
             { x: -50, y: -50 }
@@ -47,7 +25,7 @@
         );
         const entity2 = new Entity(
             'Test2',
-            [sprite1, sprite2],
+            [hull],
             { x: -1600, y: -3100 },
             rad(325),
             { x: 20, y: 20 }
@@ -56,7 +34,7 @@
 
         const entity3 = new Entity(
             'Test3',
-            [sprite1, sprite2],
+            [hull, superstructure],
             { x: 0, y: 0 },
             rad(rnd(0, 360)),
             { x: 3, y: -2 }
