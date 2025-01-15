@@ -64,7 +64,7 @@ Tattler.prototype.tattle = function () {
     let x = _canvas.width - w;
     let h = yd * this.lines;
     _ctx.beginPath();
-    _ctx.fillStyle = '#000';
+    _ctx.fillStyle = '#210';
     _ctx.fillRect(x, _canvas.height - h - yd, w, h);
     _ctx.stroke();
     _ctx.closePath();
