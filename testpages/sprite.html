@@ -13,14 +13,27 @@
     <script>
         let tattler = new Tattler('1em monospace', 10, 200);
         const sprite1 = new Sprite([
-            new SpriteLine(-100, -100, 100, -100, '#f00', 2),
-            new SpriteLine(100, -100, 0, 100, '#0f0', 2),
-            new SpriteLine(0, 100, -100, -100, '#00f', 2)
+            new SpriteLine(0,-200, 30,-150, '#f00', 2),
+            new SpriteLine(30, -150, 45, -100, '#0f0', 2),
+            new SpriteLine(45, -100, 52, -50, '#00f', 2),
+            new SpriteLine(52, -50, 52, 50, '#f0f', 2),
+            new SpriteLine(52, 50, 45, 100, '#00f', 2),
+            new SpriteLine(45, 100, 30,150,'#0f0',2),
+           
+            new SpriteLine(30,150,0,200,'#f00',2),
+           
+            new SpriteLine (0,200,-30,150,'#f00'),
+            new SpriteLine (-30,150,-45,100,'#0f0'),
+            new SpriteLine (-45,100,-52,50,'#00f'),
+            new SpriteLine (-52,50,-52,-50,'#f0f'),
+            new SpriteLine (-52,-50,-45,-100,'#00f'),
+            new SpriteLine (-45,-100,-30,-150,'#0f0'),
+            new SpriteLine (-30,-150,0,-200,'#f00') 
         ]);
         const program = {
             run: function () {
                 //scale, rotation, offset
-                sprite1.draw(rad(45), { x: 400, y: 400 });
+                sprite1.draw(rad(0), { x: _centerOfScreen.x, y:_centerOfScreen.y });
                 tattler.tell(new Tale('_zoom', `${_zoom}`, '#ccc'));
                 tattler.tell(new Tale('wheel', `${_mouse.wheel.where}`, '#ccc'));
                 tattler.tattle();
