@@ -19,7 +19,12 @@ const Entity = function (name, sprites, position, angle, velocity, spin, mass, r
     this.label = undefined;
     this.propertiesToLabel;
 }
-//Properties [{name:___, label:____},...]
+/*The label defines the look of the label,
+ the properties [{property, label},...] parameters is a list that tells it what to show.
+ It will show the specified property of the enity, and prefix it with "label".
+ If the property is an object, it's toString() method is
+ called. Point and Vector already have one.*/
+
 Entity.prototype.assignLabel = function (label, properties) {
     this.label = label;
     this.propertiesToLabel = properties;
@@ -37,6 +42,8 @@ Entity.prototype.move = function () {
     this.angle += this.spin * _delta;
     this.position.x += this.velocity.x * _delta;
     this.position.y += this.velocity.y * _delta;
+    if (this.angle<0) this.angle+=TAU;
+    if (this.angle>TAU) this.angle-=TAU;
 }
 Entity.prototype.spin = function (force) {
     this.velocity.x += cos(vector.a) * vector.l / this.mass;
@@ -63,7 +70,9 @@ Entity.prototype.draw = function () {
             if (typeof (this[property.name]) === 'object') {
                 text.push(`${property.label}${this[property.name].toString()}`);
             }
-            else {
+            else if (typeof (this[property.name]) == 'number'){
+                text.push(property.label + this[property.name].toFixed(3));
+            }else{
                 text.push(property.label + this[property.name]);
             }
         });
