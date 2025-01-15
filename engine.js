@@ -7,30 +7,31 @@ const Engine = function () {
 }
 
 Engine.prototype.addButton = function (name, text, x0, y0, x1, y1, fontsize, color, bgColor, hColor, hbgColor, action) {
-    ButtonManager.addButton(new Button(name, text, x0, y0, x1, y1, fontsize, color, bgColor, hColor, hbgColor, action));
+    this.buttonManager.addButton(new Button(name, text, x0, y0, x1, y1, fontsize, color, bgColor, hColor, hbgColor, action));
 }
 Engine.prototype.addButtonJSON = function (json){
     let buttons = JSON.parse (json);
     //TODO: load the buttons from a JSON string.
 }
-Engine.protoype.removeAllButtons = function () {
-    this.ButtonManager = new ButtonManager();
+Engine.prototype.removeAllButtons = function () {
+    this.buttonManager = new ButtonManager();
 }
 Engine.prototype.addEntity = function (name, sprites, position, angle, velocity, spin, mass, radius, parts) {
-    this.EntityManager.addEntity(new Entity(name, sprites, position, angle, velocity, spin, mass, radius));
+    let newEntity = new Entity(name, sprites, position, angle, velocity, spin, mass, radius);
     parts.forEach (part=>{
-        // TODO: add the parts to the entity..
+        newEntity.addPart (part);
     });
+    this.EntityManager.addEntity(newEntity);
 }
-Engine.prototype.removeEntryPart = function (entry, part){
-    //TODO: you have to convert parts to use a map (its currently an array) before you can do this
-    //TODO:  Also you need to give Entity a remove parts method.
+Engine.prototype.removeEntryPart = function (entityName, partName){
+    let entity = enitityManager.get (entityName);
+    entity.removePart (partName);
 }
 Engine.prototype.addEntitiesJSON = function (json){
     //TODO: get it all from a JSON string
 }
 Engine.prototype.removeAllEntities = function () {
-    this.EntityManager = new EntityManager();
+    this.entityManager = new EntityManager();
 }
 Engine.prototype.removeEntity = function (name) {
     this.entityManager.removeEntity(name);
@@ -62,4 +63,5 @@ Engine.prototype.do = function () {
     this.buttonManager.check();
     this.buttonManager.draw();
     if (this.particleManager) this.particleManager.manage();
+    if (this.tattler) tattler.tattle();
 }
