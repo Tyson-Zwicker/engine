@@ -22,10 +22,10 @@ EntityManager.prototype.add = function (entity) {
     }
 }
 EntityManager.prototype.remove = function (entityName) {
-    this.entities.delete(entityName);
+    delete this.entities[entityName];
 }
 EntityManager.prototype.get = function (entityName) {
-    this.entities.get(entityName);
+    return this.entities[entityName];
 }
 EntityManager.prototype.has = function (entityName) {
     return this.entities.hasOwnProperty(entityName);

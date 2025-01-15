@@ -1,40 +1,49 @@
-
 const Engine = function () {
     this.buttonManager = new ButtonManager();
     this.entityManager = new EntityManager();
     this.particleManager = new ParticleManager();
     this.tattler = null;
 }
-
 Engine.prototype.addButton = function (name, text, x0, y0, x1, y1, fontsize, color, bgColor, hColor, hbgColor, action) {
     this.buttonManager.addButton(new Button(name, text, x0, y0, x1, y1, fontsize, color, bgColor, hColor, hbgColor, action));
 }
-Engine.prototype.addButtonJSON = function (json){
-    let buttons = JSON.parse (json);
+Engine.prototype.addButtonJSON = function (json) {
+    let buttons = JSON.parse(json);
     //TODO: load the buttons from a JSON string.
 }
 Engine.prototype.removeAllButtons = function () {
     this.buttonManager = new ButtonManager();
 }
 Engine.prototype.addEntity = function (name, sprites, position, angle, velocity, spin, mass, radius, parts) {
-    let newEntity = new Entity(name, sprites, position, angle, velocity, spin, mass, radius);
-    parts.forEach (part=>{
-        newEntity.addPart (part);
-    });
-    this.EntityManager.addEntity(newEntity);
+    if (!this.entityManager.has(name)){
+        let newEntity = new Entity(name, sprites, position, angle, velocity, spin, mass, radius);
+        if (parts) {
+            parts.forEach(part => {
+                newEntity.addPart(part.clone());
+            });
+        }
+        this.entityManager.add(newEntity);
+    }
 }
-Engine.prototype.removeEntryPart = function (entityName, partName){
-    let entity = enitityManager.get (entityName);
-    entity.removePart (partName);
-}
-Engine.prototype.addEntitiesJSON = function (json){
+Engine.prototype.addEntitiesJSON = function (json) {
     //TODO: get it all from a JSON string
 }
 Engine.prototype.removeAllEntities = function () {
     this.entityManager = new EntityManager();
 }
 Engine.prototype.removeEntity = function (name) {
-    this.entityManager.removeEntity(name);
+    this.entityManager.remove(name);
+}
+Engine.prototype.removeEntityPart = function (entityName, partName) {
+    let entity = this.entityManager.get(entityName);
+    entity.removePart(partName);
+}
+Engine.prototype.addEntityPart = function (entityName, part) {
+    console.log (entityName);
+    console.log (this.entityManager.entities);
+    let entity = this.entityManager.get(entityName);
+    console.log (`entity=${entity}`)
+    entity.addPart(part.clone());
 }
 Engine.prototype.addTattler = function (font, lines, width) {
     this.tattler = new Tattler(font, lines, width);
@@ -42,16 +51,17 @@ Engine.prototype.addTattler = function (font, lines, width) {
 Engine.prototype.removeTattler = function () {
     this.tattler = null;
 }
-Engine.prototype.addTattle = function (prefix, msg, color) {
+Engine.prototype.tellTattle = function (prefix, msg, color) {
     this.tattler.tell(
         new Tale(prefix, msg, color)
     );
 }
-Engine.prototype.addTattleGrouped = function (prefix, msg, color) {
+Engine.prototype.tellTattleGrouped = function (prefix, msg, color) {
     this.tattler.tellGroup(
         new Tale(prefix, msg, color)
     );
 }
+
 Engine.prototype.addParticle = function (position, velocity, lifespan, rgb) {
     this.particleManager.particles.push(new Particle(position, velocity, lifespan, rgb));
 }
@@ -60,8 +70,8 @@ Engine.prototype.addParticles = function (position, quantity, rgb, lifeMinMax, a
 }
 Engine.prototype.do = function () {
     this.entityManager.manage();
+    if (this.particleManager) this.particleManager.manage();
+    if (this.tattler) this.tattler.tattle();
     this.buttonManager.check();
     this.buttonManager.draw();
-    if (this.particleManager) this.particleManager.manage();
-    if (this.tattler) tattler.tattle();
 }

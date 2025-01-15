@@ -1,11 +1,6 @@
 <!--
- TODO: Finally make something cool will all this stuff
-    We'll have entites that chase each other spitting particles when they
-    get close. Parts will the particles spiters and they will track the 
-    target while in range.
-    
-    you control with some buttons to steer.  Camera will follow you.
-    Particle also shoot out the backs to simulate thrusting
+Test:
+add/remove entities/parts
 -->
 <html>
 
@@ -15,21 +10,55 @@
     <script src=".././main.js"></script>
     <script src=".././tattle.js"></script>
     <script src=".././button.js"></script>
+    <script src=".././particle.js"></script>
     <script src=".././sprite.js"></script>
     <script src=".././part.js"></script>
-    <script src=".././entity.js"></script>
     <script src=".././entitylabel.js"></script>
+    <script src=".././entity.js"></script>
+    <script src=".././entitymanager.js"></script>
     <script src=".././engine.js"></script>
+    <script src="spritedefinitions.js"></script>
 </head>
 
-<body onload="_start(33),true" style="border:none">
+<body onload="_start(33,true)" style="border:none">
     <script>
-     
+        
         const engine = new Engine();
+
+        //name,sprite, offset, orientation
+        let fwdturret = new Part ('fwdturret',turret,new Point (0,-100), 0);
+        let aftturret = new Part ('aftturret',turret,new Point (0,100),rad(180));
+        engine.addButton('testbutton1', 'add ent#2', 0, 180, 150, 210, 1.3, '#fff', '#600', '#007', '#fff', () => {
+            engine.addEntity("entity2",[hull,superstructure], new Point (400,0),0,new Point (0,0),0,10,200,[]);    
+        });
+        engine.addButton('testbutton2', 'rmv ent#2', 0, 220, 150, 250, 1.3, '#fff', '#600', '#007', '#fff', () => {
+            engine.removeEntity ('entity2');  
+        });
+        engine.addButton('testbutton3', 'add prt to ent2', 0, 260, 150, 290, 1.3, '#fff', '#600', '#007', '#fff', () => {
+            engine.addEntityPart ('entity2',aftturret);
+        });
+        engine.addButton('testbutton4', 'rem prt frm ent2', 0, 300, 150, 330, 1.3, '#fff', '#600', '#007', '#fff', () => {
+            engine.removeEntityPart ('entity2','aftturret');
+        });
+         
+        engine.addTattler ('1em monospace', 10, 300);
+
+      
+        //name, sprites, position, angle, velocity, spin, mass, radius, parts
+        
+        engine.addEntity(
+            "entity1",[hull,superstructure], new Point (0,0),0,new Point (0,0),0,10,200,[fwdturret,aftturret]
+        );
         
         const program = {
             run: function () {
                 //Main loop here.
+                engine.tellTattleGrouped ('zoom',_zoom,'#fff');
+                engine.tellTattleGrouped ('key',_key.which,'#ff0');
+                engine.tellTattleGrouped ('mouse',_mouse.move.where,'#7f');
+                engine.tellTattleGrouped ('wheel',_mouse.wheel.where,'#0f0');
+                
+                engine.do();                
             }
         };
     </script>
