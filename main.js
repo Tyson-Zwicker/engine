@@ -81,7 +81,6 @@ const _start = function (framerate, enableWheelZoom) {
     }
     
     window.onkeydown = function (e){
-        console.log (e.key);
         _key.which = e.key;
         _key.when = Date.now();       
     }
