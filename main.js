@@ -113,7 +113,6 @@ const _mainLoop = function () {
     } else {
         console.log('waiting for program to show up..');
     }
-
     if (_zoomOnWheel && _mouse.wheel.where !== 0) {
         let sign = Math.sign(_mouse.wheel.where);
         _zoom += sign * _zoomRate;
