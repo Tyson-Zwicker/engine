@@ -89,4 +89,5 @@ ButtonManager.prototype.check = function () {
         this.hovered = null;
         this.pressed = null;
     }
+    return found;
 }
