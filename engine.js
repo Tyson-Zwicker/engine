@@ -15,7 +15,7 @@ Engine.prototype.removeAllButtons = function () {
     this.buttonManager = new ButtonManager();
 }
 Engine.prototype.addEntity = function (name, sprites, position, angle, velocity, spin, mass, radius, parts) {
-    if (!this.entityManager.has(name)){
+    if (!this.entityManager.has(name)) {
         let newEntity = new Entity(name, sprites, position, angle, velocity, spin, mass, radius);
         if (parts) {
             parts.forEach(part => {
@@ -39,11 +39,13 @@ Engine.prototype.removeEntityPart = function (entityName, partName) {
     entity.removePart(partName);
 }
 Engine.prototype.addEntityPart = function (entityName, part) {
-    console.log (entityName);
-    console.log (this.entityManager.entities);
-    let entity = this.entityManager.get(entityName);
-    console.log (`entity=${entity}`)
-    entity.addPart(part.clone());
+    if (this.entityManager.has(entityName)){
+        let entity = this.entityManager.get(entityName);
+        entity.addPart(part.clone());
+    }
+}
+Engine.prototype.setEntityTouchEvent = function (fn) {
+    this.entityManager.touchFn = fn;
 }
 Engine.prototype.addTattler = function (font, lines, width) {
     this.tattler = new Tattler(font, lines, width);
@@ -74,4 +76,7 @@ Engine.prototype.do = function () {
     if (this.tattler) this.tattler.tattle();
     this.buttonManager.check();
     this.buttonManager.draw();
+    if (this.entityManager.touchedFn) {
+        this.entityManager.checkTouch();
+    }
 }
