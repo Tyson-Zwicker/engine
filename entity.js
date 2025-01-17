@@ -18,6 +18,12 @@ const Entity = function (name, sprites, position, angle, velocity, spin, mass, r
     this.radius = radius; //This should match the furthest point of any of the sprites from the entities center.
     this.label = undefined;
     this.propertiesToLabel;
+    this.getWindowLocation = function (){
+        return {
+            x: (this.position.x - _camera.x) * _zoom + _centerOfScreen.x,
+            y: (this.position.y - _camera.y) * _zoom + _centerOfScreen.y
+        };
+    }
 }
 /*The label defines the look of the label,
  the properties [{property, label},...] parameters is a list that tells it what to show.
@@ -54,10 +60,7 @@ Entity.prototype.push = function (vector) {
     this.velocity.y += sin(vector.a) * vector.l / this.mass;
 }
 Entity.prototype.draw = function () {
-    spriteLocation = {
-        x: (this.position.x - _camera.x) * _zoom + _centerOfScreen.x,
-        y: (this.position.y - _camera.y) * _zoom + _centerOfScreen.y
-    };
+    let spriteLocation = this.getWindowLocation();
     this.sprites.forEach((s) => {
         s.draw(this.angle, spriteLocation);
     });
