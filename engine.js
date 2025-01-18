@@ -75,9 +75,9 @@ Engine.prototype.do = function () {
     if (this.tattler) this.tattler.tattle();
     this.buttonManager.check();
     this.buttonManager.draw();
-   // if (this.entityManager.touchedFn) {
-        let entityName = this.entityManager.checkTouch();
-        if (entityName === null) entityName = '';
-        this.tattler.tellGroup(new Tale('entitycheck', entityName, '#f77'));
-   // }
+    // if (this.entityManager.touchedFn) {
+    let entityName = this.entityManager.checkTouch();
+    if (entityName === null) entityName = '';
+    this.tattler.tellGroup(new Tale('entitycheck', entityName, '#f77'));
+    // }
 }
