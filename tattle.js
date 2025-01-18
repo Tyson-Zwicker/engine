@@ -10,16 +10,17 @@ A Tale is the debugging message, given to the tattler.
 */
 const Tale = function (prefix, msg, color) {
     this.count = 1;
-    this.prefix = ( prefix)? prefix : '';
+    this.prefix = (prefix) ? prefix : '';
     this.message = msg;
     this.color = (color) ? color : `#f0f`;
 }
-/*Constructor defines the font, #lines (height depends on this),and width in pixels)*/
-const Tattler = function (font, lines, width) {
+/*Constructor defines the font size in Em's, #lines (height depends on this),and width in pixels)*/
+const Tattler = function (fontSize, lines, width, bgColor) {
     this.tales = [];
-    this.font = (font) ? font : '1em monospace';
+    this.fontSize = (fontSize) ? fontSize : 1;
     this.lines = lines;
     this.width = (width) ? width : 300;
+    this.bgColor = (bgColor) ? bgColor : '#210';
 };
 /*This adds Tales to the Tattler, strongly grouping by prefix*/
 Tattler.prototype.tellGroup = function (tale) {
@@ -56,25 +57,17 @@ Tattler.prototype.tell = function (tale) {
 };
 /*  Draw a rectangle on the canvas and prints the Tales onto it. */
 Tattler.prototype.tattle = function () {
-    _ctx.font = this.font;
-    var fM = _ctx.measureText("A");
-    let yd = fM.actualBoundingBoxAscent + fM.actualBoundingBoxDescent + 3;
-    let y = window.innerHeight - (yd * this.lines);
-    let w = this.width;
-    let x = _canvas.width - w;
-    let h = yd * this.lines;
-    _ctx.beginPath();
-    _ctx.fillStyle = '#210';
-    _ctx.fillRect(x, _canvas.height - h - yd, w, h);
-    _ctx.stroke();
-    _ctx.closePath();
+    let yline = getTextHeight(this.fontSize + 'em monospace') + 2;
+    let x0 = _canvas.width - this.width;
+    let y0 = _screenSize.y - (yd * this.lines);
+    let x1 = _screenSize.x;
+    let y1 = _screenSize.y;
+    drawBox(x0, y0, x1, y1, this.bgColor, true, 1)
+    let x = x0 + 2;
+    let y = y0 + yline / 2;
     for (let i = 0; i < this.tales.length; i++) {
-        _ctx.beginPath();
-        _ctx.fillStyle = this.tales[i].color;
-        _ctx.fillText(`${this.tales[i].prefix} :${this.tales[i].message} :(${this.tales[i].count})`, x + 5, y);
+        let text = `${this.tales[i].prefix} :${this.tales[i].message} :(${this.tales[i].count})`;
+        drawTextLeft(x, y, text);
         y += yd;
-        _ctx.closePath();
     }
-    _ctx.stroke();
-    _ctx.closePath();
 }
