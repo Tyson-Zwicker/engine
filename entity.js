@@ -12,12 +12,13 @@ const Entity = function (name, sprites, position, angle, velocity, spin, mass, r
     this.angle = angle;
     this.velocity = velocity;
     this.spin = spin;
-    this.sprites = sprites;
+   
     this.mass = mass;
     this.parts = {};
     this.radius = radius; //This should match the furthest point of any of the sprites from the entities center.
     this.label = undefined;
     this.propertiesToLabel;
+    this.sprites = sprites;
     this.getWindowLocation = function (){
         return {
             x: (this.position.x - _camera.x) * _zoom + _centerOfScreen.x,
