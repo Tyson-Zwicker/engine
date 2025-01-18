@@ -93,11 +93,8 @@ Engine.prototype.do = function () {
     //If nothing else (button or entity is touched), there is a defined backgroundTouch function,
     //call it.  The reciever should know to check _mouse.where (if they wish).
     if (keepChecking) {
-        log ('checking background..');
         if (this.backgroundTouchFn) {
-            log ('background function exists..');
             if (_mouse.buttonDown) {
-                log ('button down exists..');
                 this.backgroundTouchFn();
             }
         }

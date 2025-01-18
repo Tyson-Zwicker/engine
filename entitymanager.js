@@ -40,7 +40,7 @@ EntityManager.prototype.checkTouch = function () {
             if (!this.touchedName) { //break out the heavy stuff once you find one.
                 let entity = this.entities[entityName];
                 let location = entity.getWindowLocation();
-                let radius = entity.radius / _zoom;
+                let radius = entity.radius * _zoom;
                 let bounds = { x0: location.x - radius, y0: location.y - radius, x1: location.x + radius, y1: location.y + radius };
                 if (_mouse.buttonDown) {
                     if (bounded(_mouse.move.where, bounds)) {
