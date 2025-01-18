@@ -88,3 +88,7 @@ function getTextWidth(text, font) {
     const metrics = _ctx.measureText(text);
     return metrics.width;
 }
+function getTextHeight(fontSize){
+    var fM = _ctx.measureText("A");
+    return yd = fM.actualBoundingBoxAscent + fM.actualBoundingBoxDescent;
+}
