@@ -125,3 +125,6 @@ const _mainLoop = function () {
     }
     _mouse.wheel.where = 0;//reset the scroll 'wheel _delta' to none (0)
 }
+const log = function (obj){
+    console.log (obj);
+}

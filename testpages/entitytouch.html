@@ -50,7 +50,7 @@ add/remove entities/parts
             }
         });
         engine.setBackgroundTouchEvent (()=>{
-            engine.tellTattleGrouped ('bground',`${_mouse.where.x},${mouse.where.y}`,'#aaa');
+            engine.tellTattleGrouped ('bground',`${_mouse.move.where.x},${_mouse.move.where.y}`,'#aaa');
         });
         
         const program = {
