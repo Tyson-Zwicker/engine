@@ -39,13 +39,13 @@ Engine.prototype.removeEntityPart = function (entityName, partName) {
     entity.removePart(partName);
 }
 Engine.prototype.addEntityPart = function (entityName, part) {
-    if (this.entityManager.has(entityName)){
+    if (this.entityManager.has(entityName)) {
         let entity = this.entityManager.get(entityName);
         entity.addPart(part.clone());
     }
 }
 Engine.prototype.setEntityTouchEvent = function (fn) {
-    this.entityManager.touchFn = fn;
+    this.entityManager.touchedFn = fn;
 }
 Engine.prototype.addTattler = function (font, lines, width) {
     this.tattler = new Tattler(font, lines, width);
@@ -63,7 +63,6 @@ Engine.prototype.tellTattleGrouped = function (prefix, msg, color) {
         new Tale(prefix, msg, color)
     );
 }
-
 Engine.prototype.addParticle = function (position, velocity, lifespan, rgb) {
     this.particleManager.particles.push(new Particle(position, velocity, lifespan, rgb));
 }
@@ -76,7 +75,9 @@ Engine.prototype.do = function () {
     if (this.tattler) this.tattler.tattle();
     this.buttonManager.check();
     this.buttonManager.draw();
-    if (this.entityManager.touchedFn) {
-        this.entityManager.checkTouch();
-    }
+   // if (this.entityManager.touchedFn) {
+        let entityName = this.entityManager.checkTouch();
+        if (entityName === null) entityName = '';
+        this.tattler.tellGroup(new Tale('entitycheck', entityName, '#f77'));
+   // }
 }
