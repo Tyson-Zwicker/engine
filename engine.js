@@ -3,6 +3,7 @@ const Engine = function () {
     this.entityManager = new EntityManager();
     this.particleManager = new ParticleManager();
     this.tattler = null;
+    this.backgroundTouchFn = undefined;
 }
 Engine.prototype.addButton = function (name, text, x0, y0, x1, y1, fontsize, color, bgColor, hColor, hbgColor, action) {
     this.buttonManager.addButton(new Button(name, text, x0, y0, x1, y1, fontsize, color, bgColor, hColor, hbgColor, action));
@@ -47,6 +48,9 @@ Engine.prototype.addEntityPart = function (entityName, part) {
 Engine.prototype.setEntityTouchEvent = function (fn) {
     this.entityManager.touchedFn = fn;
 }
+Engine.prototype.setBackgroundTouchEvent = function (fn) {
+    this.backgroundTouchFn =  fn;
+}
 Engine.prototype.addTattler = function (font, lines, width) {
     this.tattler = new Tattler(font, lines, width);
 }
@@ -70,14 +74,29 @@ Engine.prototype.addParticles = function (position, quantity, rgb, lifeMinMax, a
     this.particleManager.addBurst(position, quantity, rgb, lifeMinMax, arc, magnitude);
 }
 Engine.prototype.do = function () {
+    let keepChecking = true;
     this.entityManager.manage();
     if (this.particleManager) this.particleManager.manage();
     if (this.tattler) this.tattler.tattle();
-    this.buttonManager.check();
+    if (this.buttonManager.check()) {
+        keepChecking = false;
+    };
     this.buttonManager.draw();
-    // if (this.entityManager.touchedFn) {
-    let entityName = this.entityManager.checkTouch();
-    if (entityName === null) entityName = '';
-    this.tattler.tellGroup(new Tale('entitycheck', entityName, '#f77'));
-    // }
+    if (keepChecking) {
+        if (this.entityManager.touchedFn) {
+            let entityName = this.entityManager.checkTouch();
+            if (entityName !== null) {
+                keepChecking = false;
+            }
+        }
+    }
+    //If nothing else (button or entity is touched), there is a defined backgroundTouch function,
+    //call it.  The reciever should know to check _mouse.where (if they wish).
+    if (keepChecking) {
+        if (this.backgroundTouchFn) {
+            if (_mouse.buttonDown) {
+                this.backgroundTouchFn();
+            }
+        }
+    }
 }

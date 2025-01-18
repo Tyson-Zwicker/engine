@@ -20,7 +20,7 @@ add/remove entities/parts
     <script src="spritedefinitions.js"></script>
 </head>
 
-<body onload="_start(1000,true)" style="border:none">
+<body onload="_start(33,true)" style="border:none">
     <script>
         const engine = new Engine();
         //name,sprite, offset, orientation
@@ -49,6 +49,10 @@ add/remove entities/parts
                 engine.tellTattleGrouped('touched', entityName, '#9ff');
             }
         });
+        engine.setBackgroundTouchEvent (()=>{
+            engine.tellTattleGrouped ('bground',`${_mouse.where.x},${mouse.where.y}`,'#aaa');
+        });
+        
         const program = {
             run: function () {
                 //Main loop here.
