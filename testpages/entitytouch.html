@@ -20,11 +20,9 @@ add/remove entities/parts
     <script src="spritedefinitions.js"></script>
 </head>
 
-<body onload="_start(33,true)" style="border:none">
+<body onload="_start(1000,true)" style="border:none">
     <script>
-
         const engine = new Engine();
-
         //name,sprite, offset, orientation
         let fwdturret = new Part('fwdturret', turret, new Point(0, -100), 0);
         let aftturret = new Part('aftturret', turret, new Point(0, 100), rad(180));
@@ -42,17 +40,13 @@ add/remove entities/parts
         });
 
         engine.addTattler('1em monospace', 10, 300);
-
-
         //name, sprites, position, angle, velocity, spin, mass, radius, parts
-
         engine.addEntity(
             "entity1", [hull, superstructure], new Point(0, 0), 0, new Point(0, 0), 0, 10, 200, [fwdturret, aftturret]
         );
-
-        engine.setEntityTouchEvent((entityName)=>{
-            if (entityName){
-                engine.tellTattleGrouped('touched', enitityName, '#9ff');            
+        engine.setEntityTouchEvent((entityName) => {
+            if (entityName) {
+                engine.tellTattleGrouped('touched', entityName, '#9ff');
             }
         });
         const program = {
@@ -62,7 +56,6 @@ add/remove entities/parts
                 engine.tellTattleGrouped('key', _key.which, '#ff0');
                 engine.tellTattleGrouped('mouse', _mouse.move.where, '#7f');
                 engine.tellTattleGrouped('wheel', _mouse.wheel.where, '#0f0');
-
                 engine.do();
             }
         };
