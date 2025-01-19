@@ -18,7 +18,7 @@ tabler.objectListToHtmlTable (title, objectList, columnames)
     its own row, with the requested properties of said object being
     shown as the columns.
 
-table.objectsToArrayWithHTML (
+tabler.objectsToArrayWithHTML (
     'Test #6',
     test6data,
     ['field1', 'field2', 'field3'])
@@ -26,7 +26,7 @@ table.objectsToArrayWithHTML (
 
     If the object happend to have an array it, it will show the array properly.
 
-table.complexobjectListToHtmlTable (title, objectList, propertyNames, subObjectProperties)
+tabler.complexobjectListToHtmlTable (title, objectList, propertyNames, subObjectProperties)
 
     If the property is primite, its shows it,
     If its an array, it shows the first dimesion's values.
@@ -36,4 +36,15 @@ table.complexobjectListToHtmlTable (title, objectList, propertyNames, subObjectP
         you want to be shown (you can ignore some of them to).
 
 
-    
+Tabler.getTable (title)
+
+    Returns an empty table with an option of title as caption.
+
+Tabler.getRow()
+
+    Returns an empty row.
+
+Tabler.getCell (text, bold, centered, borderSolid)
+
+    Returns a table cell.  All parameters are optional.  If border solid is not true, then the border
+    wil be a dashed line.  If not cenered, it will be left justified. 

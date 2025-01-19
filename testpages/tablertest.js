@@ -10,7 +10,7 @@ let test1data = [
 ];
 let test1properties = ['name', 'age'];
 let test1Div = document.getElementById('test1Div');
-tabler.title = 'Test #1';
+
 test1Div.appendChild(tabler.objectListToHtmlTable('Test #1', test1data, test1properties));
 
 let test2data = [
@@ -23,7 +23,6 @@ let test2data = [
     { "name": "Gina", "age": 34, "employer": "None", "title": "Cindy's Mom", "fulltime": true },
 ];
 let test2properties = ['name', 'age', "employer", "title", "fulltime"];
-tabler.title = 'Test #2: bools?';
 let test2Div = document.getElementById('test2Div');
 test2Div.appendChild(tabler.objectListToHtmlTable("Test #2", test2data, test2properties));
 let test34data = [1, 2, 4, 5, 6, 7, 8, 9];

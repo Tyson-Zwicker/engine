@@ -5,18 +5,18 @@ const Tabler = function () {
 //If you find one of the properties is a object I SHOULD also contain it.  The property name
 //will be the Key and the Value is the list of properties you should show of that object.
 Tabler.prototype.ComplexObjectListToHtmlTable = function (title, objects, properties, innerObjectMap) {
-    let tableElement = this.getEmptyTableElement(title);
-    let rowElement = this.getEmptyRowElement();
+    let tableElement = this.getTable(title);
+    let rowElement = this.getRow();
     properties.forEach(propertyName => {
-        let dataElement = this.getEmptyDataElement(true, true, true);
+        let dataElement = this.getCell(true, true, true);
         dataElement.innerText = propertyName;
         rowElement.appendChild(dataElement);
     });
     tableElement.appendChild(rowElement);
     objects.forEach(object => {
-        let rowElement = this.getEmptyRowElement();
+        let rowElement = this.getRow();
         properties.forEach(property => {
-            let dataElement = this.getEmptyDataElement();
+            let dataElement = this.getCell();
             if (Array.isArray(object[property])) {
                 //Its an array..            
                 dataElement.appendChild(this.arrayToHtmlTable(undefined, object[property]));
@@ -33,7 +33,7 @@ Tabler.prototype.ComplexObjectListToHtmlTable = function (title, objects, proper
                 if (!innerTablePropertyList) throw new Error ('property missing corresponding innerObjectMap entry.');
                 let innerTable = this.objectListToHtmlTable('', [object[property]], innerTablePropertyList);
                 let innerTableElement = innerTable;
-                dataElement = this.getEmptyDataElement();
+                dataElement = this.getCell();
                 dataElement.appendChild(innerTableElement);
             } else {
                 //Its indecipherable.
@@ -51,23 +51,23 @@ Tabler.prototype.ComplexObjectListToHtmlTable = function (title, objects, proper
 
 //If one of the properties is an array.
 Tabler.prototype.ObjectListWithInnerArrayToHtmlTable = function (title, objectList, propertyNames, subObjectProperties) {
-    let table = this.getEmptyTableElement(title);
-    let rowElement = this.getEmptyRowElement();
+    let table = this.getTable(title);
+    let rowElement = this.getRow();
     propertyNames.forEach(property => {
-        let dataElement = this.getEmptyDataElement(true, true, true);
+        let dataElement = this.getCell(true, true, true);
         dataElement.innerText = property;
         rowElement.appendChild(dataElement);
     });
     table.appendChild(rowElement);
     objectList.forEach(row => {
-        let rowElement = this.getEmptyRowElement();
+        let rowElement = this.getRow();
         propertyNames.forEach(property => {
             if (Array.isArray(row[property])) {
-                dataElement = this.getEmptyDataElement();
+                dataElement = this.getCell();
                 dataElement.appendChild(this.arrayToHtmlTable(property, row[property]));
                 rowElement.appendChild(dataElement);
             } else {
-                dataElement = this.getEmptyDataElement();
+                dataElement = this.getCell();
                 dataElement.innerText = row[property];
                 rowElement.appendChild(dataElement);
             };
@@ -80,18 +80,18 @@ Tabler.prototype.ObjectListWithInnerArrayToHtmlTable = function (title, objectLi
 //break up the table into a grid with specified # of columns.
 //two dimensional arrays will automatically by shown in row & column
 Tabler.prototype.arrayToHtmlTable = function (title, array, columns, horizontal) {
-    let table = this.getEmptyTableElement(title);
+    let table = this.getTable(title);
     if (!Array.isArray[array[0]] && columns) {
         //one dimensional AND wants to be split into rows..
-        let rowElement = this.getEmptyRowElement();
+        let rowElement = this.getRow();
         let column = 0;
         for (let i = 0; i < array.length; i++) {
             if (column === columns) {
                 table.appendChild(rowElement);
-                rowElement = this.getEmptyRowElement();
+                rowElement = this.getRow();
                 column = 0;
             }
-            let dataElement = this.getEmptyDataElement();
+            let dataElement = this.getCell();
             dataElement.innerText = array[i];
             rowElement.appendChild(dataElement);
             column++;
@@ -102,20 +102,20 @@ Tabler.prototype.arrayToHtmlTable = function (title, array, columns, horizontal)
     } else {
         if (!Array.isArray[array[0]]) {
             //Simple 1 dimension..
-            let rowElement = this.getEmptyRowElement();
+            let rowElement = this.getRow();
             for (let i = 0; i < array.length; i++) {
-                let dataElement = this.getEmptyDataElement();
+                let dataElement = this.getCell();
                 dataElement.innerText = array[i];
                 rowElement.appendChild(dataElement);
                 table.appendChild(rowElement);
-                rowElement = this.getEmptyRowElement();
+                rowElement = this.getRow();
             }
         } else {
             //2 dimensional..
             for (let i = 0; i < array.length; i++) {
-                let rowElement = this.getEmptyRowElement();
+                let rowElement = this.getRow();
                 for (let j = 0; j < array[i].length; j++) {
-                    let dataElement = this.getEmptyDataElement();
+                    let dataElement = this.getCell();
                     dataElement.innerText = array[i];
                     rowElement.appendChild(dataElement);
                 }
@@ -127,18 +127,18 @@ Tabler.prototype.arrayToHtmlTable = function (title, array, columns, horizontal)
 }
 
 Tabler.prototype.objectListToHtmlTable = function (title, objectList, propertyNames) {
-    let table = this.getEmptyTableElement(title);
-    let rowElement = this.getEmptyRowElement();
+    let table = this.getTable(title);
+    let rowElement = this.getRow();
     propertyNames.forEach(property => {
-        let dataElement = this.getEmptyDataElement(true, true, true)
+        let dataElement = this.getCell(true, true, true)
         dataElement.innerText = property;
         rowElement.appendChild(dataElement);
     });
     table.appendChild(rowElement);
     objectList.forEach(row => {
-        let rowElement = this.getEmptyRowElement();
+        let rowElement = this.getRow();
         propertyNames.forEach(property => {
-            dataElement = this.getEmptyDataElement();
+            dataElement = this.getCell();
             dataElement.innerText = row[property];
             rowElement.appendChild(dataElement);
         });
@@ -147,7 +147,7 @@ Tabler.prototype.objectListToHtmlTable = function (title, objectList, propertyNa
     return table;
 }
 
-Tabler.prototype.getEmptyTableElement = function (title) {
+Tabler.prototype.getTable = function (title) {
     let table = document.createElement('table');
     table.style.border = '2px solid black';
     table.style.borderCollapse = 'collapse';
@@ -159,11 +159,11 @@ Tabler.prototype.getEmptyTableElement = function (title) {
     }
     return table;
 };
-Tabler.prototype.getEmptyRowElement = function () {
+Tabler.prototype.getRow = function () {
     let rowElement = document.createElement('tr');
     return rowElement;
 }
-Tabler.prototype.getEmptyDataElement = function (bold, centered, borderSolid) {
+Tabler.prototype.getCell = function (text, bold, centered, borderSolid) {
     let dataElement = document.createElement('td');
     if (bold) dataElement.style.fontWeight = 'bold';
     if (centered) dataElement.style.textAlign = 'center';
@@ -172,5 +172,6 @@ Tabler.prototype.getEmptyDataElement = function (bold, centered, borderSolid) {
     } else {
         dataElement.style.border = '1px dotted black';
     }
+    if (text) dataElement.innerText = text;
     return dataElement;
 }

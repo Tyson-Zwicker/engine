@@ -2,8 +2,8 @@
 const tabler = new Tabler();
 const body = document.getElementsByTagName('body')[0];
 function newRow(text) {
-    let row = tabler.getEmptyRowElement();
-    let cell = tabler.getEmptyDataElement();
+    let row = tabler.getRow();
+    let cell = tabler.getCell();
     row.appendChild(cell);
     return row;
 }
@@ -15,9 +15,9 @@ function showJSONTables (){
     ]);
 
     let spriteDiv = document.getElementById('spriteDiv');
-    let table = tabler.getEmptyTableElement('Sprite JSON');
-    let row = tabler.getEmptyRowElement();
-    let cell = tabler.getEmptyDataElement();
+    let table = tabler.getTable('Sprite JSON');
+    let row = tabler.getRow();
+    let cell = tabler.getCell();
     cell.innerText = JSON.stringify(hull);
     row.appendChild(cell);
     table.appendChild(row);
@@ -32,9 +32,9 @@ function showJSONTables (){
         , rad(25), 100, 150
     );
     let entityDiv = document.getElementById('entityDiv');
-    table = tabler.getEmptyTableElement('Entity JSON');
-    row = tabler.getEmptyRowElement();
-    cell = tabler.getEmptyDataElement();
+    table = tabler.getTable('Entity JSON');
+    row = tabler.getRow();
+    cell = tabler.getCell();
     cell.innerText = JSON.stringify(entity);
     row.appendChild(cell);
     table.appendChild(row);
@@ -48,9 +48,9 @@ function showJSONTables (){
         () => { return 'function result' }
     );
     let buttonDiv = document.getElementById('buttonDiv');
-    table = tabler.getEmptyTableElement('Button JSON');
-    row = tabler.getEmptyRowElement();
-    cell = tabler.getEmptyDataElement();
+    table = tabler.getTable('Button JSON');
+    row = tabler.getRow();
+    cell = tabler.getCell();
     cell.innerText = JSON.stringify(button);
     row.appendChild(cell);
     table.appendChild(row);
