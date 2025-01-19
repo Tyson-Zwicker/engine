@@ -10,6 +10,8 @@ const InfiniteArray = function (values) {
             for (let dim = 0; 0 < coords.length; dim++) {
                 let keys = this.values.getOwnPropertyNames();
                 if (!keys.contains(coords[dim])) {
+                    let newDimension = {};
+                    newDimension[isInfinite] = true;
                     this.values[coords[dim]] = {};
                     break;
                 }
@@ -22,17 +24,15 @@ const InfiniteArray = function (values) {
     }
     this.get = function (coords) {
         try {
-            if (coords.length === 0) {
-                return this.values[coords[0]];
-            } else {
-                let values = this.values;
-                for (let dim = 0; dim < coords.length; dim++) {
-                    values = values[dim]; //This throw exception if not there.
-                    if (dim = coords.length - 1) {
-                        //This COULD be the object you are looking for.  Or.. it
-                        //COULD BE deeper dimensions into the array.
-                        return values;
-                    }
+            let values = undefined;
+            for (let dim = 0; dim < coords.length; dim++) {
+                values = values[dim]; //This throw exception if not there.
+                if (dim = coords.length - 1) {
+                    //This could be the object you are looking for.  Or.. it
+                    //could just be deeper dimensions.  Use wisely (you can use
+                    //the from() method to make the deeper dimensions into another
+                    //infinite array (or construct a new one with it).
+                    return values;
                 }
             }
         } catch {
@@ -42,5 +42,14 @@ const InfiniteArray = function (values) {
     }
     this.from = function (deeperArray) {
         return new InfiniteArray(deeperArray);
+    }
+    this.getSize = function (v, s) {
+        let size = (s) ? s : 0;
+        let vals = (v) ? v : this.values;
+        let done = false;
+        do {
+            let keys = values.getOwnPropertyNames();
+
+        } while (!done);
     }
 }
