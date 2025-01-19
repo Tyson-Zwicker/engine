@@ -8,10 +8,10 @@ const InfiniteArray = function (values) {
         let done = false;
         do {
             for (let dim = 0; 0 < coords.length; dim++) {
-                let keys = this.values.getOwnPropertyNames();
-                if (!keys.contains(coords[dim])) {
+                let keys = Object.getOwnPropertyNames(this.values);
+                if (!keys.includes(coords[dim])) {
                     let newDimension = {};
-                    newDimension[isInfinite] = true;
+                    newDimension['IsInfinite'] = true;
                     this.values[coords[dim]] = {};
                     break;
                 }
@@ -24,14 +24,14 @@ const InfiniteArray = function (values) {
     }
     this.get = function (coords) {
         try {
-            let values = undefined;
+            let value = undefined;
             for (let dim = 0; dim < coords.length; dim++) {
-                values = values[dim]; //This throw exception if not there.
+                value = values[dim]; //This throw exception if not there.
                 if (dim = coords.length - 1) {
-                    //This could be the object you are looking for.  Or.. it
-                    //could just be deeper dimensions.  Use wisely (you can use
-                    //the from() method to make the deeper dimensions into another
-                    //infinite array,or construct a new one with it).
+                    //This could be the object you are looking for.  It
+                    //could a be deeper array, or it could be just a value.  If it has a property
+                    //called "IsInfinite" and that property is true, there is more 
+                    //array under this coord.  Otherwise, its a value.
                     return values;
                 }
             }
