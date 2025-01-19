@@ -2,22 +2,40 @@
 //I googled for a better name.. and that's what its called.
 //But I'm not calling it that. It's too big and also boring!
 
-const InfiniteArray = function (values) {
-    this.values = (values) ? values : {};
+const InfiniteArray = function () {
+    this.values = {};
     this.set = function (coords, value) {
         let done = false;
+        // starting at the top..
+        let values = this.values;
         do {
             for (let dim = 0; 0 < coords.length; dim++) {
-                let keys = Object.getOwnPropertyNames(this.values);
-                if (!keys.includes(coords[dim])) {
+                //Get all the coordinates that have been defined from this dimension.
+                let keys = Object.getOwnPropertyNames(values);
+                //Is this the dimension on which the value should be set?
+                if (dim === coords.length - 1) {
+                    //If so, set it
+                    values[coords[dim]] = value;
+                    done = true;
+                    break;
+                    //And get out of here..
+                }
+                //We're still digging deeper..
+                else if (!keys.includes(coords[dim])) {
+                    //If this dimesion doesn't contain anything related to the deeper 
+                    //dimension, add the deeper dimension and break the for loop, 
+                    //And try again..
                     let newDimension = {};
                     newDimension['IsInfinite'] = true;
-                    this.values[coords[dim]] = {};
+                    values[coords[dim]] = newDimension;
                     break;
-                }
-                if (dim === coords.length - 1) {
-                    this.values[coords[dim]] = value;
-                    done = true;
+                } else {
+                    //Finally, we've either set the value, or created a deeper 
+                    //dimension in which to try to place the value.. so move to
+                    //that deeper dimension. 
+                    //And try again..
+                    values = values[coords[dim]];
+                    break;
                 }
             }
         } while (!done);

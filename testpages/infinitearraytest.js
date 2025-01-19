@@ -13,6 +13,7 @@ function doTest() {
     cell = tabler.getCell(array.get[1]);
     row.appendChild(cell);
     table.append (row);
+    console.log ('test 1');
 
     row = tabler.getRow();
     cell = tabler.getCell('set [3,1,4] =b');
@@ -22,6 +23,7 @@ function doTest() {
     cell = tabler.getCell(array.get[3, 1, 4]);
     row.appendChild(cell);
     table.append (row);
+    console.log ('test 2');
 
     row = tabler.getRow();
     cell = tabler.getCell('set [3,1,1] =c');
@@ -31,6 +33,7 @@ function doTest() {
     cell = tabler.getCell(array.get[3, 1, 1]);
     row.appendChild(cell);
     table.append (row);
+    console.log ('test 3');
 
     row = tabler.getRow();
     cell = tabler.getCell('overwrite [1,1] =d');
@@ -40,6 +43,7 @@ function doTest() {
     cell = tabler.getCell(array.get[1, 1]);
     row.appendChild(cell);
     table.append (row);
+    console.log ('test 4');
 
     row = tabler.getRow();
     cell = tabler.getCell('overwrite [1,2] =e');
@@ -49,5 +53,8 @@ function doTest() {
     cell = tabler.getCell(array.get[1, 1]);
     row.appendChild(cell);
     table.append (row);
+    console.log ('test4');
+
+    div.appendTable (table);
 
 }
