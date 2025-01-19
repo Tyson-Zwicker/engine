@@ -31,7 +31,7 @@ const InfiniteArray = function (values) {
                     //This could be the object you are looking for.  Or.. it
                     //could just be deeper dimensions.  Use wisely (you can use
                     //the from() method to make the deeper dimensions into another
-                    //infinite array (or construct a new one with it).
+                    //infinite array,or construct a new one with it).
                     return values;
                 }
             }
@@ -42,14 +42,5 @@ const InfiniteArray = function (values) {
     }
     this.from = function (deeperArray) {
         return new InfiniteArray(deeperArray);
-    }
-    this.getSize = function (v, s) {
-        let size = (s) ? s : 0;
-        let vals = (v) ? v : this.values;
-        let done = false;
-        do {
-            let keys = values.getOwnPropertyNames();
-            //TODO: how?
-        } while (!done);
     }
 }
