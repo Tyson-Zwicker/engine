@@ -49,7 +49,7 @@ const InfiniteArray = function (values) {
         let done = false;
         do {
             let keys = values.getOwnPropertyNames();
-
+            //TODO: how?
         } while (!done);
     }
 }
