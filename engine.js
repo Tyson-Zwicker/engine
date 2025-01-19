@@ -1,3 +1,8 @@
+// TODO:  Add *more* snarky log comments, instead of just "failing gracefully"
+// If you want to use the parts by themselves there should be no feedback- your being you.
+//  But If your using this API, this is the place to recieve complaints about "wrong"
+//  things that don't crash anything should be quitely mentioned in the console.
+
 const Engine = function () {
     this.buttonManager = new ButtonManager();
     this.entityManager = new EntityManager();
@@ -37,7 +42,11 @@ Engine.prototype.removeEntity = function (name) {
 }
 Engine.prototype.removeEntityPart = function (entityName, partName) {
     let entity = this.entityManager.get(entityName);
-    entity.removePart(partName);
+    if (entity) {
+        entity.removePart(partName);
+    } else {
+        log(`you've tried to remove ${partName} from ${entityName} but ${entityName} doesn't exist.`);
+    }
 }
 Engine.prototype.addEntityPart = function (entityName, part) {
     if (this.entityManager.has(entityName)) {
@@ -47,9 +56,9 @@ Engine.prototype.addEntityPart = function (entityName, part) {
 }
 Engine.prototype.setEntityTouchEvent = function (fn) {
     this.entityManager.touchedFn = fn;
-}                 
+}
 Engine.prototype.setBackgroundTouchEvent = function (fn) {
-    this.backgroundTouchFn =  fn;
+    this.backgroundTouchFn = fn;
 }
 Engine.prototype.addTattler = function (font, lines, width) {
     this.tattler = new Tattler(font, lines, width);
