@@ -58,23 +58,23 @@ const drawLine = function (x0, y0, x1, y1, color, thickness) {
     _ctx.closePath()
     _ctx.stroke();
 }
-const drawTextCenter = function (x, y, text, size, color) {
-    _ctx.font = (size) ? `${size}em monospace` : '0.75em monospace';
+const drawTextCenter = function (x, y, text, fontSize, color) {
+    _ctx.font = (fontSize) ? `${fontSize}em monospace` : '0.75em monospace';
     _ctx.textBaseline = "middle";
     _ctx.textAlign = "center";
     _ctx.fillStyle = (color) ? color : '#ccc';
     _ctx.fillText(text, x, y);
     
 }
-const drawTextLeft = function (x, y, text, size, color) {
-    _ctx.font = (size) ? `${size}em monospace` : '0.75em monospace';
+const drawTextLeft = function (x, y, text, fontSize, color) {
+    _ctx.font = (fontSize) ? `${fontSize}em monospace` : '0.75em monospace';
     _ctx.textBaseline = "middle";
     _ctx.textAlign = "start";
     _ctx.fillStyle = (color) ? color : '#ccc';
     _ctx.fillText(text, x, y);
 }
-const drawTextRight = function (x, y, text, size, color) {
-    _ctx.font = (size) ? `${size}em monospace` : '0.75em monospace';
+const drawTextRight = function (x, y, text, fontSize, color) {
+    _ctx.font = (sfontSizeze) ? `${fontSize}em monospace` : '0.75em monospace';
     _ctx.textBaseline = "middle";
     _ctx.textAlign = "end";
     _ctx.fillStyle = (color) ? color : '#ccc';
