@@ -1,5 +1,15 @@
 
+let div0 = document.getElementById ('Test0Div');
 let tabler = new Tabler();
+let table = tabler.getTable ('Simple Table');
+let row = tabler.getRow();
+let cell1 = tabler.getCell ('1');
+let cell2 = tabler.getCell ('2');
+row.appendChild (cell1);
+row.appendChild (cell2);
+table.appendChild (row);
+div0.appendChild (table);
+
 let test1data = [
     { "name": "Abby", "age": 19 },
     { "name": "Breanne", "age": 32 },
