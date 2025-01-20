@@ -9,8 +9,8 @@ function doTest() {
     cell = tabler.getCell('set [1] =a');
     row.appendChild(cell);
     cell = tabler
-    array.set([1], 'a');
-    cell = tabler.getCell(array.get[1]);
+    array.set(['1'], 'a');
+    cell = tabler.getCell(array.get['1']);
     row.appendChild(cell);
     table.append (row);
     console.log ('test 1');
@@ -19,8 +19,8 @@ function doTest() {
     cell = tabler.getCell('set [3,1,4] =b');
     row.appendChild(cell);
     cell = tabler
-    array.set([3, 1, 4], 'b');
-    cell = tabler.getCell(array.get[3, 1, 4]);
+    array.set(['3','1', '4'], 'b');
+    cell = tabler.getCell(array.get['3', '1', '4']);
     row.appendChild(cell);
     table.append (row);
     console.log ('test 2');
@@ -29,8 +29,8 @@ function doTest() {
     cell = tabler.getCell('set [3,1,1] =c');
     row.appendChild(cell);
     cell = tabler
-    array.set([3,1,1], 'c');
-    cell = tabler.getCell(array.get[3, 1, 1]);
+    array.set(['3','1','1'], 'c');
+    cell = tabler.getCell(array.get['3', '1', '1']);
     row.appendChild(cell);
     table.append (row);
     console.log ('test 3');
@@ -39,8 +39,8 @@ function doTest() {
     cell = tabler.getCell('overwrite [1,1] =d');
     row.appendChild(cell);
     cell = tabler
-    array.set([1,1], 'd');
-    cell = tabler.getCell(array.get[1, 1]);
+    array.set(['1','1'], 'd');
+    cell = tabler.getCell(array.get['1', '1']);
     row.appendChild(cell);
     table.append (row);
     console.log ('test 4');
@@ -49,12 +49,12 @@ function doTest() {
     cell = tabler.getCell('overwrite [1,2] =e');
     row.appendChild(cell);
     cell = tabler
-    array.set([1,2], 'e');
-    cell = tabler.getCell(array.get[1, 1]);
+    array.set(['1','2'], 'e');
+    cell = tabler.getCell(array.get['1', '2']);
     row.appendChild(cell);
     table.append (row);
-    console.log ('test4');
+    console.log ('test 5');
 
-    div.appendTable (table);
+    div.appendChild (table);
 
 }
