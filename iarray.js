@@ -2,8 +2,6 @@ const IArray = function () {
     this.values = {};
     this.values['isInfinite'] = true;
 }
-//Store "obj" at coords (an array of coordinates, each element represents a coordinate in a 
-// successively higher dimension.  Note that the coords.
 IArray.prototype.set = function (coords, obj) {
     let tempVals = this.values;
     let dim = 0;
