@@ -19,26 +19,40 @@ add/remove entities/parts
     <script src=".././entitymanager.js"></script>
     <script src=".././engine.js"></script>
     <script src=".././iarray.js"></script>
-    
+
 </head>
 
 <body onload="_start(33,true)" style="border:none; font:1.5em monospace">
-    <script src="spritemaker.js"></script>
+
     <script>
         const engine = new Engine();
-        const spriteMaker = new SpriteMaker();
-        engine.addTattler (1, 6, 200);
-
-        makeSymmetryButtonPanel();
+        engine.addTattler(1, 6, 200);
+        engine.addButton(
+            // name, text, x0, y0, x1, y1, fontsize, color, bgColor, hColor, hbgColor, action, toggle, unToggleFn
+            new Button('verticalsym', 'Vertical', 100, 2, 200, 38, 1.5, '#fff', '#06f', '#0f0', '#060',
+                () => { spriteMaker.verticalSymmetry = true; },
+                true,
+                () => { spriteMaker.verticalSymmetry = true; }
+            )
+        );
+        engine.addButton(
+            // name, text, x0, y0, x1, y1, fontsize, color, bgColor, hColor, hbgColor, action, toggle, unToggleFn
+            new Button('horizontalsym', 'Horizontal', 100, 2, 200, 38, 1.5, '#fff', '#06f', '#0f0', '#060',
+                () => { spriteMaker.verticalSymmetry = true; },
+                true,
+                () => { spriteMaker.verticalSymmetry = true; }
+            )
+        );
 
         const program = {
             run: function () {
                 engine.tellTattleGrouped('zoom', _zoom, '#0ff');
                 engine.tellTattleGrouped('key', _key.which, '#ff0');
                 engine.tellTattleGrouped('mouse', _mouse.move.where, '#7f');
-                engine.tellTattleGrouped('wheel', _mouse.wheel.where, '#0f0');
+                engine.tellTattleGrouped('wheel', _mouse.wheel.where, '#0f0');              
+                drawBox(0, 30, _screenSize.x, 70, '#066',true);
+                drawTextRight(5, 50, 'Line of Symmetry:', '#fff');
                 engine.do();
-                spriteMaker.do();
             }
         };
     </script>
