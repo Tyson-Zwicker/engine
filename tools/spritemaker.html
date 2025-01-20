@@ -18,12 +18,19 @@ add/remove entities/parts
     <script src=".././entity.js"></script>
     <script src=".././entitymanager.js"></script>
     <script src=".././engine.js"></script>
-    <script src="spritemaker.js"></script>
+    <script src=".././iarray.js"></script>
+    
 </head>
 
-<body onload="_start(33,true)" style="border:none">
+<body onload="_start(33,true)" style="border:none; font:1.5em monospace">
+    <script src="spritemaker.js"></script>
     <script>
+        const engine = new Engine();
         const spriteMaker = new SpriteMaker();
+        engine.addTattler (1, 6, 200);
+
+        makeSymmetryButtonPanel();
+
         const program = {
             run: function () {
                 engine.tellTattleGrouped('zoom', _zoom, '#0ff');
