@@ -5,7 +5,7 @@
     <script src=".././gfx.js"></script>
     <script src=".././main.js"></script>
     <script src=".././button.js"></script>
-    <script src=:.././buttonmanager.js"></script>
+    <script src=".././buttonmanager.js"></script>
     <script src=".././tattle.js"></script>
     
 </head>
@@ -25,7 +25,11 @@
             30, 40, 180, 70, 1.4,
             '#700', '#aa0',
             '#00f', '#0ff',
-            action1
+            action1,
+            true,
+            ()=>{
+                tattler.tellGrouped (new Tale ('toggle', button1.manager.toggled.has (button1),'fff'));
+            }
         );
         const button2 = new Button(
             'button2',
