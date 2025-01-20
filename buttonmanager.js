@@ -36,7 +36,7 @@ ButtonManager.prototype.check = function () {
                 //The button was raised onthe same button it went down on..
                 button.action();
                 this.pressed = null;
-                if (button.toggle) {                //If its a toggle
+                if (button.isToggle) {                //If its a toggle
                     if (this.toggled.has(button)) { //and its already toggledf
                         this.toggled.delete(button); //Untoggled it.
                         if (button.unToggleFn) {
