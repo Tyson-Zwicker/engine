@@ -10,8 +10,8 @@ const Engine = function () {
     this.tattler = null;
     this.backgroundTouchFn = undefined;
 }
-Engine.prototype.addButton = function (name, text, x0, y0, x1, y1, fontsize, color, bgColor, hColor, hbgColor, action) {
-    this.buttonManager.addButton(new Button(name, text, x0, y0, x1, y1, fontsize, color, bgColor, hColor, hbgColor, action));
+Engine.prototype.addButton = function (name, text, x0, y0, x1, y1, fontsize, color, bgColor, hColor, hbgColor, action, toggle, unToggleFn) {
+    this.buttonManager.addButton(new Button(name, text, x0, y0, x1, y1, fontsize, color, bgColor, hColor, hbgColor, action,toggle, unToggleFn));
 }
 Engine.prototype.addButtonJSON = function (json) {
     let buttons = JSON.parse(json);
