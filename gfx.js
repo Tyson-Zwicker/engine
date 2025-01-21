@@ -74,7 +74,7 @@ const drawTextLeft = function (x, y, text, fontSize, color) {
     _ctx.fillText(text, x, y);
 }
 const drawTextRight = function (x, y, text, fontSize, color) {
-    _ctx.font = (sfontSizeze) ? `${fontSize}em monospace` : '0.75em monospace';
+    _ctx.font = (fontSize) ? `${fontSize}em monospace` : '0.75em monospace';
     _ctx.textBaseline = "middle";
     _ctx.textAlign = "end";
     _ctx.fillStyle = (color) ? color : '#ccc';
