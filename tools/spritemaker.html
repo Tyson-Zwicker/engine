@@ -25,33 +25,69 @@ add/remove entities/parts
 <body onload="_start(33,true)" style="border:none; font:1.5em monospace">
 
     <script>
+        const spriteMaker = {
+            verticalSymmetry: false,
+            horizontalSymmetry: false,
+            points: new IArray(),
+        }
         const engine = new Engine();
-        engine.addTattler(1, 6, 200);
-        engine.addButton(
-            // name, text, x0, y0, x1, y1, fontsize, color, bgColor, hColor, hbgColor, action, toggle, unToggleFn
-            new Button('verticalsym', 'Vertical', 100, 2, 200, 38, 1.5, '#fff', '#06f', '#0f0', '#060',
-                () => { spriteMaker.verticalSymmetry = true; },
-                true,
-                () => { spriteMaker.verticalSymmetry = true; }
-            )
+        engine.addTattler(1, 6, 300);
+        engine.addButton('verticalsym', 'Vertical', 10, 60, 190, 80, 1, '#fff', '#06f', '#0f0', '#060',
+            () => { spriteMaker.verticalSymmetry = true; }, true,
+            () => { spriteMaker.verticalSymmetry = false; }
         );
-        engine.addButton(
-            // name, text, x0, y0, x1, y1, fontsize, color, bgColor, hColor, hbgColor, action, toggle, unToggleFn
-            new Button('horizontalsym', 'Horizontal', 100, 2, 200, 38, 1.5, '#fff', '#06f', '#0f0', '#060',
-                () => { spriteMaker.verticalSymmetry = true; },
-                true,
-                () => { spriteMaker.verticalSymmetry = true; }
-            )
+        engine.addButton('horizontalsym', 'Horizontal', 10, 85, 190, 105, 1, '#fff', '#06f', '#0f0', '#060',
+            () => { spriteMaker.horizontalSymmetry = true; }, true,
+            () => { spriteMaker.horizontalSymmetry = false; }
         );
+        //TODO:  I need a "radio button" type thing... a group of toggle mutually exclusive toggle buttons..
+        engine.addButton('grid1', '1', 15, 150, 40, 180, 1, '#fff', '#06f', '#0f0', '#060',
+            () => { ; }, true,
+            () => { ; }
+        );
+        engine.addButton('grid2', '2', 45, 150, 75, 180, 1, '#fff', '#06f', '#0f0', '#060',
+            () => { ; }, true,
+            () => { ; }
+        );
+        engine.addButton('grid3', '5', 80, 150, 110, 180, 1, '#fff', '#06f', '#0f0', '#060',
+            () => { ; }, true,
+            () => { ; }
+        );
+        engine.addButton('grid4', '10', 115, 150, 145, 180, 1, '#fff', '#06f', '#0f0', '#060',
+            () => { ; }, true,
+            () => { ; }
+        );
+        engine.addButton('grid5', '25', 150, 150, 180, 180, 1, '#fff', '#06f', '#0f0', '#060',
+            () => { spriteMaker.horizontalSymmetry = true; }, true,
+            () => { spriteMaker.horizontalSymmetry = false; }
+        );
+        function drawGrid() {
+            let cx = 200 + (_screenSize.x - 200) / 2;
+            let cy = _centerOfScreen.y - 30;
+            drawBox(200, 30, _screenSize.x, _screenSize.y, '#000', true);
+            if (spriteMaker.horizontalSymmetry) {
+                drawLine(200, cy, _screenSize.x, cy, '#333');
+            }
+            if (spriteMaker.verticalSymmetry) {
+                drawLine(cx, 30, cx, _screenSize.y, '#333');
+            }
+        }
+        function drawButtonPanels() {
+            cx = 95;
+            drawBox(5, 30, 195, 110, '#369', true);
+            drawTextCenter(cx, 45, 'Line of Symmetry', .75, '#fff');
+            drawBox(5, 120, 195, 185, '#369', true);
+            drawTextCenter(cx, 135, 'Snap Spacing', .75, '#fff');
 
+        }
         const program = {
             run: function () {
+                drawButtonPanels();
+                drawGrid();
                 engine.tellTattleGrouped('zoom', _zoom, '#0ff');
                 engine.tellTattleGrouped('key', _key.which, '#ff0');
                 engine.tellTattleGrouped('mouse', _mouse.move.where, '#7f');
-                engine.tellTattleGrouped('wheel', _mouse.wheel.where, '#0f0');              
-                drawBox(0, 30, _screenSize.x, 70, '#066',true);
-                drawTextRight(5, 50, 'Line of Symmetry:', '#fff');
+                engine.tellTattleGrouped('wheel', _mouse.wheel.where, '#0f0');
                 engine.do();
             }
         };
