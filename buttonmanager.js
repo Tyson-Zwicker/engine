@@ -67,16 +67,13 @@ ButtonManager.prototype.check = function () {
                 button.actionFn();
                 this.pressed = null;
                 if (button.radioGroup) {
-                    this.toggled.set(button, true);
-                    console.log(`radio button ${button.name} of group ${button.radioGroup} toggled`);
+                    this.toggled.set(button, true);                    
                     //Its in a radio group, so untoggle all the others..
                     let buttonsInGroup = this.radioGroups[button.radioGroup];
                     for (let i = 0; i < buttonsInGroup.length; i++) {
                         let radioButton = buttonsInGroup[i];
                         if (radioButton !== button) {
-                            console.log(`other button in group${radioButton.name}`);
-                            if (this.toggled.has(radioButton)) {
-                                console.log('was toggled on, shutting off');
+                            if (this.toggled.has(radioButton)) {                                
                                 this.toggled.delete(radioButton);
                             }
                         }
