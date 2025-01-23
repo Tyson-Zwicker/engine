@@ -34,7 +34,9 @@
             buttonColors,
             action2
         );
-        const buttonManager = new ButtonManager ([button1,button2]);
+        const buttonManager = new ButtonManager ();
+        buttonManager.addButton (button1);
+        buttonManager.addButton (button2);
         const program = {
             run: function () {
                 buttonManager.check();
