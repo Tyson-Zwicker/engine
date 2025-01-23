@@ -1,0 +1,80 @@
+<html>
+
+<head>
+    <script src=".././maths.js"></script>
+    <script src=".././gfx.js"></script>
+    <script src=".././main.js"></script>
+    <script src=".././button.js"></script>
+    <script src=".././buttonmanager.js"></script>
+    <script src=".././tattle.js"></script>
+
+</head>
+
+<body onload="_start(33)" style="border:none">
+    <script>
+        const tattler = new Tattler('1em monospace', 10, 300);
+        function buttonAction1() {
+            tattler.tellGroup(
+                new Tale('Button', '1')
+            )
+        };
+        function buttonAction2() {
+            tattler.tellGroup(
+                new Tale('Button', '2')
+            )
+        };
+        function buttonAction3() {
+            tattler.tellGroup(
+                new Tale('Button', '3')
+            )
+        };
+        function buttonAction4() {
+            tattler.tellGroup(
+                new Tale('Button', '4')
+            )
+        };
+        const buttonColors = new ButtonColors('#700', '#aa0', '#00f', '#0ff');
+        const button1 = new Button(
+            'button1',
+            'Button One!',
+            30, 40, 180, 70, 1.4,
+            buttonColors,
+            buttonAction1
+        );
+        const button2 = new Button(
+            'button2',
+            'Button Two?',
+            30, 75, 180, 105, 1.4,
+            buttonColors,
+            buttonAction2
+        );
+        const button3 = new Button(
+            'button3',
+            'Button Three',
+            30, 110, 180, 140, 1.4,
+            buttonColors,
+            buttonAction3
+        );
+        const button4 = new Button(
+            'button4',
+            'Button Four',
+            30, 145, 180, 175, 1.4,
+            buttonColors,
+            buttonAction4
+        );
+        const buttonManager = new ButtonManager();
+        buttonManager.addButtonToRadioGroup(button1, 'group1');
+        buttonManager.addButtonToRadioGroup(button2, 'group1');
+        buttonManager.addButtonToRadioGroup(button3, 'group1');
+        buttonManager.addButtonToRadioGroup(button4, 'group1');
+        const program = {
+            run: function () {
+                buttonManager.check();
+                buttonManager.draw();
+                tattler.tattle();
+            }
+        };
+    </script>
+</body>
+
+</html>
