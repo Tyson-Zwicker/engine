@@ -1,21 +1,33 @@
-const Button = function (name, text, x0, y0, x1, y1, fontsize, color, bgColor, hColor, hbgColor, action, toggle, unToggleFn) {
+const ButtonColors = function ( color, bgColor, hColor, hbgColor){
+    this.color = color;
+    this.bgColor = bgColor;
+    this.hoverColor= hColor;
+    this.hoverBackground =hbgColor;
+}
+
+const Button = function (name, text, x0, y0, x1, y1, fontsize, buttonColors, actionFn) {
     this.name = name;
     this.text = text;
     this.x0 = x0;
     this.y0 = y0;
     this.x1 = x1;
     this.y1 = y1;
-    this.color = color;
-    this.bgColor = bgColor;
-    this.hColor = hColor;
-    this.hbgColor = hbgColor;
+    this.color = buttonColors.color;
+    this.bgColor = buttonColors.bgColor; 
+    this.hColor = buttonColors.hoverColor;
+    this.hbgColor = buttonColors.hoverBackground;
     this.width = x1 - x0;
     this.height = y1 - y0;
     this.fontsize = fontsize;
-    this.action = action;
+    this.actionFn = actionFn;
     this.manager = null;
-    this.isToggle = (toggle) ? toggle : false;
-    this.unToggleFn = unToggleFn;
+    this.isToggle = false;
+    this.radioGroup = null;
+    this.unToggleFn = null;
+}
+Button.prototype.setAsToggle = function (untoggleFn){
+    this.isToggle = true;
+    this.unToggleFn = untoggleFn;
 }
 Button.prototype.selectColor = function () {
     let border = undefined;

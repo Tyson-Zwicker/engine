@@ -19,20 +19,19 @@
         function action2() { tattler.tellGroup (
             new Tale ('ACTION2','**button2')
         ) };
+        const buttonColors = new ButtonColors ('#700', '#aa0','#00f', '#0ff');
         const button1 = new Button(
             'button1',
             'Button One!',
             30, 40, 180, 70, 1.4,
-            '#700', '#aa0',
-            '#00f', '#0ff',
+            buttonColors,
             action1
         );
         const button2 = new Button(
             'button2',
             'Button Two?',
             30, 75, 180, 105, 1.4,
-            '#070', '#0aa',
-            '#0f0', '#f0f',
+            buttonColors,
             action2
         );
         const buttonManager = new ButtonManager ([button1,button2]);

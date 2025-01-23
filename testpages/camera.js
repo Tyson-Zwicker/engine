@@ -66,13 +66,13 @@ function showEntity3 (){
     _camera.y = entity3.position.y;
 }
 /*And these are the buttons that so those^^ functions*/
+const buttonColors = new ButtonColors ('#700', '#aa0','#00f', '#0ff');
 const button1 = new Button(
     'button1',
     'Show 1',
     30, 40, 180, 70,
      1.1,
-    '#700', '#aa0',
-    '#00f', '#0ff',
+    buttonColors,
     showEntity1
 );
 const button2 = new Button(
@@ -80,8 +80,7 @@ const button2 = new Button(
     'Show 2',
     30, 75, 180, 105,
      1.1,
-    '#700', '#aa0',
-    '#00f', '#0ff',
+    buttonColors,
     showEntity2
 );
 const button3 = new Button(
@@ -89,8 +88,10 @@ const button3 = new Button(
     'Show 3',
     30, 110, 180, 140,
      1.1,
-    '#700', '#aa0',
-    '#00f', '#0ff',
+    buttonColors,
     showEntity3
 );
-const buttonManager = new ButtonManager ([button1, button2, button3]);
+const buttonManager = new ButtonManager ();
+buttonManager.addButton (button1);
+buttonManager.addButton (button2);
+buttonManager.addButton (button3);

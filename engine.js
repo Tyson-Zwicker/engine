@@ -10,8 +10,20 @@ const Engine = function () {
     this.tattler = null;
     this.backgroundTouchFn = undefined;
 }
-Engine.prototype.addButton = function (name, text, x0, y0, x1, y1, fontsize, color, bgColor, hColor, hbgColor, action, toggle, unToggleFn) {
-    this.buttonManager.addButton(new Button(name, text, x0, y0, x1, y1, fontsize, color, bgColor, hColor, hbgColor, action, toggle, unToggleFn));
+Engine.prototype.addButton = function (name, text, x0, y0, x1, y1, fontsize, buttonColors, action) {
+    this.buttonManager.addButton(new Button(name, text, x0, y0, x1, y1, fontsize, buttonColors, action));
+}
+Engine.prototype.removeButton = function (button) {
+    this.buttonManager.removeButton (button);
+}
+Engine.prototype.setButtonAsToggle = function(button,untoggleFn){
+    button.untoggledFn = untoggledFn;
+}
+Engine.prototype.setButtonAsRadio = function(button, groupName){
+    this.buttonManager.addButtonToRadioGroup (button, GroupName);
+}
+Engine.prototype.removeRadioButtonGroup = function(groupname) {
+    this.buttonManager.removeRadioGroup (groupName);
 }
 Engine.prototype.addButtonJSON = function (json) {
     let buttons = JSON.parse(json);

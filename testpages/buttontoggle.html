@@ -7,39 +7,46 @@
     <script src=".././button.js"></script>
     <script src=".././buttonmanager.js"></script>
     <script src=".././tattle.js"></script>
-    
+
 </head>
 
 <body onload="_start(33)" style="border:none">
     <script>
-        const tattler = new Tattler('1em monospace',10,300);        
-        function action1() { tattler.tellGroup (
-           new Tale ('ACTION1','**button1')
-        ) };
-        function action2() { tattler.tellGroup (
-            new Tale ('ACTION2','**button2')
-        ) };
+        const tattler = new Tattler('1em monospace', 10, 300);
+        function action1() {
+            tattler.tellGroup(
+                new Tale('ACTION1', '**button1')
+            )
+        };
+        function action2() {
+            tattler.tellGroup(
+                new Tale('ACTION2', '**button2')
+            )
+        };
+
+        const buttonManager = new ButtonManager();
+        const buttonColors = new ButtonColors('#700', '#aa0', '#00f', '#0ff');
         const button1 = new Button(
             'button1',
             'Button One!',
             30, 40, 180, 70, 1.4,
-            '#700', '#aa0',
-            '#00f', '#0ff',
-            action1,
-            true,
-            ()=>{
-                tattler.tellGroup (new Tale ('toggle', button1.manager.toggled.has (button1),'fff'));
-            }
+            buttonColors,
+            action1
         );
+        button1.setAsToggle(() => {
+            tattler.tellGroup(
+                new Tale('UNTOGGLED', '**button1')
+            );
+        });
         const button2 = new Button(
             'button2',
             'Button Two?',
             30, 75, 180, 105, 1.4,
-            '#070', '#0aa',
-            '#0f0', '#f0f',
+            buttonColors,
             action2
         );
-        const buttonManager = new ButtonManager ([button1,button2]);
+        buttonManager.addButton(button1);
+        buttonManager.addButton(button2);
         const program = {
             run: function () {
                 buttonManager.check();

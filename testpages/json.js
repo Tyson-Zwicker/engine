@@ -39,12 +39,12 @@ function showJSONTables (){
     row.appendChild(cell);
     table.appendChild(row);
     spriteDiv.appendChild(table);
+    const buttonColors = new ButtonColors ('#700', '#aa0','#00f', '#0ff'); 
     const button = new Button(
         'sampleButton',
         'Look a Button!',
         30, 40, 180, 70, 1.4,
-        '#700', '#aa0',
-        '#00f', '#0ff',
+        buttonColors,
         () => { return 'function result' }
     );
     let buttonDiv = document.getElementById('buttonDiv');
