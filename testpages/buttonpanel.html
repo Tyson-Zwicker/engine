@@ -35,6 +35,26 @@
                 new Tale('Button', '4')
             )
         };
+        function buttonAction5() {
+            tattler.tellGroup(
+                new Tale('Button', '5')
+            )
+        };
+        function buttonAction6() {
+            tattler.tellGroup(
+                new Tale('Button', '6')
+            )
+        };
+        function buttonAction7() {
+            tattler.tellGroup(
+                new Tale('Button', '7')
+            )
+        };
+        function buttonAction8() {
+            tattler.tellGroup(
+                new Tale('Button', '8')
+            )
+        };
         const buttonDefs = [
             { name: 'button1', text: 'One', actionFn: buttonAction1 },
             { name: 'button2', text: 'Two', actionFn: buttonAction2 },
@@ -44,13 +64,32 @@
         const buttonManager = new ButtonManager();
         const buttonColors = new ButtonColors('#700', '#aa0', '#00f', '#0ff');
         //name, colors, x, y, width, buttonHeight, fontSize, outerBorder, radioGroup
-        const panel = new VerticalButtonPanel(
+        const vpanel = new VerticalButtonPanel(
             'panel1',
-             buttonColors,
-             10, 50, 100, 
-             25, 1, 5, 'group1');
-        panel.add(buttonDefs);
-        buttonManager.addPanel(panel);
+            buttonColors,
+            10, 50, 100,
+            25, 1, 5, 'group1'
+        );
+        vpanel.add(buttonDefs);
+        buttonManager.addPanel(vpanel);
+
+        const buttonDefs2 = [
+            { name: 'button5', text: '5', actionFn: buttonAction5 },
+            { name: 'button6', text: '6', actionFn: buttonAction6 },
+            { name: 'button7', text: '7', actionFn: buttonAction7 },
+            { name: 'button8', text: '8', actionFn: buttonAction8 }
+        ];
+        //name, colors, x, y, height, buttonWidth, fontSize, outerBorder, radioGroup
+        const hpanel = new HorizontalButtonPanel(
+            'panel2',
+            buttonColors,
+            150, 5, 30,
+            50, 1, 5, 'group2'
+        );
+        hpanel.add (buttonDefs2);
+        buttonManager.addPanel (hpanel);
+        //TODO: Also test non-radio panels
+        //TODO: There is supposed to be a background filled box?
         const program = {
             run: function () {
                 buttonManager.check();
