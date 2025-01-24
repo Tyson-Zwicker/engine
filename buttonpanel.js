@@ -57,7 +57,6 @@ HorizontalButtonPanel.prototype.add = function (buttonDefinitions) {
             this.y + this.height,
             this.fontSize, this.colors, def.actionFn
         );
-        console.log (`x ${x} this.buttonWidth`);
         this.buttons.push(button);
         x += this.buttonWidth + this.outerBorder;
     });
