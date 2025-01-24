@@ -1,9 +1,26 @@
 const ButtonManager = function () {
     this.buttons = [];
-    this.radioGroups = {}
+    this.radioGroups = {};
+    this.panels = {};
     this.toggled = new Map();
     this.pressed = null;
     this.hovered = null;
+}
+ButtonManager.prototype.addPanel = function (panel){    
+    
+    panel.buttons.forEach (button=>{
+        if (panel.radioGroup){
+            let groupName = panel.radioGroup
+            this.addButtonToRadioGroup (button, panel.radioGroup);
+        }else{
+            this.addButton (button);
+        }
+    });
+    this.panels[panel.name]= panel;
+    
+}
+ButtonManager.prototype.removePanel = function (panelName){
+    delete this.panels[panelName];
 }
 ButtonManager.prototype.addButtonToRadioGroup = function (button, groupName) {
     let group = [];
@@ -44,6 +61,9 @@ ButtonManager.prototype.removeButton = function (button) {
     }
 }
 ButtonManager.prototype.draw = function () {
+    Object.getOwnPropertyNames (this.panels).forEach (panel =>{
+        drawBox (panel.x,panel.y, panel.x+panel.width, panel.y+panel.height, panel.color, true);
+    });
     this.buttons.forEach(button => {
         button.draw();
     });

@@ -1,0 +1,65 @@
+<html>
+
+<head>
+    <script src=".././maths.js"></script>
+    <script src=".././gfx.js"></script>
+    <script src=".././main.js"></script>
+    <script src=".././button.js"></script>
+    <script src=".././buttonmanager.js"></script>
+    <script src=".././buttonpanel.js"></script>
+
+    <script src=".././tattle.js"></script>
+
+</head>
+
+<body onload="_start(33)" style="border:none">
+    <script>
+        const tattler = new Tattler('1em monospace', 10, 300);
+        function buttonAction1() {
+            tattler.tellGroup(
+                new Tale('Button', '1')
+            )
+        };
+        function buttonAction2() {
+            tattler.tellGroup(
+                new Tale('Button', '2')
+            )
+        };
+        function buttonAction3() {
+            tattler.tellGroup(
+                new Tale('Button', '3')
+            )
+        };
+        function buttonAction4() {
+            tattler.tellGroup(
+                new Tale('Button', '4')
+            )
+        };
+        const buttonDefs = [
+            { name: 'button1', text: 'One', actionFn: buttonAction1 },
+            { name: 'button2', text: 'Two', actionFn: buttonAction2 },
+            { name: 'button3', text: 'Three', actionFn: buttonAction3 },
+            { name: 'button4', text: 'Four', actionFn: buttonAction4 }
+        ];
+        const buttonManager = new ButtonManager();
+        const buttonColors = new ButtonColors('#700', '#aa0', '#00f', '#0ff');
+        //name, colors, x, y, width, buttonHeight, fontSize, outerBorder, radioGroup
+        const panel = new VerticalButtonPanel(
+            'panel1',
+             buttonColors,
+             10, 50, 100, 
+             25, 1, 5, 'group1');
+        panel.add(buttonDefs);
+        buttonManager.addPanel(panel);
+        const program = {
+            run: function () {
+                buttonManager.check();
+                buttonManager.draw();
+                tattler.tattle();
+            }
+        };
+
+    </script>
+</body>
+
+</html>
