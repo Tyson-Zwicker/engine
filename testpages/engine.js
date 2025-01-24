@@ -1,6 +1,5 @@
 
 const engine = new Engine();
-
 //name,sprite, offset, orientation
 let fwdturret = new Part('fwdturret', turret, new Point(0, -100), 0);
 let aftturret = new Part('aftturret', turret, new Point(0, 100), rad(180));
