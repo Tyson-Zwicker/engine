@@ -6,20 +6,18 @@ const ButtonManager = function () {
     this.pressed = null;
     this.hovered = null;
 }
-ButtonManager.prototype.addPanel = function (panel){    
-    
-    panel.buttons.forEach (button=>{
-        if (panel.radioGroup){
+ButtonManager.prototype.addPanel = function (panel) {
+    panel.buttons.forEach(button => {
+        if (panel.radioGroup) {
             let groupName = panel.radioGroup
-            this.addButtonToRadioGroup (button, panel.radioGroup);
-        }else{
-            this.addButton (button);
+            this.addButtonToRadioGroup(button, panel.radioGroup);
+        } else {
+            this.addButton(button);
         }
     });
-    this.panels[panel.name]= panel;
-    
+    this.panels[panel.name] = panel;
 }
-ButtonManager.prototype.removePanel = function (panelName){
+ButtonManager.prototype.removePanel = function (panelName) {
     delete this.panels[panelName];
 }
 ButtonManager.prototype.addButtonToRadioGroup = function (button, groupName) {
@@ -61,8 +59,13 @@ ButtonManager.prototype.removeButton = function (button) {
     }
 }
 ButtonManager.prototype.draw = function () {
-    Object.getOwnPropertyNames (this.panels).forEach (panel =>{
-        drawBox (panel.x,panel.y, panel.x+panel.width, panel.y+panel.height, panel.color, true);
+    Object.getOwnPropertyNames(this.panels).forEach(panelName => {
+        let panel = this.panels[panelName];
+        let x0 = panel.x;
+        let y0 = panel.y;
+        let x1 = panel.x + panel.width;
+        let y1 = panel.y + panel.height;
+        drawBox(panel.x, panel.y, panel.x + panel.width, panel.y + panel.height, panel.bgColor, true);
     });
     this.buttons.forEach(button => {
         button.draw();
@@ -87,13 +90,13 @@ ButtonManager.prototype.check = function () {
                 button.actionFn();
                 this.pressed = null;
                 if (button.radioGroup) {
-                    this.toggled.set(button, true);                    
+                    this.toggled.set(button, true);
                     //Its in a radio group, so untoggle all the others..
                     let buttonsInGroup = this.radioGroups[button.radioGroup];
                     for (let i = 0; i < buttonsInGroup.length; i++) {
                         let radioButton = buttonsInGroup[i];
                         if (radioButton !== button) {
-                            if (this.toggled.has(radioButton)) {                                
+                            if (this.toggled.has(radioButton)) {
                                 this.toggled.delete(radioButton);
                             }
                         }

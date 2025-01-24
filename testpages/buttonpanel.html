@@ -66,7 +66,7 @@
         //name, colors, x, y, width, buttonHeight, fontSize, outerBorder, radioGroup
         const vpanel = new VerticalButtonPanel(
             'panel1',
-            buttonColors,
+            buttonColors, '#040',
             10, 50, 100,
             25, 1, 5, 'group1'
         );
@@ -82,14 +82,13 @@
         //name, colors, x, y, height, buttonWidth, fontSize, outerBorder, radioGroup
         const hpanel = new HorizontalButtonPanel(
             'panel2',
-            buttonColors,
+            buttonColors, '#040',
             150, 5, 30,
-            50, 1, 5, 'group2'
+            50, 1, 5
         );
-        hpanel.add (buttonDefs2);
-        buttonManager.addPanel (hpanel);
-        //TODO: Also test non-radio panels
-        //TODO: There is supposed to be a background filled box?
+        hpanel.add(buttonDefs2);
+        buttonManager.addPanel(hpanel);
+        
         const program = {
             run: function () {
                 buttonManager.check();
@@ -97,7 +96,6 @@
                 tattler.tattle();
             }
         };
-
     </script>
 </body>
 
