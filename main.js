@@ -8,6 +8,7 @@ let _zoomOnWheel = false;
 let _delta = undefined;
 let _oldTime = new Date();
 let _time = new Date();
+
 const _centerOfScreen = { "x": window.innerWidth / 2, "y": window.innerHeight / 2 };
 const _screenSize = { "x": window.innerWidth, "y": window.innerHeight };
 const _mouse = {
@@ -50,6 +51,7 @@ const _start = function (framerate, enableWheelZoom) {
     _canvas.style.margin = "0px 0px 0px 0px";
     _canvas.style.border = "0px";
     _ctx = _canvas.getContext('2d');
+
     body.appendChild(_canvas);
     window.addEventListener("resize", _resizeCanvas);
     _canvas.onwheel = function (e) {
@@ -75,30 +77,30 @@ const _start = function (framerate, enableWheelZoom) {
     _canvas.onmouseup = function (e) {
         _mouse.up = {
             where: new Point(e.clientX, e.clientY),
-            when: Date.now(),            
+            when: Date.now(),
         };
         _mouse.buttonDown = false;
     }
-    
-    window.onkeydown = function (e){
+    window.onkeydown = function (e) {
         _key.which = e.key;
-        _key.when = Date.now();       
+        _key.when = Date.now();
     }
-    window.onkeyup = function (e){
+    window.onkeyup = function (e) {
         _key.which = null;
-        _key.when= null;
+        _key.when = null;
     }
     _resizeCanvas();
-
-    _mainLoop(); //Run at least once..
-    if (framerate) setInterval(_mainLoop, framerate); //then if a framerate was specified go for it.
+    if (framerate) {
+        setInterval(_mainLoop, framerate); //then if a framerate was specified go for it.
+    } else {
+        setTimeout(_mainLoop, 100); //run at least once.
+    }
 }
 
 const _mainLoop = function () {
     _time = Date.now();
     _delta = (_time - _oldTime) / 1000; //the fraction of 1 second since last loop.
     _oldTime = _time;
-    
     if (program) {
         _ctx.fillStyle = '#112';
         _ctx.fillRect(0, 0, _canvas.width, _canvas.height);
@@ -108,10 +110,10 @@ const _mainLoop = function () {
         if (program.run) {
             program.run();
         } else {
-            console.log('Nothing to loop.. yet?');
+            log('Nothing to loop.. yet?');
         }
     } else {
-        console.log('waiting for program to show up..');
+        log('waiting for program to show up..');
     }
     if (_zoomOnWheel && _mouse.wheel.where !== 0) {
         let sign = Math.sign(_mouse.wheel.where);
@@ -123,8 +125,8 @@ const _mainLoop = function () {
             _zoom = 1;
         }
     }
-    _mouse.wheel.where = 0;//reset the scroll 'wheel _delta' to none (0)
+    _mouse.wheel.where = 0;//reset the scroll 'wheel _delta' to none (0) 
 }
-const log = function (obj){
-    console.log (obj);
+const log = function (obj) {
+    console.log(obj);
 }
