@@ -2,7 +2,7 @@
    ACTUALLY: Let's start throwing some actual errors instead of just backtracking 
    through code to figure out where the thing didn't do what you wanted it to do.
 */
-// If you want to use the parts by themselves there should be no feedback- your being you.
+// If you want to use the parts by themselves there should be no feedback- you're doing you.
 //  But If your using this API, this is the place to recieve complaints about "wrong"
 //  things that don't crash anything should be quitely mentioned in the console.
 
@@ -34,6 +34,12 @@ Engine.prototype.addButtonJSON = function (json) {
 }
 Engine.prototype.removeAllButtons = function () {
     this.buttonManager = new ButtonManager();
+}
+Engine.prototype.addPanel = function (panel){
+    this.buttonManager.addPanel (panel);
+}
+Engine.prototype.removePanel = function (panelName){
+    this.buttonManager.remove (panelName);
 }
 Engine.prototype.addEntity = function (name, sprites, position, angle, velocity, spin, mass, radius, parts) {
     if (!this.entityManager.has(name)) {
@@ -75,8 +81,8 @@ Engine.prototype.setEntityTouchEvent = function (fn) {
 Engine.prototype.setBackgroundTouchEvent = function (fn) {
     this.backgroundTouchFn = fn;
 }
-Engine.prototype.addTattler = function (font, lines, width) {
-    this.tattler = new Tattler(font, lines, width);
+Engine.prototype.addTattler = function (fontSize, lines, width) {
+    this.tattler = new Tattler(fontSize, lines, width);
 }
 Engine.prototype.removeTattler = function () {
     this.tattler = null;
