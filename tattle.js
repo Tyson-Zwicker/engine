@@ -57,14 +57,14 @@ Tattler.prototype.tell = function (tale) {
 };
 /*  Draw a rectangle on the canvas and prints the Tales onto it. */
 Tattler.prototype.tattle = function () {
-    let yline = getTextHeight(this.fontSize + 'em monospace') + 2;
+    let yd = getTextHeight(this.fontSize + 'em monospace') + 2;
     let x0 = _canvas.width - this.width;
     let y0 = _screenSize.y - (yd * this.lines);
     let x1 = _screenSize.x;
     let y1 = _screenSize.y;
     drawBox(x0, y0, x1, y1, this.bgColor, true, 1)
     let x = x0 + 2;
-    let y = y0 + yline / 2;
+    let y = y0 + yd / 2;
     for (let i = 0; i < this.tales.length; i++) {
         let text = `${this.tales[i].prefix} :${this.tales[i].message} :(${this.tales[i].count})`;
         drawTextLeft(x, y, text);

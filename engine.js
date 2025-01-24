@@ -1,4 +1,7 @@
-// TODO:  Add *more* snarky log comments, instead of just "failing gracefully"
+/* TODO:  Add *more* snarky log comments, instead of just, "failing gracefully"
+   ACTUALLY: Let's start throwing some actual errors instead of just backtracking 
+   through code to figure out where the thing didn't do what you wanted it to do.
+*/
 // If you want to use the parts by themselves there should be no feedback- your being you.
 //  But If your using this API, this is the place to recieve complaints about "wrong"
 //  things that don't crash anything should be quitely mentioned in the console.

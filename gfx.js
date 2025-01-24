@@ -84,11 +84,18 @@ const rgbToHex =function (r,g,b){
     return `#${Math.trunc(r).toString(16)}${Math.trunc(g).toString(16)}${Math.trunc(b).toString(16)}`
 }
 function getTextWidth(text, font) {
+    let oldFont = _ctx.font;
     _ctx.font = font;
     const metrics = _ctx.measureText(text);
-    return metrics.width;
+    let width = metrics.width;
+    _ctx.font = oldFont;
+    return width;
 }
-function getTextHeight(fontSize){
-    var fM = _ctx.measureText("A");
-    return yd = fM.actualBoundingBoxAscent + fM.actualBoundingBoxDescent;
+function getTextHeight(font){
+    let oldFont = _ctx.font;
+    _ctx.font = font;
+    var fM = _ctx.measureText("Mj");
+    let height = fM.actualBoundingBoxAscent + fM.actualBoundingBoxDescent;
+    _ctx.font = oldFont;
+    return height;
 }
