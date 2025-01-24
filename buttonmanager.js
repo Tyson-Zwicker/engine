@@ -18,7 +18,16 @@ ButtonManager.prototype.addPanel = function (panel) {
     this.panels[panel.name] = panel;
 }
 ButtonManager.prototype.removePanel = function (panelName) {
-    delete this.panels[panelName];
+    let panelNames = Object.getOwnPropertyNames(this.panels);
+    if (panelNames.includes(panelName)) {
+        let panel = this.panels[panelName];
+        panel.buttons.forEach(button => {
+            this.removeButton(button);
+        });
+        delete this.panels[panelName];
+    } else {
+        throw Error(`cannot remove panel '${panelName}', not found.`)
+    }
 }
 ButtonManager.prototype.addButtonToRadioGroup = function (button, groupName) {
     let group = [];
@@ -32,13 +41,17 @@ ButtonManager.prototype.addButtonToRadioGroup = function (button, groupName) {
     this.addButton(button);
 }
 ButtonManager.prototype.removeRadioGroup = function (groupName) {
-    let group = this.radioGroups[groupName];
-    if (group) {
-        group.forEach(button => {
-            button.radioGroup = false;
-        });
+    if (Object.getOwnPropertyNames(this.radioGroups).includes(groupName)) {
+        let group = this.radioGroups[groupName];
+        if (group) {
+            group.forEach(button => {
+                button.radioGroup = false;
+            });
+        }
+        delete this.radioGroups[groupName];
+    } else {
+        throw Error(`cannot remove radiogroup ${groupName}, not found.`);
     }
-    delete this.radioGroups[groupName];
 }
 ButtonManager.prototype.addButton = function (button) {
     button.manager = this;
@@ -56,6 +69,8 @@ ButtonManager.prototype.removeButton = function (button) {
     }
     if (del !== -1) {
         this.buttons.splice(del, 1);
+    }else{
+        throw Error (`button ${button.name} not found`);
     }
 }
 ButtonManager.prototype.draw = function () {
