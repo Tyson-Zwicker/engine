@@ -1,6 +1,6 @@
 
 const engine = new Engine();
-const buttonColors = new ButtonColors ('#00f', '#0ff','#f00', '#ff0');
+const buttonColors = new ButtonColors('#00f', '#0ff', '#f00', '#ff0');
 const buttonColors2 = new ButtonColors('#fff', '#0af', '#ff0', '#b0f');
 const tattler = new Tattler('1em monospace', 10, 300);
 engine.addTattler(1, 6, 250);
@@ -20,13 +20,14 @@ const buttonDefs2 = [
     { name: 'button5', text: '5', actionFn: buttonAction5 },
     { name: 'button6', text: '6', actionFn: buttonAction6 },
     { name: 'button7', text: '7', actionFn: buttonAction7 },
-    { name: 'button8', text: '8', actionFn: buttonAction8 }];
+    { name: 'button8', text: '8', actionFn: buttonAction8, untoggleAction8 }];
 //name, colors, x, y, height, buttonWidth, fontSize, outerBorder, radioGroup
 const hpanel = new HorizontalButtonPanel(
     'panel2',
     buttonColors, '#040',
     150, 5, 30,
     50, 1, 5);
+
 hpanel.add(buttonDefs2);
 engine.addPanel(hpanel);
 engine.addPanel(vpanel);
@@ -41,7 +42,7 @@ engine.addButton('button11', 'Remove Horizontal.',
     200, 130, 350, 150,
     1, buttonColors2, buttonAction11);
 engine.addButton('button12', 'Add Vertical',
-    360,130,510,150,
+    360, 130, 510, 150,
     1, buttonColors2, buttonAction12);
 
 engine.addButton('button13', 'Add Horizontal',

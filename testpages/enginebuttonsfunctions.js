@@ -1,55 +1,42 @@
 function buttonAction1() {
-    tattler.tellGroup(
-        new Tale('Button', '1')
-    )
-};
+    engine.tellTattleGrouped('button', '1', '#fff')
+}
 function buttonAction2() {
-    tattler.tellGroup(
-        new Tale('Button', '2')
-    )
-};
+    engine.tellTattleGrouped('button', '2', '#fff');
+}
 function buttonAction3() {
-    tattler.tellGroup(
-        new Tale('Button', '3')
-    )
-};
+    engine.tellTattleGrouped('button', '3', '#fff');
+}
 function buttonAction4() {
-    tattler.tellGroup(
-        new Tale('Button', '4')
-    )
-};
+    engine.tellTattleGrouped('button', '4', '#fff');
+}
 function buttonAction5() {
-    tattler.tellGroup(
-        new Tale('Button', '5')
-    )
-};
+    engine.tellTattleGrouped('button', '5', '#fff');
+}
 function buttonAction6() {
-    tattler.tellGroup(
-        new Tale('Button', '6')
-    )
-};
+    engine.tellTattleGrouped('button', '6', '#fff');
+}
 function buttonAction7() {
-    tattler.tellGroup(
-        new Tale('Button', '7')
-    )
-};
+    engine.tellTattleGrouped('button', '7', '#fff');
+}
 function buttonAction8() {
-    tattler.tellGroup(
-        new Tale('Button', '8')
-    )
-};
+    engine.tellTattleGrouped('button', '8', '#fff');
+}
+function untoggleAction8() {
+    engine.tellTattleGrouped('button', 'NOT 8!', '#fff');
+}
 function buttonAction9() { //remove self
-    engine.removeButton ('button9');
+    engine.removeButton('button9');
 }
 function buttonAction10() { //remove vert
-    engine.removePanel ('panel1');
+    engine.removePanel('panel1');
 }
 function buttonAction11() { //remove horz
-    engine.removePanel ('panel2');
+    engine.removePanel('panel2');
 }
 function buttonAction12() { //add vert
-    engine.addPanel (vpanel);
+    engine.addPanel(vpanel);
 }
 function buttonAction13() { //add horz
-    engine.addPanel (hpanel);
+    engine.addPanel(hpanel);
 }

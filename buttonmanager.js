@@ -5,14 +5,16 @@ const ButtonManager = function () {
     //this is not a list of all togglable buttons, 
     //but if the button is in here, then its toggled..
     //should be removed from here if it is no longer toggled.
-    //TODO: this should just be an object, it doesn't need to be a map.
-    this.toggled = new Map();
+    this.toggled = {};
     this.pressed = null;
     this.hovered = null;
 }
 ButtonManager.prototype.addPanel = function (panel) {
     panel.buttons.forEach(button => {
         if (panel.radioGroup) {
+            if (Object.getOwnPropertyNames(this.radioGroups).includes (panel.RadioGroup)){
+                throw new Error (`panel  ${panel.name} specified as radio group, button a radio group by that name already exists.`);
+            }
             let groupName = panel.radioGroup
             this.addButtonToRadioGroup(button, panel.radioGroup);
         } else {
@@ -26,11 +28,14 @@ ButtonManager.prototype.removePanel = function (panelName) {
     if (panelNames.includes(panelName)) {
         let panel = this.panels[panelName];
         panel.buttons.forEach(button => {
-            this.removeButton(button);
+            this.removeButton(button.name);
         });
+        if (Object.getOwnPropertyNames(this.radioGroups).includes (panelName)){
+            delete this.radioGroups[panelName];
+        }
         delete this.panels[panelName];
     } else {
-        throw Error(`cannot remove panel '${panelName}', not found.`)
+        throw Error(`cannot remove panel '${panelName}': not found.`)
     }
 }
 ButtonManager.prototype.addButtonToRadioGroup = function (button, groupName) {
@@ -54,7 +59,7 @@ ButtonManager.prototype.removeRadioGroup = function (groupName) {
         }
         delete this.radioGroups[groupName];
     } else {
-        throw Error(`cannot remove radiogroup ${groupName}, not found.`);
+        throw Error(`cannot remove radiogroup ${groupName}: not found.`);
     }
 }
 ButtonManager.prototype.addButton = function (button) {
@@ -62,10 +67,13 @@ ButtonManager.prototype.addButton = function (button) {
     this.buttons[button.name] = button;
 }
 ButtonManager.prototype.removeButton = function (buttonName) {
-    if (this.buttons[buttonname]) {
+    if (this.buttons[buttonName]) {
         delete this.buttons[buttonName];
+        if (this.toggled[buttonName]) {
+            delete this.toggled[buttonName];
+        }
     } else {
-        throw Error(`button ${button.name} not found`);
+        throw Error(`button ${button.name}: not found`);
     }
 }
 ButtonManager.prototype.draw = function () {
@@ -85,48 +93,55 @@ ButtonManager.prototype.check = function () {
     let found = false;
     Object.getOwnPropertyNames(this.buttons).forEach((buttonName) => {
         let button = this.buttons[buttonName];
-        if (bounded(_mouse.move.where, button)) {
-            found = true;
-            if (_mouse.buttonDown === false && this.hovered !== button) {
-                //a _newly_ hovered button 
-                this.hovered = button;
-                this.pressed = null;    //means whatever was pressed is free.
-            }
-            else if (_mouse.buttonDown === true && this.hovered === button) {
-                //The button was pressed while it hovered on this button..
-                this.pressed = button;
-            }
-            else if (_mouse.buttonDown === false && this.pressed === button) {
-                //The button was raised onthe same button it went down on..
-                button.actionFn();
-                this.pressed = null;
-                if (button.radioGroup) {
-                    this.toggled[buttonName] = true;
-                    //Its in a radio group, so untoggle all the others..
-                    let buttonsInGroup = this.radioGroups[button.radioGroup];
-                    for (let i = 0; i < buttonsInGroup.length; i++) {
-                        let radioButton = buttonsInGroup[i];
-                        if (radioButton !== button) {
-                            if (this.toggled[radioButton.name]) {
-                                delete this.toggled[radioButton.name];                                
+        try {
+            if (bounded(_mouse.move.where, button)) {
+                found = true;
+                if (_mouse.buttonDown === false && this.hovered !== button) {
+                    //a _newly_ hovered button 
+                    this.hovered = button;
+                    this.pressed = null;    //means whatever was pressed is free.
+                }
+                else if (_mouse.buttonDown === true && this.hovered === button) {
+                    //The button was pressed while it hovered on this button..
+                    this.pressed = button;
+                }
+                else if (_mouse.buttonDown === false && this.pressed === button) {
+                    //The button was raised onthe same button it went down on..
+                    button.actionFn();
+                    this.pressed = null;
+                    if (button.radioGroup) {
+                        this.toggled[buttonName] = true;
+                        //Its in a radio group, so untoggle all the others..
+                        let buttonsInGroup = this.radioGroups[button.radioGroup];
+                        for (let i = 0; i < buttonsInGroup.length; i++) {
+                            let radioButton = buttonsInGroup[i];
+                            if (radioButton !== button) {
+                                if (this.toggled[radioButton.name]) {
+                                    delete this.toggled[radioButton.name];
+                                }
                             }
                         }
                     }
-                }
-                if (button.isToggle) {              //If its a toggle
-                    if (this.toggled[buttonName]) { //and its already toggledfn
-                        delete this.toggled[buttonName];//Untoggled it.
-                        if (button.unToggleFn) {
-                            button.unToggleFn();
+                    if (button.isToggle) {              //If its a toggle
+                        if (this.toggled[buttonName]) { //and its already toggledfn
+                            delete this.toggled[buttonName];//Untoggled it.
+                            if (button.unToggleFn) {
+                                button.unToggleFn();
+                            }
+                        } else {                        //Its a toggle not toggled- toggle it
+                            //The value doesn't matter, just presence of the key.
+                            this.toggled[buttonName] = true;
                         }
-                    } else {                        //Its a toggle not toggled- toggle it
-                        //The value doesn't matter, just presence of the key.
-                        this.toggled[buttonName]= true;
                     }
                 }
             }
+        } catch (err) {
+            console.log (this.buttons);
+            console.log (engine);
+            throw new Error (`checking ${buttonName} caused error ${err}`);
         }
     });
+
     if (!found) {
         //The _mouse isn't over anything, so nothing can be touched or hovered.
         this.hovered = null;
