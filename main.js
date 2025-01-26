@@ -93,7 +93,7 @@ const _start = function (framerate, enableWheelZoom) {
     if (framerate) {
         setInterval(_mainLoop, framerate); //then if a framerate was specified go for it.
     } else {
-        setTimeout(_mainLoop, 100); //run at least once.
+        _mainLoop(); //run at least once.
     }
 }
 
