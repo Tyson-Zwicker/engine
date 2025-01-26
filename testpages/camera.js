@@ -66,7 +66,7 @@ function showEntity3 (){
     _camera.y = entity3.position.y;
 }
 /*And these are the buttons that so those^^ functions*/
-const buttonColors = new ButtonColors ('#700', '#aa0','#00f', '#0ff');
+const buttonColors = new ButtonColors ('#00f', '#0ff','#f00', '#ff0');
 const button1 = new Button(
     'button1',
     'Show 1',
