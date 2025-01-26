@@ -1,0 +1,41 @@
+<!--
+Test:
+add/remove entities/parts
+-->
+<html>
+
+<head>
+    <script src=".././maths.js"></script>
+    <script src=".././gfx.js"></script>
+    <script src=".././main.js"></script>
+    <script src=".././tattle.js"></script>
+    <script src=".././button.js"></script>
+    <script src=".././buttonpanel.js"></script>
+    <script src=".././buttonmanager.js"></script>
+    <script src=".././particle.js"></script>
+    <script src=".././sprite.js"></script>
+    <script src=".././part.js"></script>
+    <script src=".././entitylabel.js"></script>
+    <script src=".././entity.js"></script>
+    <script src=".././entitymanager.js"></script>
+    <script src=".././engine.js"></script>
+    <script src="enginebuttonsfunctions.js"></script>
+    <script src="enginebuttons.js"></script>
+</head>
+
+<body onload="_start(33,true)" style="border:none">
+    <script>
+        const program = {
+            run: function () {
+                //Main loop here.
+                engine.tellTattleGrouped('zoom', _zoom, '#fff');
+                engine.tellTattleGrouped('key', _key.which, '#ff0');
+                engine.tellTattleGrouped('mouse', _mouse.move.where, '#7f');
+                engine.tellTattleGrouped('wheel', _mouse.wheel.where, '#0f0');
+                engine.do();
+            }
+        };
+    </script>
+</body>
+
+</html>
