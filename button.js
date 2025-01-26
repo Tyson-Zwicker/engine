@@ -30,7 +30,7 @@ Button.prototype.selectColor = function () {
     let border = undefined;
     let text = undefined;
     let bg = undefined;
-    if (this.manager.toggled.has(this)){
+    if (this.manager.toggled[this.name]){
         //toggled same as pressed
         border = this.colors.hoverBackground;
         text = border;
