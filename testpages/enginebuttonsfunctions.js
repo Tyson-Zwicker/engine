@@ -39,7 +39,7 @@ function buttonAction8() {
     )
 };
 function buttonAction9() { //remove self
-    engine.removeButton (button9);
+    engine.removeButton ('button9');
 }
 function buttonAction10() { //remove vert
     engine.removePanel ('panel1');
@@ -51,5 +51,5 @@ function buttonAction12() { //add vert
     engine.addPanel (vpanel);
 }
 function buttonAction13() { //add horz
-    engine.addPanel (hpanel);s
+    engine.addPanel (hpanel);
 }
