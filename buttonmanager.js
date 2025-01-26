@@ -1,12 +1,15 @@
 const ButtonManager = function () {
     this.buttons = {};
+    // key/property is radio group's name, contains array of buttons in that group.
     this.radioGroups = {};
+    // key/property is panel's name, contains array of buttons in that group.
     this.panels = {};
-    //this is not a list of all togglable buttons, 
-    //but if the button is in here, then its toggled..
-    //should be removed from here if it is no longer toggled.
+    //this is not a list of all togglable buttons,  but if the button is in here, then its toggled..
+    //should be removed from here if it is no longer toggled (or removed).
     this.toggled = {};
+    //Either null, or a button object
     this.pressed = null;
+    //Either null, or a button object
     this.hovered = null;
 }
 ButtonManager.prototype.addPanel = function (panel) {
@@ -136,9 +139,9 @@ ButtonManager.prototype.check = function () {
                 }
             }
         } catch (err) {
-            console.log (this.buttons);
+            console.log (button);            
             console.log (engine);
-            throw new Error (`checking ${buttonName} caused error ${err}`);
+            throw new Error (`${buttonName} caused error ${err}`);
         }
     });
 
