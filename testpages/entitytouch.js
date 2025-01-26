@@ -2,7 +2,7 @@ const engine = new Engine();
 //name,sprite, offset, orientation
 let fwdturret = new Part('fwdturret', turret, new Point(0, -100), 0);
 let aftturret = new Part('aftturret', turret, new Point(0, 100), rad(180));
-const buttonColors = new ButtonColors ('#700', '#aa0','#00f', '#0ff');
+const buttonColors = new ButtonColors ('#00f', '#0ff','#f00', '#ff0');
 engine.addButton('testbutton1', 'add ent#2', 0, 180, 150, 210, 1.3, buttonColors, () => {
     engine.addEntity("entity2", [hull, superstructure], new Point(400, 0), 0, new Point(0, 0), 0, 10, 200, []);
 });
