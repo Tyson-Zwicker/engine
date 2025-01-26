@@ -20,7 +20,7 @@ const buttonDefs2 = [
     { name: 'button5', text: '5', actionFn: buttonAction5 },
     { name: 'button6', text: '6', actionFn: buttonAction6 },
     { name: 'button7', text: '7', actionFn: buttonAction7 },
-    { name: 'button8', text: '8', actionFn: buttonAction8, untoggleAction8 }];
+    { name: 'button8', text: '8', actionFn: buttonAction8, untoggleFn: untoggleAction8 }];
 //name, colors, x, y, height, buttonWidth, fontSize, outerBorder, radioGroup
 const hpanel = new HorizontalButtonPanel(
     'panel2',
