@@ -1,7 +1,10 @@
 const ButtonManager = function () {
-    this.buttons = [];
+    this.buttons = {};
     this.radioGroups = {};
     this.panels = {};
+    //this is not a list of all togglable buttons, 
+    //but if the button is in here, then its toggled..
+    //should be removed from here if it is no longer toggled.
     this.toggled = new Map();
     this.pressed = null;
     this.hovered = null;
@@ -45,7 +48,7 @@ ButtonManager.prototype.removeRadioGroup = function (groupName) {
         let group = this.radioGroups[groupName];
         if (group) {
             group.forEach(button => {
-                button.radioGroup = false;
+                delete this.buttons[button.name];
             });
         }
         delete this.radioGroups[groupName];
@@ -55,22 +58,17 @@ ButtonManager.prototype.removeRadioGroup = function (groupName) {
 }
 ButtonManager.prototype.addButton = function (button) {
     button.manager = this;
-    this.buttons.push(button);
-    if (button.isToggle) {
-        this.toggled = new Map();
-    }
+    this.buttons[button.name] = button;
+    //TODO:  What is this code supposed to be doing?
+    //if (button.isToggle) {
+    //    this.toggled = new Map();
+    // }
 }
-ButtonManager.prototype.removeButton = function (button) {
-    let del = -1;
-    for (let i = 0; i < this.buttons.length; i++) {
-        if (this.buttons[i] = button) {
-            del = i;
-        }
-    }
-    if (del !== -1) {
-        this.buttons.splice(del, 1);
-    }else{
-        throw Error (`button ${button.name} not found`);
+ButtonManager.prototype.removeButton = function (buttonName) {
+    if (this.buttons[buttonname]) {
+        delete this.buttons[buttonName];
+    } else {
+        throw Error(`button ${button.name} not found`);
     }
 }
 ButtonManager.prototype.draw = function () {
@@ -82,13 +80,14 @@ ButtonManager.prototype.draw = function () {
         let y1 = panel.y + panel.height;
         drawBox(panel.x, panel.y, panel.x + panel.width, panel.y + panel.height, panel.bgColor, true);
     });
-    this.buttons.forEach(button => {
-        button.draw();
+    Object.getOwnPropertyNames(this.buttons).forEach(buttonName => {
+        this.buttons[buttonName].draw();
     });
 }
 ButtonManager.prototype.check = function () {
     let found = false;
-    this.buttons.forEach((button) => {
+    Object.getOwnPropertyNames(this.buttons).forEach((buttonName) => {
+        let button = this.buttons[buttonName];
         if (bounded(_mouse.move.where, button)) {
             found = true;
             if (_mouse.buttonDown === false && this.hovered !== button) {
