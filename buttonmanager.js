@@ -5,6 +5,7 @@ const ButtonManager = function () {
     //this is not a list of all togglable buttons, 
     //but if the button is in here, then its toggled..
     //should be removed from here if it is no longer toggled.
+    //TODO: this should just be an object, it doesn't need to be a map.
     this.toggled = new Map();
     this.pressed = null;
     this.hovered = null;
@@ -59,10 +60,6 @@ ButtonManager.prototype.removeRadioGroup = function (groupName) {
 ButtonManager.prototype.addButton = function (button) {
     button.manager = this;
     this.buttons[button.name] = button;
-    //TODO:  What is this code supposed to be doing?
-    //if (button.isToggle) {
-    //    this.toggled = new Map();
-    // }
 }
 ButtonManager.prototype.removeButton = function (buttonName) {
     if (this.buttons[buttonname]) {
@@ -104,27 +101,27 @@ ButtonManager.prototype.check = function () {
                 button.actionFn();
                 this.pressed = null;
                 if (button.radioGroup) {
-                    this.toggled.set(button, true);
+                    this.toggled[buttonName] = true;
                     //Its in a radio group, so untoggle all the others..
                     let buttonsInGroup = this.radioGroups[button.radioGroup];
                     for (let i = 0; i < buttonsInGroup.length; i++) {
                         let radioButton = buttonsInGroup[i];
                         if (radioButton !== button) {
-                            if (this.toggled.has(radioButton)) {
-                                this.toggled.delete(radioButton);
+                            if (this.toggled[radioButton.name]) {
+                                delete this.toggled[radioButton.name];                                
                             }
                         }
                     }
                 }
                 if (button.isToggle) {              //If its a toggle
-                    if (this.toggled.has(button)) { //and its already toggledfn
-                        this.toggled.delete(button);//Untoggled it.
+                    if (this.toggled[buttonName]) { //and its already toggledfn
+                        delete this.toggled[buttonName];//Untoggled it.
                         if (button.unToggleFn) {
                             button.unToggleFn();
                         }
                     } else {                        //Its a toggle not toggled- toggle it
                         //The value doesn't matter, just presence of the key.
-                        this.toggled.set(button, true);
+                        this.toggled[buttonName]= true;
                     }
                 }
             }
