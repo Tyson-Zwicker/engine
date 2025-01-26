@@ -39,7 +39,7 @@ Engine.prototype.addPanel = function (panel){
     this.buttonManager.addPanel (panel);
 }
 Engine.prototype.removePanel = function (panelName){
-    this.buttonManager.remove (panelName);
+    this.buttonManager.removePanel (panelName);
 }
 Engine.prototype.addEntity = function (name, sprites, position, angle, velocity, spin, mass, radius, parts) {
     if (!this.entityManager.has(name)) {
