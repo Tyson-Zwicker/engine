@@ -16,18 +16,21 @@ const VerticalButtonPanel = function (name, colors, bgColors, x, y, width, butto
     this.radioGroup = (radioGroup) ? radioGroup : null;
 }
 VerticalButtonPanel.prototype.add = function (buttonDefinitions) {
-    //buttonDefinitions is an array of {name, text, action} objects.
+    //buttonDefinitions is an array of {name, text, actionFn, [untoggleFn]} objects.
     //They'll be drawn in the order they appear in the array, top to bottom
 
     let y = this.y + this.outerBorder;
     buttonDefinitions.forEach(def => {
-        //name, text, x0, y0, x1, y1, fontsize, buttonColors, actionFn
+        //name, text, x0, y0, x1, y1, fontsize, buttonColors, actionFn, untoggleFn
         let button = new Button(def.name, def.text,
             this.x + this.outerBorder,
             y,
             this.x + this.width - this.outerBorder,
             y + this.buttonHeight,
             this.fontSize, this.colors, def.actionFn);
+        if (def.untoggleFn){
+            button.setAsToggle (def.untoggleFn);
+        }
         this.buttons.push(button);
         y += this.buttonHeight + this.outerBorder;
     });
@@ -59,6 +62,9 @@ HorizontalButtonPanel.prototype.add = function (buttonDefinitions) {
             this.y + this.height - this.outerBorder,
             this.fontSize, this.colors, def.actionFn
         );
+        if (def.untoggleFn){
+            button.setAsToggle (def.untoggleFn);
+        }
         this.buttons.push(button);
         x += this.buttonWidth + this.outerBorder;
     });
