@@ -16,7 +16,7 @@ ButtonManager.prototype.addPanel = function (panel) {
     panel.buttons.forEach(button => {
         if (panel.radioGroup) {
             if (Object.getOwnPropertyNames(this.radioGroups).includes (panel.RadioGroup)){
-                throw new Error (`panel  ${panel.name} specified as radio group, button a radio group by that name already exists.`);
+                throw new Error (`Canot add panel ${panel.name} because radio group ${panel.radioGroup} already exists.`);
             }
             let groupName = panel.radioGroup
             this.addButtonToRadioGroup(button, panel.radioGroup);
@@ -33,8 +33,8 @@ ButtonManager.prototype.removePanel = function (panelName) {
         panel.buttons.forEach(button => {
             this.removeButton(button.name);
         });
-        if (Object.getOwnPropertyNames(this.radioGroups).includes (panelName)){
-            delete this.radioGroups[panelName];
+        if (Object.getOwnPropertyNames(this.radioGroups).includes (panel.radioGroup)){//<changed from panel name to .panelGroup
+            delete this.radioGroups[panel.radioGroup];
         }
         delete this.panels[panelName];
     } else {
