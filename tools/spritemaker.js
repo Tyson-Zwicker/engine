@@ -3,7 +3,7 @@ const spriteMaker = {
     hSym: false,
     snapSize: 1,
     points: new IArray(),
-
+    action: 'add' //valid values are 'add' and 'remove'
 }
 const setVSym = function () { spriteMaker.vSym = true; }
 const setHSym = function () { spriteMaker.vSym = false; }
@@ -15,6 +15,8 @@ const setSnap5 = function () { spriteMaker.snapSize = 5; }
 const setSnap10 = function () { spriteMaker.snapSize = 10; }
 const setSnap25 = function () { spriteMaker.snapSize = 25; }
 const setSnap50 = function () { spriteMaker.snapSize = 50; }
+const setActionAdd = function (){ spriteMaker.action ='add'}
+const setActionRemove = function (){spriteMaker.action ='remove'}
 
 const engine = new Engine();
 const buttonColors = new ButtonColors('#fff', '#0af', '#ff0', '#b0f');
@@ -45,3 +47,12 @@ snapPanel.add(snapButtons);
 engine.addPanel(snapPanel);
 
 //TODO:  Add an (optional) title/label to the panels.
+
+const actionPanel = new HorizontalButtonPanel('actionPanel', buttonColors, '#008',10,175,30,70,.8,5,'actionGroup');
+const actionButtons = [
+    { name: 'add', text: 'Add', actionFn: setActionAdd },
+    { name: 'remove', text: 'Remove', actionFn: setActionRemove },
+]
+actionPanel.add (actionButtons);
+engine.addPanel (actionPanel);
+//TODO: I want to be able to set the toggle state in the button def.
