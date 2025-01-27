@@ -1,0 +1,50 @@
+<html>
+
+<head>
+    <script src=".././maths.js"></script>
+    <script src=".././gfx.js"></script>
+    <script src=".././main.js"></script>
+    <script src=".././tattle.js"></script>
+    <script src=".././button.js"></script>
+    <script src=".././buttonpanel.js"></script>
+    <script src=".././buttonmanager.js"></script>
+    <script src=".././particle.js"></script>
+    <script src=".././sprite.js"></script>
+    <script src=".././part.js"></script>
+    <script src=".././entitylabel.js"></script>
+    <script src=".././entity.js"></script>
+    <script src=".././entitymanager.js"></script>
+    <script src=".././engine.js"></script>
+    <script src="missile.js"></script>
+</head>
+
+<body onload="_start(33,true)" style="border:none">
+    <script>
+        const engine = new Engine();
+        function makeMissile() {
+            const missileSprite = new Sprite([
+                new SpriteLine(0, -30, 10, -20, '#ccc', 1), //body
+                new SpriteLine(10, -20, 10, 30, '#ccc', 1),
+                new SpriteLine(10, 30, -10, 30, '#ccc', 1),
+                new SpriteLine(-10, 30, -10, -20, '#ccc', 1),
+                new SpriteLine(-10,-20, 0,-30, '#ccc', 1),
+                new SpriteLine(-15, -30, -10, -20, '#ccc', 2), //left fin
+                new SpriteLine(-15, -30, -10, -30, '#ccc', 2),
+                new SpriteLine(15, -30, 10, -20, '#ccc', 2), //right fin
+                new SpriteLine(15, -30, 10, -30, '#ccc', 2),                
+            ]);
+            engine.addEntity("missile", [missileSprite], new Point(400, 0), 0, new Point(0, 0), 270, 10, 60, []);
+        }
+        function accelerate() {
+            //TODO:  Give engine a pushEntity and spinEntity
+        }
+        const program = {
+            run: function () {
+                //Main loop here.
+                engine.do();
+            }
+        };
+    </script>
+</body>
+
+</html>
