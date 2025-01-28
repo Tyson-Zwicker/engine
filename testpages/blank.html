@@ -9,12 +9,15 @@
 <body onload="_start(33)" style="border:none">
     <script>
         const program = {
+            //declare it here.. (so scope is visible to run function)
+            testObject: undefined,
             init: function (){
-                //Initialize stuff here..
+                //Initialize it here.
                 console.log (_ctx); // test that the globals are initialized so we can use them in our own it code..
+                testObject = 'I persist!  My scope does not impair me from being see in the run() function.';
             },
             run: function () {
-               //Main loop here.
+               console.log (testObject);//anything initialized properly will be visible by the mainloop.
             }
         };
     </script>
