@@ -21,6 +21,8 @@
 <body onload="_start(33,true)" style="border:none">
     <script>
         const engine = new Engine();
+        //TODO: this should easier.. the engine should take a SpriteDefinition sort of like how the buttons panels do it..
+        //TODO: Now that I think about it.. the non-panel stuff should be based on a def object too. Why am I exposing the guts?
         function makeMissile() {
             const missileSprite = new Sprite([
                 new SpriteLine(0, -30, 10, -20, '#ccc', 1), //body
@@ -36,7 +38,7 @@
             engine.addEntity("missile", [missileSprite], new Point(400, 0), 0, new Point(0, 0), 270, 10, 60, []);
         }
         function accelerate() {
-            //TODO:  Give engine a pushEntity and spinEntity
+            //TODO:  Give engine a pushEntity and spinEntity method
         }
         const program = {
             run: function () {
