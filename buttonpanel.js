@@ -13,7 +13,7 @@ const VerticalButtonPanel = function (name, colors, bgColors, x, y, width, butto
     this.buttonHeight = buttonHeight;
     this.fontSize = fontSize;
     this.outerBorder = outerBorder; //distance between panel left/right edge and button also vertical spacing between buttons.
-    this.radioGroup = (radioGroup) ? radioGroup : null;
+    this.radioGroup = (radioGroup===true) ? true : false;
 }
 VerticalButtonPanel.prototype.add = function (buttonDefinitions) {
     //buttonDefinitions is an array of {name, text, actionFn, [untoggleFn]} objects.
@@ -49,7 +49,7 @@ const HorizontalButtonPanel = function (name, colors,bgColor, x, y, height, butt
     this.buttonWidth = buttonWidth;
     this.fontSize = fontSize;
     this.outerBorder = outerBorder; //distance between panel left/right edge and button also vertical spacing between buttons.
-    this.radioGroup = (radioGroup) ? radioGroup : null;
+    this.radioGroup = (radioGroup===true) ? true : false;
 }
 HorizontalButtonPanel.prototype.add = function (buttonDefinitions) {
     let x = this.x + this.outerBorder;

@@ -12,14 +12,15 @@ const ButtonManager = function () {
     //Either null, or a button object
     this.hovered = null;
 }
+
 ButtonManager.prototype.addPanel = function (panel) {
-    panel.buttons.forEach(button => {
+    if (panel.radioGroup && Object.getOwnPropertyNames(this.radioGroups).includes (panel.name)){
+        throw new Error (`Cannot add panel ${panel.name} as radio group because a radio group by that name already exists.`);
+    }
+    panel.buttons.forEach(button => {   
         if (panel.radioGroup) {
-            if (Object.getOwnPropertyNames(this.radioGroups).includes (panel.RadioGroup)){
-                throw new Error (`Canot add panel ${panel.name} because radio group ${panel.radioGroup} already exists.`);
-            }
-            let groupName = panel.radioGroup
-            this.addButtonToRadioGroup(button, panel.radioGroup);
+            
+            this.addButtonToRadioGroup(button, panel.name);//uses panel name as radio group.
         } else {
             this.addButton(button);
         }
@@ -33,8 +34,8 @@ ButtonManager.prototype.removePanel = function (panelName) {
         panel.buttons.forEach(button => {
             this.removeButton(button.name);
         });
-        if (Object.getOwnPropertyNames(this.radioGroups).includes (panel.radioGroup)){//<changed from panel name to .panelGroup
-            delete this.radioGroups[panel.radioGroup];
+        if (Object.getOwnPropertyNames(this.radioGroups).includes (panel.name) && panel.radioGroup){
+            delete this.radioGroups[panel.name];
         }
         delete this.panels[panelName];
     } else {

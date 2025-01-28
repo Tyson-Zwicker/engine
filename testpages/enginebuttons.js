@@ -14,7 +14,7 @@ const vpanel = new VerticalButtonPanel(
     'panel1',
     buttonColors, '#040',
     10, 50, 100,
-    25, 1, 5, 'group1');
+    25, 1, 5, true);
 vpanel.add(buttonDefs);
 const buttonDefs2 = [
     { name: 'button5', text: '5', actionFn: buttonAction5 },
