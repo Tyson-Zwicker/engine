@@ -8,9 +8,11 @@
 <!-- change "33" in "buildPage" to desired framerate-->
 <body onload="_start(33)" style="border:none">
     <script>
-        //Initialization here..
-        
         const program = {
+            init: function (){
+                //Initialize stuff here..
+                console.log (_ctx); // test that the globals are initialized so we can use them in our own it code..
+            },
             run: function () {
                //Main loop here.
             }

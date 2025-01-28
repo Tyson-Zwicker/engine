@@ -8,7 +8,7 @@ let _zoomOnWheel = false;
 let _delta = undefined;
 let _oldTime = new Date();
 let _time = new Date();
-
+let _initialized = false;
 const _centerOfScreen = { "x": window.innerWidth / 2, "y": window.innerHeight / 2 };
 const _screenSize = { "x": window.innerWidth, "y": window.innerHeight };
 const _mouse = {
@@ -104,9 +104,11 @@ const _mainLoop = function () {
     if (program) {
         _ctx.fillStyle = '#112';
         _ctx.fillRect(0, 0, _canvas.width, _canvas.height);
-        do {
-            drawTextLeft(10, 10, _time.toString().substring(7), 1);
-        } while (false);
+        drawTextLeft(10, 10, _time.toString().substring(7), 1);
+        if (!_initialized && program.init){
+            program.init();
+            _initialized = true;
+        }
         if (program.run) {
             program.run();
         } else {
