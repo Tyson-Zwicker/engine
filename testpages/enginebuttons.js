@@ -6,10 +6,10 @@ const tattler = new Tattler('1em monospace', 10, 300);
 engine.addTattler(1, 6, 250);
 
 const buttonDefs = [
-    { name: 'button1', text: 'One', actionFn: buttonAction1 },
-    { name: 'button2', text: 'Two', actionFn: buttonAction2 },
-    { name: 'button3', text: 'Three', actionFn: buttonAction3 },
-    { name: 'button4', text: 'Four', actionFn: buttonAction4 }];
+    { name: 'button1', text: 'One', actionFn: buttonAction, actionParam: 1 },
+    { name: 'button2', text: 'Two', actionFn: buttonAction, actionParam: 2 },
+    { name: 'button3', text: 'Three', actionFn: buttonAction, actionParam: 3 },
+    { name: 'button4', text: 'Four', actionFn: buttonAction, actionParam: 4 }];
 const vpanel = new VerticalButtonPanel(
     'panel1',
     buttonColors, '#040',
@@ -17,10 +17,10 @@ const vpanel = new VerticalButtonPanel(
     25, 1, 5, true);
 vpanel.add(buttonDefs);
 const buttonDefs2 = [
-    { name: 'button5', text: '5', actionFn: buttonAction5 },
-    { name: 'button6', text: '6', actionFn: buttonAction6 },
-    { name: 'button7', text: '7', actionFn: buttonAction7 },
-    { name: 'button8', text: '8', actionFn: buttonAction8, untoggleFn: untoggleAction8 }];
+    { name: 'button5', text: '5', actionFn: buttonAction, actionParam: 5 },
+    { name: 'button6', text: '6', actionFn: buttonAction, actionParam: 6 },
+    { name: 'button7', text: '7', actionFn: buttonAction, actionParam: 7 },
+    { name: 'button8', text: '8', actionFn: buttonAction, actionParam: 8, untoggleFn: untoggleAction8 }];
 //name, colors, x, y, height, buttonWidth, fontSize, outerBorder, radioGroup
 const hpanel = new HorizontalButtonPanel(
     'panel2',

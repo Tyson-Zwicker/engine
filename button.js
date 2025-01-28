@@ -5,7 +5,7 @@ const ButtonColors = function ( color, bgColor, hColor, hbgColor){
     this.hoverBackground =hbgColor;
 }
 
-const Button = function (name, text, x0, y0, x1, y1, fontsize, buttonColors, actionFn) {
+const Button = function (name, text, x0, y0, x1, y1, fontsize, buttonColors, actionFn, actionParam) {
     this.name = name;
     this.text = text;
     this.x0 = x0;
@@ -21,6 +21,7 @@ const Button = function (name, text, x0, y0, x1, y1, fontsize, buttonColors, act
     this.isToggle = false;
     this.radioGroup = null;
     this.unToggleFn = null;
+    this.actionParam = (actionParam)? actionParam: null;
 }
 Button.prototype.setAsToggle = function (untoggleFn){
     this.isToggle = true;

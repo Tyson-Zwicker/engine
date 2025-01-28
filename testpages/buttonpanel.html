@@ -35,24 +35,10 @@
                 new Tale('Button', '4')
             )
         };
-        function buttonAction5() {
+        
+        function hPanelButtonAction(param) {
             tattler.tellGroup(
-                new Tale('Button', '5')
-            )
-        };
-        function buttonAction6() {
-            tattler.tellGroup(
-                new Tale('Button', '6')
-            )
-        };
-        function buttonAction7() {
-            tattler.tellGroup(
-                new Tale('Button', '7')
-            )
-        };
-        function buttonAction8() {
-            tattler.tellGroup(
-                new Tale('Button', '8')
+                new Tale('Button', param)
             )
         };
         const buttonDefs = [
@@ -62,7 +48,7 @@
             { name: 'button4', text: 'Four', actionFn: buttonAction4 }
         ];
         const buttonManager = new ButtonManager();
-        const buttonColors = new ButtonColors ('#00f', '#0ff','#f00', '#ff0');
+        const buttonColors = new ButtonColors('#00f', '#0ff', '#f00', '#ff0');
         //name, colors, x, y, width, buttonHeight, fontSize, outerBorder, radioGroup
         const vpanel = new VerticalButtonPanel(
             'panel1',
@@ -74,10 +60,10 @@
         buttonManager.addPanel(vpanel);
 
         const buttonDefs2 = [
-            { name: 'button5', text: '5', actionFn: buttonAction5 },
-            { name: 'button6', text: '6', actionFn: buttonAction6 },
-            { name: 'button7', text: '7', actionFn: buttonAction7 },
-            { name: 'button8', text: '8', actionFn: buttonAction8 }
+            { name: 'button5', text: '5', actionFn: hPanelButtonAction, actionParam: 5 },
+            { name: 'button6', text: '6', actionFn: hPanelButtonAction, actionParam: 6 },
+            { name: 'button7', text: '7', actionFn: hPanelButtonAction, actionParam: 7 },
+            { name: 'button8', text: '8', actionFn: hPanelButtonAction, actionParam: 8 }
         ];
         //name, colors, x, y, height, buttonWidth, fontSize, outerBorder, radioGroup
         const hpanel = new HorizontalButtonPanel(
@@ -88,7 +74,7 @@
         );
         hpanel.add(buttonDefs2);
         buttonManager.addPanel(hpanel);
-        
+
         const program = {
             run: function () {
                 buttonManager.check();

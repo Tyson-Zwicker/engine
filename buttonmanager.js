@@ -14,12 +14,12 @@ const ButtonManager = function () {
 }
 
 ButtonManager.prototype.addPanel = function (panel) {
-    if (panel.radioGroup && Object.getOwnPropertyNames(this.radioGroups).includes (panel.name)){
-        throw new Error (`Cannot add panel ${panel.name} as radio group because a radio group by that name already exists.`);
+    if (panel.radioGroup && Object.getOwnPropertyNames(this.radioGroups).includes(panel.name)) {
+        throw new Error(`Cannot add panel ${panel.name} as radio group because a radio group by that name already exists.`);
     }
-    panel.buttons.forEach(button => {   
+    panel.buttons.forEach(button => {
         if (panel.radioGroup) {
-            
+
             this.addButtonToRadioGroup(button, panel.name);//uses panel name as radio group.
         } else {
             this.addButton(button);
@@ -34,7 +34,7 @@ ButtonManager.prototype.removePanel = function (panelName) {
         panel.buttons.forEach(button => {
             this.removeButton(button.name);
         });
-        if (Object.getOwnPropertyNames(this.radioGroups).includes (panel.name) && panel.radioGroup){
+        if (Object.getOwnPropertyNames(this.radioGroups).includes(panel.name) && panel.radioGroup) {
             delete this.radioGroups[panel.name];
         }
         delete this.panels[panelName];
@@ -111,7 +111,12 @@ ButtonManager.prototype.check = function () {
                 }
                 else if (_mouse.buttonDown === false && this.pressed === button) {
                     //The button was raised onthe same button it went down on..
-                    button.actionFn();
+                    if (button.actionParam) {
+                        button.actionFn(button.actionParam);
+                    } else {
+                        button.actionFn();
+                    }
+
                     this.pressed = null;
                     if (button.radioGroup) {
                         this.toggled[buttonName] = true;
@@ -126,23 +131,24 @@ ButtonManager.prototype.check = function () {
                             }
                         }
                     }
-                    if (button.isToggle) {              //If its a toggle
-                        if (this.toggled[buttonName]) { //and its already toggledfn
+                    if (button.isToggle) {                  //If its a toggle
+                        if (this.toggled[buttonName]) {     //and its already toggledfn
                             delete this.toggled[buttonName];//Untoggled it.
                             if (button.unToggleFn) {
                                 button.unToggleFn();
                             }
-                        } else {                        //Its a toggle not toggled- toggle it
-                            //The value doesn't matter, just presence of the key.
+                        } else {
+                            //Its a toggle not toggled- toggle it
+                            //The value doesn't matter, just presence of the key.                        
                             this.toggled[buttonName] = true;
                         }
                     }
                 }
             }
         } catch (err) {
-            console.log (button);            
-            console.log (engine);
-            throw new Error (`${buttonName} caused error ${err}`);
+            console.log(button);
+            console.log(engine);
+            throw new Error(`${buttonName} caused error ${err}`);
         }
     });
 

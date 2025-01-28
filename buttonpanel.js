@@ -27,7 +27,7 @@ VerticalButtonPanel.prototype.add = function (buttonDefinitions) {
             y,
             this.x + this.width - this.outerBorder,
             y + this.buttonHeight,
-            this.fontSize, this.colors, def.actionFn);
+            this.fontSize, this.colors, def.actionFn, def.actionParam);
         if (def.untoggleFn){
             button.setAsToggle (def.untoggleFn);
         }
@@ -60,7 +60,7 @@ HorizontalButtonPanel.prototype.add = function (buttonDefinitions) {
             this.y + this.outerBorder,
             x + this.buttonWidth,
             this.y + this.height - this.outerBorder,
-            this.fontSize, this.colors, def.actionFn
+            this.fontSize, this.colors, def.actionFn, def.actionParam
         );
         if (def.untoggleFn){
             button.setAsToggle (def.untoggleFn);
