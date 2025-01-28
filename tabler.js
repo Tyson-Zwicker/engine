@@ -30,7 +30,7 @@ Tabler.prototype.ComplexObjectListToHtmlTable = function (title, objects, proper
                 //It's an object..
                 //so it SHOULD be a key in here..
                 let innerTablePropertyList = innerObjectMap.get(property);
-                if (!innerTablePropertyList) throw new Error ('property missing corresponding innerObjectMap entry.');
+                if (!innerTablePropertyList) throw new Error('property missing corresponding innerObjectMap entry.');
                 let innerTable = this.objectListToHtmlTable('', [object[property]], innerTablePropertyList);
                 let innerTableElement = innerTable;
                 dataElement = this.getCell();
@@ -50,7 +50,7 @@ Tabler.prototype.ComplexObjectListToHtmlTable = function (title, objects, proper
 
 
 //If one of the properties is an array.
-Tabler.prototype.ObjectListWithInnerArrayToHtmlTable = function (title, objectList, propertyNames, subObjectProperties) {
+Tabler.prototype.ObjectListWithInnerArrayToHtmlTable = function (title, objectList, propertyNames) {
     let table = this.getTable(title);
     let rowElement = this.getRow();
     propertyNames.forEach(property => {
@@ -59,12 +59,13 @@ Tabler.prototype.ObjectListWithInnerArrayToHtmlTable = function (title, objectLi
         rowElement.appendChild(dataElement);
     });
     table.appendChild(rowElement);
+    
     objectList.forEach(row => {
         let rowElement = this.getRow();
         propertyNames.forEach(property => {
             if (Array.isArray(row[property])) {
                 dataElement = this.getCell();
-                dataElement.appendChild(this.arrayToHtmlTable(property, row[property]));
+                dataElement.appendChild(this.arrayToHtmlTable(null, row[property]));
                 rowElement.appendChild(dataElement);
             } else {
                 dataElement = this.getCell();
@@ -99,6 +100,7 @@ Tabler.prototype.arrayToHtmlTable = function (title, array, columns, horizontal)
         if (column > 0) {
             table.appendChild(rowElement);
         }
+        return table;
     } else {
         if (!Array.isArray[array[0]]) {
             //Simple 1 dimension..
@@ -121,9 +123,11 @@ Tabler.prototype.arrayToHtmlTable = function (title, array, columns, horizontal)
                 }
                 table.appendChild(row);
             }
+
         }
+        return table;
     }
-    return table;
+    throw Error('Cannot draw more than two dimensions');
 }
 
 Tabler.prototype.objectListToHtmlTable = function (title, objectList, propertyNames) {
@@ -159,11 +163,18 @@ Tabler.prototype.getTable = function (title) {
     }
     return table;
 };
-Tabler.prototype.getRow = function () {
+Tabler.prototype.getRow = function (textColor, bgColor) {
     let rowElement = document.createElement('tr');
+
+    if (textColor) {
+        rowElement.style.color = textColor;
+    }
+    if (bgColor) {
+        rowElement.style.backgroundColor = bgColor;
+    }
     return rowElement;
 }
-Tabler.prototype.getCell = function (text, bold, centered, borderSolid) {
+Tabler.prototype.getCell = function (text, bold, centered, borderSolid, textColor, bgColor) {
     let dataElement = document.createElement('td');
     if (bold) dataElement.style.fontWeight = 'bold';
     if (centered) dataElement.style.textAlign = 'center';
@@ -173,5 +184,11 @@ Tabler.prototype.getCell = function (text, bold, centered, borderSolid) {
         dataElement.style.border = '1px dotted black';
     }
     if (text) dataElement.innerText = text;
+    if (textColor) {
+        dataElement.style.color = textColor;
+    }
+    if (bgColor) {
+        dataElement.style.backgroundColor = bgColor;
+    }
     return dataElement;
 }
