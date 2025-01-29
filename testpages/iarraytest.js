@@ -169,6 +169,61 @@ function doTest() {
     row.appendChild(cell);
     table.append(row);
 
+    div.appendChild(table);
+
+    //============================== simple x,y =====================
+    array = new IArray();
+    table = tabler.getTable('Simple x,y');
+
+    row = tabler.getRow();
+    cell = tabler.getCell(`set[0,0]= true`);
+    row.appendChild(cell);
+    array.set([0,0], true);
+    cell = tabler.getCell(array.get([0,0]));
+    row.appendChild(cell);
+    table.append(row);
+    
+    row = tabler.getRow();
+    cell = tabler.getCell(`set[1,0]= true`);
+    row.appendChild(cell);
+    array.set([1,0], true);
+    cell = tabler.getCell(array.get([1,0]));
+    row.appendChild(cell);
+    table.append(row);
+    
+    row = tabler.getRow();
+    cell = tabler.getCell(`set[0,1]= true`);
+    row.appendChild(cell);
+    array.set([0,1], true);
+    cell = tabler.getCell(array.get([0,1]));
+    row.appendChild(cell);
+    table.append(row);
+    
+    row = tabler.getRow();
+    cell = tabler.getCell(`set[1,1]= true`);
+    row.appendChild(cell);
+    array.set([1,1], true);
+    cell = tabler.getCell(array.get([1,1]));
+    row.appendChild(cell);
+    table.append(row);
+    div.appendChild (table);
+
+    table = tabler.getTable ();
+    row  = tabler.getRow();
+    cell = tabler.getCell (array.get([0,0]));
+    row.append (cell);
+    cell = tabler.getCell (array.get([1,0]));
+    row.append (cell);
+    table.append (row);
+    row  = tabler.getRow();
+    cell = tabler.getCell (array.get([0,1]));
+    row.append (cell);
+    cell = tabler.getCell (array.get([1,1]));
+    row.append (cell);
+    table.append (row);
+    div.append (table);
+
+    
     /*
         row  = tabler.getRow();
         cell = tabler.getCell (`set['backback food','apple', 'comment']= 'easy to eat.'`);

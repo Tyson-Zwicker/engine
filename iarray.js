@@ -7,6 +7,9 @@ const IArray = function () {
 }
 //Given an array of keys, and value..
 IArray.prototype.set = function (coords, obj) {
+    if (!Array.isArray (coords)){
+        throw Error ('coords must be specified in an array.');
+    }
     let tempVals = this.values;
     let depth = 0;
     let values = this.values;
@@ -24,24 +27,27 @@ IArray.prototype.set = function (coords, obj) {
         } else {
             //One of the keys doesn't exist yet, so create the inner dictionary,
             //  and loop again to see if we're deep enough to assign the value..
-            let  innerDictionary= {};
+            let innerDictionary = {};
             innerDictionary['isInfinite'] = true;
             values[coords[depth].toString()] = innerDictionary;
         }
     } while (true);
 }
 IArray.prototype.get = function (coords) {
+    if (!Array.isArray (coords)){
+        throw Error ('coords must be specified in an array.');
+    }
     let values = this.values;
     let depth = 0;
     do {
         if (depth === coords.length - 1) {
-            if (values[coords[depth].toString()]) {                
+            if (values[coords[depth].toString()]) {
                 //we've reached the specified keys..
-                if (values[coords[depth]]['isInfinite']){
+                if (values[coords[depth]]['isInfinite']) {
                     //but instead of finding a value, we find an inner dictionary..
                     //so return all the keys of the dictionary as simple array.
-                    return Object.getOwnPropertyNames (values[coords[depth]]);                    
-                }else{
+                    return Object.getOwnPropertyNames(values[coords[depth]]);
+                } else {
                     //and we've found a value to return.
                     return values[coords[depth]]
                 }
