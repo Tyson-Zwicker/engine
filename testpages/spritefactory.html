@@ -1,0 +1,35 @@
+<html>
+
+<head>
+    <script src=".././maths.js"></script>
+    <script src=".././gfx.js"></script>
+    <script src=".././main.js"></script>
+    <script src=".././sprite.js"></script>
+    
+</head>
+<!-- change "33" in "buildPage" to desired framerate-->
+<body onload="_start(33)" style="border:none">
+    <script>
+        const program = {
+            //declare it here.. (so scope is visible to run function)
+            testSprite: undefined,
+            angle: undefined,
+            init: function (){
+                //Initialize it here.
+                let sf = new SpriteFactory('#0f0',2);
+                console.log (sf);
+                for (a = 0; a<TAU; a=a+TAU/36){
+                    sf.addPoint ( cos (a)*100,sin(a)*100);
+                }
+                testSprite = sf.getSprite ();
+                angle =0;
+            },
+            run: function () {
+               testSprite.draw(angle, _centerOfScreen);
+               angle +=PI/100;
+            }
+        };
+    </script>
+</body>
+
+</html>

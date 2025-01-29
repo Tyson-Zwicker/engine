@@ -32,3 +32,40 @@ const Sprite = function (lines) {
 Sprite.prototype.draw = function (rotation, offset) {
     this.lines.forEach((line) => { line.draw(rotation, offset) });
 }
+
+//A more convient way to build sprites...
+const SpriteFactory = function (color, width) {
+    this.color = (color)?color:'#fff';
+    this.width = (width)?width:1;
+    this.points = [];
+}
+SpriteFactory.prototype.setColor = function(color){
+    this.color = color;
+}
+SpriteFactory.prototype.setWidth = function(width){
+    this.width = width;
+}
+SpriteFactory.prototype.addPoint = function(x, y){
+    this.points.push({ x, y });
+}
+SpriteFactory.prototype.getSprite = function () {
+    if (this.points.length > 1) {
+        let lines = [];
+        for (let i = 1; i < this.points.length - 1; i++){
+            lines.push(new SpriteLine(
+                this.points[i - 1].x,
+                this.points[i - 1].y,
+                this.points[i].x,
+                this.points[i].y, this.color, this.width));
+        }
+        return new Sprite (lines);
+    } else {
+        throw new Error(`Cannot make a sprite from only ${this.points} points.`);
+    }
+    
+}
+SpriteFactory.clear = function (color, width) {
+    this.color = (color) ? color : '#fff';
+    this.width = (width) ? width : 1;
+    ths.points = [];
+}
