@@ -34,6 +34,11 @@ const SnapPanel = function (x0, y0, x1, y1) {
         throw new Error ('cannot calculate distance: snap level not declared');
     }
 }
+
+
+//TODO: Its drawing the snapPoints in the upper left hand corner so you are not accounting for the offset
+//of the panel... I think.
+
 SnapPanel.prototype.setSnap = function (snap) {
     this.snap = snap;
     console.log (`snap set to  ${this.snap}`);
@@ -58,7 +63,8 @@ SnapPanel.prototype.setSnap = function (snap) {
         }
         i++; j = 0;
     }
-
+    console.log (`after calling setSnap ${snap} this.snapPoints:`);
+    console.log (this.snapPoints);
 }
 SnapPanel.prototype.setSymmetry = function (horizontal, vertical) {
     this.vSym = vertical;
@@ -89,7 +95,7 @@ SnapPanel.prototype.reactToMouseDown = function (point) {
         throw Error('snappanel: Snap level not declared.');
     }
 }
-//returns the gridPoint that was clicked or null if no point was clicked.
+//returns the snapPoints that was clicked or null if no point was clicked.
 SnapPanel.prototype.reactToMouseUp = function (point) {
     if (this.snap) {
         if (bounded (point, {x0,y0,x1,y1})){
@@ -127,15 +133,22 @@ SnapPanel.prototype.draw = function () {
         if (this.hSim){
             drawLine (this.x0,cy, this.x1, cy,'#666');
         }
-        
-        for (let i=0;i< this.numXlines; i++){
+        console.log (`xlines${this.numXLines}`);
+        console.log (`ylines${this.numYLines}`);
+        for (let i=0;i< this.numXLines; i++){
+            console.log (`i ${i}`);
+
             for (let j=0;j<this.numYLines;j++){
-                let x = this.gridPoint[i][j].x;
-                let y = this.gridPoint[i][j].y;
+                console.log (`j ${j}`);
+                let x = this.snapPoints[i][j].x;
+                let y = this.snapPoints[i][j].y;
+                console.log (`@(${i},${j})`);
+                console.log (`x:${this.snapPoints[i][j].x}`);
+                console.log (`y:${this.snapPoints[i][j].y}`);
                 drawBox (x-0.5, y-0.5, x+0.5, y+0.5,'#c00',true);
             }
         }
-        //draw small box at each gridPoint..
+        //draw small box at each snapPoints..
         //highlight hovered and highlight pressed with different color..
         drawBox (this.x0,this.y0, this.x1, this.y1,'#0f9');
     }
