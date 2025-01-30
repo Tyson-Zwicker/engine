@@ -39,6 +39,7 @@ Engine.prototype.addPanel = function (panel){
     this.buttonManager.addPanel (panel);
 }
 Engine.prototype.removePanel = function (panelName){
+
     this.buttonManager.removePanel (panelName);
 }
 Engine.prototype.addEntity = function (name, sprites, position, angle, velocity, spin, mass, radius, parts) {
@@ -59,8 +60,24 @@ Engine.prototype.removeAllEntities = function () {
     this.entityManager = new EntityManager();
 }
 Engine.prototype.removeEntity = function (name) {
-    this.entityManager.remove(name);
+    if (this.entityManager.has(name)){
+        this.entityManager.remove(name);
+    }else{
+        throw new Error (`Entity '${name}' not found.`);
+    }
 }
+Engine.prototype.getEntity = function (name){
+    if (this.entityManager.has(name)){
+        return this.entityManager.get (name);
+    }else{
+        throw new Error (`Entity '${name}' not found.`);
+    }
+}
+Engine.prototype.pushEntity = function (name, force, direction){
+    let entity = this.getEntity (name);
+    entity.push (new Vector (direction,force));
+}
+
 Engine.prototype.removeEntityPart = function (entityName, partName) {
     let entity = this.entityManager.get(entityName);
     if (entity) {
