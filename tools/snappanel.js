@@ -42,14 +42,14 @@ const SnapPanel = function (x0, y0, x1, y1) {
 SnapPanel.prototype.setSnap = function (snap) {
     this.snap = snap;
     console.log (`snap set to  ${this.snap}`);
-    let cx = (this.x1 - this.x0) / 2;
-    let cy = (this.y1 - this.y0) / 2;
+    let cx = (this.x1 + this.x0) / 2;
+    let cy = (this.y1 + this.y0) / 2;
     this.numXLines = Math.trunc((this.x1 - this.x0) / snap);
     this.numYLines = Math.trunc((this.y1 - this.y0) / snap);
-    this.a0 = cx - this.numXLines * snap;
-    this.b0 = cy - this.numYLines * snap;
-    this.a1 = cx + this.numXLines * snap;
-    this.b1 = cy + this.numYLines * snap;
+    this.a0 = cx - this.numXLines/2 * snap;
+    this.b0 = cy - this.numYLines/2 * snap;
+    this.a1 = cx + this.numXLines/2 * snap;
+    this.b1 = cy + this.numYLines/2 * snap;
     this.snapPoints = [];
     let i = 0; j = 0;
     for (let x = this.a0; x < this.a1; x += snap) {
@@ -63,6 +63,10 @@ SnapPanel.prototype.setSnap = function (snap) {
         }
         i++; j = 0;
     }
+    console.log (`x0 ${this.x0}, x1 ${this.x1}`);
+    console.log (`y0 ${this.x0}, y1 ${this.y1}`);
+    console.log (`cx ${cx} cy ${cy}, a0 ${this.a0} b0 ${this.b0} a1 ${this.a1}, b1 ${this.b1}`);
+    console.log (`numXLines ${this.numXLines}, numYLines ${this.numYLines}`);
     console.log (`after calling setSnap ${snap} this.snapPoints:`);
     console.log (this.snapPoints);
 }
@@ -110,7 +114,6 @@ SnapPanel.prototype.reactToMouseUp = function (point) {
             this.pressedPoint = null
             return null;
         }
-
     } else {
         throw Error('snappanel: Snap level not declared.');
     }
@@ -136,15 +139,9 @@ SnapPanel.prototype.draw = function () {
         console.log (`xlines${this.numXLines}`);
         console.log (`ylines${this.numYLines}`);
         for (let i=0;i< this.numXLines; i++){
-            console.log (`i ${i}`);
-
             for (let j=0;j<this.numYLines;j++){
-                console.log (`j ${j}`);
                 let x = this.snapPoints[i][j].x;
                 let y = this.snapPoints[i][j].y;
-                console.log (`@(${i},${j})`);
-                console.log (`x:${this.snapPoints[i][j].x}`);
-                console.log (`y:${this.snapPoints[i][j].y}`);
                 drawBox (x-0.5, y-0.5, x+0.5, y+0.5,'#c00',true);
             }
         }
