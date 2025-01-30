@@ -70,6 +70,12 @@ ButtonManager.prototype.addButton = function (button) {
     button.manager = this;
     this.buttons[button.name] = button;
 }
+ButtonManager.prototype.hasButton = function (name){
+    return this.buttons.hasOwnProperty (name);
+}
+ButtonManager.prototype.getButton = function (name){
+    return this.buttons[name];
+}
 ButtonManager.prototype.removeButton = function (buttonName) {
     if (this.buttons[buttonName]) {
         delete this.buttons[buttonName];
