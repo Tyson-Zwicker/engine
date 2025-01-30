@@ -20,7 +20,9 @@ add/remove entities/parts
     <script src=".././entitymanager.js"></script>
     <script src=".././engine.js"></script>
     <script src=".././iarray.js"></script>
+    <script src="./snappanel.js"></script>
     <script src="./spritemaker.js"></script>
+    
 
 </head>
 
@@ -28,8 +30,14 @@ add/remove entities/parts
 
     <script>
         const program = {
+            snapPanel: undefined,
+            init: function(){
+                snapPanel = new SnapPanel (300,50,500,250);
+                snapPanel.setSnap (10);
+            },
             run: function () {
                 engine.do();
+                snapPanel.draw();
             }
         };
     </script>

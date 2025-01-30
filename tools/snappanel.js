@@ -36,6 +36,7 @@ const SnapPanel = function (x0, y0, x1, y1) {
 }
 SnapPanel.prototype.setSnap = function (snap) {
     this.snap = snap;
+    console.log (`snap set to  ${this.snap}`);
     let cx = (this.x1 - this.x0) / 2;
     let cy = (this.y1 - this.y0) / 2;
     this.numXLines = Math.trunc((this.x1 - this.x0) / snap);
@@ -109,7 +110,7 @@ SnapPanel.prototype.reactToMouseUp = function (point) {
     }
 }
 SnapPanel.prototype.draw = function () {
-    if (!snap) {
+    if (!this.snap) {
         throw Error('Cannot draw snappanel: Snap level not declared.');
     } else {
         //Draw the lines..
@@ -120,8 +121,22 @@ SnapPanel.prototype.draw = function () {
             drawLine(this.x0, y, this.x1, y, '#777', 1);
         }
         //draw symetry lines along centeral gridlines..
-
+        if (this.vSym) {
+            drawLine (this.cx,this.y0, this.cx,this.y1, '#666');
+        }
+        if (this.hSim){
+            drawLine (this.x0,cy, this.x1, cy,'#666');
+        }
+        
+        for (let i=0;i< this.numXlines; i++){
+            for (let j=0;j<this.numYLines;j++){
+                let x = this.gridPoint[i][j].x;
+                let y = this.gridPoint[i][j].y;
+                drawBox (x-0.5, y-0.5, x+0.5, y+0.5,'#c00',true);
+            }
+        }
         //draw small box at each gridPoint..
         //highlight hovered and highlight pressed with different color..
+        drawBox (this.x0,this.y0, this.x1, this.y1,'#0f9');
     }
 }
