@@ -1,5 +1,7 @@
 # What is this?
 
-Its a Toolbox of stuff I use when I want to make something that runs in a browser.  The testpages folder is the "manual" for now- everything has a test.  This is in dev.. changes all the time, stuff breaks some nights because I backup here and sometimes I sleep.
+A place to develop the pieces I need to write a game.  The methods developed here are being ported over to
+another repo "conductor" which (will) use most of the code written here, but all wrapped up in closures so its
+way easier to work with as a consumer.  I will continue to develop the ideas over here, but the end product will
+end up in at git@github.com:Tyson-Zwicker/conductor.git
 
-Current Task: SpriteBuilder...
